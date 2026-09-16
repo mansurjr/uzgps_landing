@@ -2,15 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { animate, stagger } from "animejs";
-import { contacts, industries } from "@/data/content";
-
-const links = [
-  { href: "#platform", label: "Платформа" },
-  { href: "#equipment", label: "Оборудование" },
-  { href: "#calculator", label: "Экономия" },
-  { href: "#about", label: "О компании" },
-];
+import { contacts } from "@/data/content";
+import { locales } from "@/i18n";
+import { useDict } from "@/i18n/DictProvider";
+import { localePath } from "@/lib/site";
 
 export function Logo({ inverted = false }: { inverted?: boolean }) {
   return (
@@ -22,12 +19,20 @@ export function Logo({ inverted = false }: { inverted?: boolean }) {
 }
 
 export default function Header() {
+  const { t, locale } = useDict();
   const [scrolled, setScrolled] = useState(false);
   const [mega, setMega] = useState(false);
   const [sheet, setSheet] = useState(false);
   const megaRef = useRef<HTMLDivElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
+
+  const links = [
+    { href: "#platform", label: t.nav.platform },
+    { href: "#equipment", label: t.nav.equipment },
+    { href: "#calculator", label: t.nav.savings },
+    { href: "#about", label: t.nav.about },
+  ];
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 40);
@@ -86,26 +91,42 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       {/* utility row collapses once the page scrolls */}
-      <div
-        className={`hidden overflow-hidden bg-ink text-paper/70 transition-[height] duration-300 lg:block ${
-          scrolled ? "h-0" : "h-9"
-        }`}
-      >
+      <div className={`hidden overflow-hidden bg-ink text-paper/70 transition-[height] duration-300 lg:block ${scrolled ? "h-0" : "h-9"}`}>
         <div className="wrap flex h-9 items-center justify-between text-[13px]">
-          <span>Ташкент, ул. Кирк Киз, 10</span>
+          <span>{contacts.address}</span>
           <div className="flex items-center gap-6">
             <span>
-              Техподдержка: <a href="tel:+998712305544" className="text-paper hover:text-primary">(71) 230-55-44</a>
+              {t.common.support}:{" "}
+              <a href="tel:+998712305544" className="text-paper hover:text-primary">
+                (71) 230-55-44
+              </a>
             </span>
             <a href={contacts.telegram} target="_blank" rel="noreferrer" className="hover:text-primary">
               Telegram
             </a>
-            <span className="flex gap-2">
-              <span className="text-paper">RU</span>
-              <span className="text-paper/30">/</span>
-              <a href="https://uzgps.uz/uz" className="hover:text-primary">
-                UZ
-              </a>
+            <span className="flex items-center gap-2">
+              {locales.map((l, i) => (
+                <span key={l} className="flex items-center gap-2">
+                  {i > 0 && <span className="text-paper/30">/</span>}
+                  {l === locale ? (
+                    <span aria-current="true" className="text-paper">
+                      {t.common.langName[l]}
+                    </span>
+                  ) : (
+                    <Link
+                      href={localePath(l)}
+                      hrefLang={l}
+                      scroll={false}
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "instant" });
+                      }}
+                      className="hover:text-primary"
+                    >
+                      {t.common.langName[l]}
+                    </Link>
+                  )}
+                </span>
+              ))}
             </span>
           </div>
         </div>
@@ -115,12 +136,12 @@ export default function Header() {
         className={`relative border-b bg-white transition-colors duration-300 ${scrolled || mega ? "border-rule" : "border-transparent"}`}
         onMouseLeave={closeMegaSoon}
       >
-        <div className="wrap flex h-[76px] items-center gap-8 whitespace-nowrap xl:gap-12">
-          <a href="#top" aria-label="UZGPS — на главную" className="shrink-0">
+        <div className="wrap flex h-[76px] items-center gap-6 whitespace-nowrap xl:gap-10">
+          <a href="#top" aria-label="UZGPS" className="shrink-0">
             <Logo />
           </a>
 
-          <nav className="hidden h-full items-stretch gap-7 lg:flex" aria-label="Основное меню">
+          <nav className="hidden h-full items-stretch gap-7 lg:flex" aria-label={t.nav.label}>
             <button
               type="button"
               aria-expanded={mega}
@@ -129,7 +150,7 @@ export default function Header() {
               onClick={() => setMega((m) => !m)}
               className={`relative flex items-center gap-1.5 text-[15px] transition-colors hover:text-ink ${mega ? "text-ink" : "text-ink/75"}`}
             >
-              Решения
+              {t.nav.solutions}
               <svg width="10" height="6" viewBox="0 0 10 6" className={`transition-transform ${mega ? "rotate-180" : ""}`} aria-hidden>
                 <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" />
               </svg>
@@ -148,13 +169,21 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-6 lg:flex">
+          <div className="ml-auto hidden items-center gap-5 lg:flex">
             <a href={contacts.salesHref} className="hidden text-right leading-tight xl:block">
-              <span className="block text-[12px] text-graphite">Отдел продаж</span>
+              <span className="block text-[12px] text-graphite">{t.common.salesDept}</span>
               <span className="num block text-[16px] font-semibold">{contacts.sales}</span>
             </a>
+            <a
+              href={contacts.login}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 border border-navy px-4 py-2.5 text-[15px] font-medium text-navy transition-colors hover:bg-navy hover:text-white"
+            >
+              {t.common.login}
+            </a>
             <a href="#contact" className="btn-primary !py-3">
-              Оставить заявку
+              {t.common.request}
             </a>
           </div>
 
@@ -162,9 +191,9 @@ export default function Header() {
             type="button"
             className="ml-auto flex h-11 items-center gap-3 text-[15px] font-medium lg:hidden"
             onClick={() => setSheet(true)}
-            aria-label="Открыть меню"
+            aria-label={t.common.menu}
           >
-            Меню
+            {t.common.menu}
             <span className="flex w-6 flex-col gap-1.5" aria-hidden>
               <span className="h-[2px] bg-ink" />
               <span className="h-[2px] bg-ink" />
@@ -183,10 +212,10 @@ export default function Header() {
             <div className="wrap grid grid-cols-[1fr_1fr_320px] gap-12 py-10">
               <div>
                 <p data-mega-item className="text-[13px] text-graphite">
-                  По отраслям
+                  {t.nav.megaIndustries}
                 </p>
                 <ul className="mt-4">
-                  {industries.map((it) => (
+                  {t.content.industries.slice(0, 6).map((it) => (
                     <li key={it.title} data-mega-item>
                       <a
                         href="#solutions"
@@ -202,39 +231,22 @@ export default function Header() {
               </div>
               <div>
                 <p data-mega-item className="text-[13px] text-graphite">
-                  Размещение
+                  {t.nav.megaDeployment}
                 </p>
                 <ul className="mt-4 space-y-6">
-                  <li data-mega-item>
-                    <a href="#solutions" onClick={() => setMega(false)} className="block">
-                      <span className="text-[16px] font-medium">Облачное решение</span>
-                      <span className="mt-1 block text-[14px] text-graphite">Без собственного сервера. Работа из браузера и приложения.</span>
-                    </a>
-                  </li>
-                  <li data-mega-item>
-                    <a href="#solutions" onClick={() => setMega(false)} className="block">
-                      <span className="text-[16px] font-medium">Серверное решение</span>
-                      <span className="mt-1 block text-[14px] text-graphite">СМПО на вашей инфраструктуре, от 500 до 10 000 машин.</span>
-                    </a>
-                  </li>
-                  <li data-mega-item>
-                    <a href="#solutions" onClick={() => setMega(false)} className="block">
-                      <span className="text-[16px] font-medium">Для провайдеров телематики</span>
-                      <span className="mt-1 block text-[14px] text-graphite">Своя платформа мониторинга под вашим брендом.</span>
-                    </a>
-                  </li>
+                  {[t.nav.megaCloud, t.nav.megaServer, t.nav.megaProvider].map((item) => (
+                    <li key={item.title} data-mega-item>
+                      <a href="#solutions" onClick={() => setMega(false)} className="block">
+                        <span className="text-[16px] font-medium">{item.title}</span>
+                        <span className="mt-1 block text-[14px] text-graphite">{item.text}</span>
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
-              <a
-                data-mega-item
-                href="#calculator"
-                onClick={() => setMega(false)}
-                className="flex flex-col justify-between bg-ink p-7 text-paper"
-              >
-                <span className="font-display text-[26px] leading-tight tracking-[-0.03em]">
-                  Сколько вы потеряли на топливе в прошлом месяце?
-                </span>
-                <span className="mt-8 text-primary">Посчитать за минуту →</span>
+              <a data-mega-item href="#calculator" onClick={() => setMega(false)} className="flex flex-col justify-between bg-ink p-7 text-paper">
+                <span className="font-display text-[26px] leading-tight tracking-[-0.03em]">{t.nav.megaCta.title}</span>
+                <span className="mt-8 text-primary">{t.nav.megaCta.action}</span>
               </a>
             </div>
           </div>
@@ -243,11 +255,11 @@ export default function Header() {
 
       {/* mobile sheet */}
       {sheet && (
-        <div ref={sheetRef} className="fixed inset-0 z-50 flex flex-col bg-white lg:hidden" role="dialog" aria-modal="true" aria-label="Меню">
+        <div ref={sheetRef} className="fixed inset-0 z-50 flex flex-col bg-white lg:hidden" role="dialog" aria-modal="true" aria-label={t.common.menu}>
           <div className="wrap flex h-[76px] shrink-0 items-center justify-between border-b border-rule">
             <Logo />
             <button type="button" onClick={() => setSheet(false)} className="flex h-11 items-center gap-3 text-[15px] font-medium">
-              Закрыть
+              {t.common.close}
               <span className="relative block size-5" aria-hidden>
                 <span className="absolute left-0 top-1/2 h-[2px] w-5 rotate-45 bg-ink" />
                 <span className="absolute left-0 top-1/2 h-[2px] w-5 -rotate-45 bg-ink" />
@@ -255,7 +267,7 @@ export default function Header() {
             </button>
           </div>
           <nav className="wrap flex-1 overflow-y-auto py-6">
-            {[{ href: "#solutions", label: "Решения" }, ...links].map((l) => (
+            {[{ href: "#solutions", label: t.nav.solutions }, ...links].map((l) => (
               <a
                 key={l.href}
                 data-sheet-item
@@ -267,14 +279,41 @@ export default function Header() {
                 <span className="text-[18px] text-graphite">→</span>
               </a>
             ))}
+            <div data-sheet-item className="flex gap-4 py-5 text-[18px]">
+              {locales.map((l) => (
+                <Link
+                  key={l}
+                  href={localePath(l)}
+                  hrefLang={l}
+                  scroll={false}
+                  onClick={() => {
+                    setSheet(false);
+                    window.scrollTo({ top: 0, behavior: "instant" });
+                  }}
+                  className={l === locale ? "font-semibold text-navy" : "text-graphite"}
+                >
+                  {t.common.langName[l]}
+                </Link>
+              ))}
+            </div>
           </nav>
           <div className="wrap shrink-0 space-y-3 border-t border-rule py-5">
             <a href={contacts.salesHref} className="num block text-[20px] font-semibold">
               {contacts.sales}
             </a>
-            <a href="#contact" onClick={() => setSheet(false)} className="btn-primary w-full">
-              Оставить заявку
-            </a>
+            <div className="flex gap-3">
+              <a href="#contact" onClick={() => setSheet(false)} className="btn-primary flex-1">
+                {t.common.request}
+              </a>
+              <a
+                href={contacts.login}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center border border-navy px-5 font-medium text-navy"
+              >
+                {t.common.login}
+              </a>
+            </div>
           </div>
         </div>
       )}

@@ -1,22 +1,24 @@
-import { contacts, problems } from "@/data/content";
-import { SITE } from "@/lib/site";
+import { contacts } from "@/data/content";
+import type { Dict, Locale } from "@/i18n";
+import { SITE, localeUrl } from "@/lib/site";
 
 /**
  * schema.org graph for the landing page: the company, the site, the СМПО product
  * and the question/answer pairs shown in the «Знакомо?» block.
  */
-export default function StructuredData() {
+export default function StructuredData({ t, locale }: { t: Dict; locale: Locale }) {
+  const pageUrl = localeUrl(locale);
   const org = {
     "@type": "Organization",
     "@id": `${SITE.url}/#organization`,
     name: SITE.name,
     legalName: SITE.legalName,
+    description: t.seo.description,
     url: SITE.url,
     logo: { "@type": "ImageObject", url: `${SITE.url}/brand/pin.svg` },
-    image: `${SITE.url}/opengraph-image`,
-    description: SITE.description,
+    image: `${pageUrl}opengraph-image`.replace("//opengraph", "/opengraph"),
     foundingDate: SITE.founded,
-    areaServed: { "@type": "Country", name: "Узбекистан" },
+    areaServed: { "@type": "Country", name: "Uzbekistan" },
     address: {
       "@type": "PostalAddress",
       streetAddress: SITE.address.street,
@@ -37,10 +39,10 @@ export default function StructuredData() {
   const website = {
     "@type": "WebSite",
     "@id": `${SITE.url}/#website`,
-    url: SITE.url,
+    url: pageUrl,
     name: SITE.name,
-    description: SITE.description,
-    inLanguage: "ru-UZ",
+    description: t.seo.description,
+    inLanguage: locale === "uz" ? "uz-UZ" : "ru-UZ",
     publisher: { "@id": `${SITE.url}/#organization` },
   };
 
@@ -52,25 +54,17 @@ export default function StructuredData() {
     applicationSubCategory: "Fleet management, GPS tracking",
     operatingSystem: "Web, Android, iOS",
     inLanguage: ["ru", "uz", "en"],
-    url: SITE.url,
+    url: pageUrl,
     publisher: { "@id": `${SITE.url}/#organization` },
-    description:
-      "Система мониторинга подвижных объектов: онлайн-карта, трекинг с графиком скорости и показаний ДУТ, геозоны и точки интереса, отчёты и настройки объектов.",
-    featureList: [
-      "Мониторинг объектов в реальном времени",
-      "Трекинг с плеером и графиком скорости, зажигания и топлива",
-      "Контроль заправок и сливов по датчикам уровня топлива",
-      "Геозоны (ZoI) и точки интереса (PoI)",
-      "Отчёты и выгрузка в Excel",
-      "Лимиты скорости, интервалы связи и параметры эко-вождения",
-    ],
-    softwareHelp: `${SITE.url}/#platform`,
+    description: t.seo.description,
+    featureList: t.content.systemModules.map((m) => m.title),
+    softwareHelp: `${pageUrl}#platform`,
   };
 
   const faq = {
     "@type": "FAQPage",
     "@id": `${SITE.url}/#faq`,
-    mainEntity: problems.map((p) => ({
+    mainEntity: t.content.problems.map((p) => ({
       "@type": "Question",
       name: p.q,
       acceptedAnswer: { "@type": "Answer", text: p.a },

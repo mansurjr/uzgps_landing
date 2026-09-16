@@ -3,7 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { animate, stagger } from "animejs";
-import { devices } from "@/data/content";
+import { devices, type DeviceModel } from "@/data/content";
+import { fill } from "@/i18n";
+import { useDict } from "@/i18n/DictProvider";
 
 const AUTOPLAY_MS = 6000;
 const SWIPE_PX = 40;
@@ -11,6 +13,8 @@ const SWIPE_PX = 40;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function DeviceCarousel() {
+  const { t } = useDict();
+  const copy = (model: string) => t.content.devices[model as DeviceModel];
   const [index, setIndex] = useState(0);
   const dirRef = useRef<1 | -1>(1);
   const pausedRef = useRef(false);
@@ -107,7 +111,7 @@ export default function DeviceCarousel() {
     <div
       role="region"
       aria-roledescription="carousel"
-      aria-label="GPS-трекеры Teltonika"
+      aria-label={t.equipment.carousel.title}
       onMouseEnter={pause}
       onMouseLeave={resume}
       onFocusCapture={pause}
@@ -116,10 +120,8 @@ export default function DeviceCarousel() {
     >
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <h3 className="font-display text-[clamp(28px,3vw,40px)] leading-tight tracking-[-0.03em]">Трекеры Teltonika</h3>
-          <p className="mt-2 max-w-[520px] text-[16px] text-paper/60">
-            Оригинальное оборудование с гарантией 12 месяцев. Подберём модель под ваш транспорт и задачи.
-          </p>
+          <h3 className="font-display text-[clamp(28px,3vw,40px)] leading-tight tracking-[-0.03em]">{t.equipment.carousel.title}</h3>
+          <p className="mt-2 max-w-[520px] text-[16px] text-paper/60">{t.equipment.carousel.lead}</p>
         </div>
         <p className="num text-[15px] text-paper/50" aria-live="polite">
           <span className="text-paper">{pad(index + 1)}</span> / {pad(devices.length)}
@@ -164,7 +166,7 @@ export default function DeviceCarousel() {
             <button
               type="button"
               onClick={prev}
-              aria-label="Предыдущий трекер"
+              aria-label={t.equipment.carousel.prev}
               className="grid size-12 place-items-center border border-ink bg-paper text-[20px] text-ink transition-colors hover:bg-navy hover:text-paper"
             >
               ←
@@ -172,7 +174,7 @@ export default function DeviceCarousel() {
             <button
               type="button"
               onClick={next}
-              aria-label="Следующий трекер"
+              aria-label={t.equipment.carousel.next}
               className="-ml-px grid size-12 place-items-center border border-ink bg-paper text-[20px] text-ink transition-colors hover:bg-navy hover:text-paper"
             >
               →
@@ -188,23 +190,23 @@ export default function DeviceCarousel() {
         {/* details */}
         <div ref={info} className="flex flex-col border-t border-rule-inv p-6 md:p-10 lg:border-l lg:border-t-0">
           <p data-info className="text-[15px] text-primary">
-            {device.title}
+            {copy(device.model).title}
           </p>
           <h4 data-info className="num mt-2 font-display text-[clamp(40px,4.4vw,64px)] font-medium leading-none tracking-[-0.04em]">
             {device.model}
           </h4>
           <p data-info className="mt-6 text-[17px] leading-relaxed text-paper/70">
-            {device.text}
+            {copy(device.model).text}
           </p>
 
-          {device.specs?.length > 0 && (
+          {copy(device.model).specs.length > 0 && (
             <dl data-info className="mt-8 grid grid-cols-2 border-t border-rule-inv">
-              {device.specs.map((s, i) => (
+              {copy(device.model).specs.map((s, i) => (
                 <div
                   key={s}
                   className={`border-b border-rule-inv py-3.5 text-[15px] text-paper/85 ${i % 2 ? "pl-4" : "border-r pr-4"}`}
                 >
-                  <dt className="sr-only">Характеристика</dt>
+                  <dt className="sr-only">{t.common.spec}</dt>
                   <dd>{s}</dd>
                 </div>
               ))}
@@ -212,9 +214,7 @@ export default function DeviceCarousel() {
           )}
 
           <div data-info className="mt-auto pt-10">
-            <a href="#contact" className="btn-primary w-full sm:w-auto">
-              Подобрать трекер для парка
-            </a>
+            <a href="#contact" className="btn-primary w-full sm:w-auto">{t.equipment.carousel.cta}</a>
           </div>
         </div>
       </div>
@@ -223,7 +223,7 @@ export default function DeviceCarousel() {
       <ul
         ref={thumbs}
         role="tablist"
-        aria-label="Модели трекеров"
+        aria-label={t.equipment.carousel.tablist}
         className="mt-px flex overflow-x-auto border-x border-b border-rule-inv [scrollbar-width:none] lg:grid lg:grid-cols-6 [&::-webkit-scrollbar]:hidden"
       >
         {devices.map((d, i) => {
@@ -234,7 +234,7 @@ export default function DeviceCarousel() {
                 type="button"
                 role="tab"
                 aria-selected={active}
-                aria-label={`${d.model} — ${d.title}`}
+                aria-label={`${d.model} — ${copy(d.model).title}`}
                 onClick={() => goTo(i)}
                 className={`group relative flex w-full flex-col items-center gap-2 px-3 pb-4 pt-5 transition-colors ${
                   active ? "bg-paper/[0.06]" : "hover:bg-paper/[0.03]"

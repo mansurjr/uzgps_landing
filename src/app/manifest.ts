@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/site";
+import { ru } from "@/i18n/ru";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: SITE.title,
-    short_name: SITE.name,
-    description: SITE.shortDescription,
+    name: ru.seo.title,
+    short_name: "UZGPS",
+    description: ru.seo.short,
     start_url: "/",
     display: "browser",
     background_color: "#ffffff",

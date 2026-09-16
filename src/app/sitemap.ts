@@ -1,14 +1,15 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/site";
+import { locales } from "@/i18n";
+import { localeUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: `${SITE.url}/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-      alternates: { languages: { ru: `${SITE.url}/`, uz: "https://uzgps.uz/uz" } },
-    },
-  ];
+  const languages = Object.fromEntries(locales.map((l) => [l, localeUrl(l)]));
+
+  return locales.map((locale) => ({
+    url: localeUrl(locale),
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: locale === "ru" ? 1 : 0.8,
+    alternates: { languages },
+  }));
 }

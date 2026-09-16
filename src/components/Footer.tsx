@@ -1,25 +1,25 @@
 import { Logo } from "./Header";
-import { contacts, industries } from "@/data/content";
+import { contacts } from "@/data/content";
+import type { Dict } from "@/i18n";
 
-const company = [
-  { href: "#platform", label: "Платформа" },
-  { href: "#equipment", label: "Оборудование" },
-  { href: "#calculator", label: "Калькулятор экономии" },
-  { href: "#about", label: "О компании" },
-];
+export default function Footer({ t }: { t: Dict }) {
+  const company = [
+    { href: "#platform", label: t.nav.platform },
+    { href: "#equipment", label: t.nav.equipment },
+    { href: "#calculator", label: t.footer.calculator },
+    { href: "#about", label: t.nav.about },
+    { href: contacts.login, label: t.common.login },
+  ];
 
-export default function Footer() {
   return (
     <footer className="bg-ink text-paper">
       <div className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
           <Logo inverted />
-          <p className="mt-5 max-w-[300px] text-[15px] leading-relaxed text-paper/55">
-            Спутниковый мониторинг транспорта и персонала. Центр программистов BePro, Ташкент.
-          </p>
+          <p className="mt-5 max-w-[300px] text-[15px] leading-relaxed text-paper/55">{t.footer.about}</p>
         </div>
-        <FooterCol title="Решения">
-          {industries.map((i) => (
+        <FooterCol title={t.footer.solutions}>
+          {t.content.industries.slice(0, 6).map((i) => (
             <li key={i.title}>
               <a href="#solutions" className="hover:text-primary">
                 {i.title}
@@ -27,7 +27,7 @@ export default function Footer() {
             </li>
           ))}
         </FooterCol>
-        <FooterCol title="Компания">
+        <FooterCol title={t.footer.company}>
           {company.map((c) => (
             <li key={c.label}>
               <a href={c.href} className="hover:text-primary">
@@ -36,7 +36,7 @@ export default function Footer() {
             </li>
           ))}
         </FooterCol>
-        <FooterCol title="Контакты">
+        <FooterCol title={t.footer.contacts}>
           <li>
             <a href={contacts.salesHref} className="num hover:text-primary">
               {contacts.sales}
@@ -60,9 +60,11 @@ export default function Footer() {
       </div>
       <div className="border-t border-rule-inv">
         <div className="wrap flex flex-col justify-between gap-3 py-6 text-[13px] text-paper/45 sm:flex-row">
-          <span>© 2014–{new Date().getFullYear()} UZGPS. Все права защищены.</span>
-          <a href="https://uzgps.uz/mobileprivacy" className="hover:text-paper">
-            Политика конфиденциальности
+          <span>
+            © 2014–{new Date().getFullYear()} UZGPS. {t.footer.rights}
+          </span>
+          <a href={contacts.privacy} className="hover:text-paper">
+            {t.contact.policy}
           </a>
         </div>
       </div>

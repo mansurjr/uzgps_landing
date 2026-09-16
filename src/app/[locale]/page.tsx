@@ -1,5 +1,8 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { notFound } from "next/navigation";
+import { getDict, isLocale } from "@/i18n";
+import { DictProvider } from "@/i18n/DictProvider";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
@@ -28,12 +31,19 @@ function platformMedia(): PlatformMedia {
   return { screens, video: existsSync(path.join(dir, "overview.mp4")) ? "/platform/overview.mp4" : undefined };
 }
 
-export default function Home() {
+export default async function Home({ params }: PageProps<"/[locale]">) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+  const t = getDict(locale);
+
   return (
-    <>
-      <StructuredData />
-      <a href="#top" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-navy focus:px-4 focus:py-2 focus:text-paper">
-        Перейти к содержанию
+    <DictProvider t={t} locale={locale}>
+      <StructuredData t={t} locale={locale} />
+      <a
+        href="#top"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-navy focus:px-4 focus:py-2 focus:text-paper"
+      >
+        {t.common.skipToContent}
       </a>
       <Header />
       <main>
@@ -48,7 +58,7 @@ export default function Home() {
         <About />
         <Contact />
       </main>
-      <Footer />
-    </>
+      <Footer t={t} />
+    </DictProvider>
   );
 }

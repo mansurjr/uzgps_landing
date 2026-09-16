@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { animate, stagger } from "animejs";
 import Image from "next/image";
 import { useReveal } from "@/lib/useReveal";
-import { appScreens, contacts, mapLayers, objectStatuses, systemModules } from "@/data/content";
+import { appScreens, contacts } from "@/data/content";
+import { useDict } from "@/i18n/DictProvider";
+import type { Dict } from "@/i18n";
 import SmpoMonitoring from "./smpo/SmpoMonitoring";
 import SmpoTracking from "./smpo/SmpoTracking";
 import SmpoReports from "./smpo/SmpoReports";
@@ -13,38 +15,9 @@ import SmpoSettings from "./smpo/SmpoSettings";
 /** Real captures found in public/platform (see page.tsx): overview video and per-tab screenshots. */
 export type PlatformMedia = { video?: string; screens: Partial<Record<string, string>> };
 
-const tabs = [
-  {
-    key: "track",
-    label: "Мониторинг",
-    title: "Где каждая машина прямо сейчас",
-    points: ["Местоположение и скорость в реальном времени", "Фильтры по статусу, зажиганию, спутникам и топливу", "Подложки: " + mapLayers.join(", ")],
-    caption: "Экран «Мониторинг». Нажмите на объект в списке или на карте.",
-  },
-  {
-    key: "fuel",
-    label: "Топливо",
-    title: "Сливы видны в момент события",
-    points: ["График скорости, зажигания и показаний ДУТ", "Заправки и сливы отмечены на треке и графике", "Плеер трека за сегодня, вчера, неделю и месяц"],
-    caption: "Экран «Трекинг»: трек за день, график скорости и показаний ДУТ со сливами и заправками.",
-  },
-  {
-    key: "reports",
-    label: "Отчёты",
-    title: "Цифры вместо догадок",
-    points: ["Пробег, моточасы и время простоев", "Нарушения скорости и стиля вождения", "Выгрузка данных в Excel"],
-    caption: "Раздел «Отчеты»: аналитические панели на базе Apache Superset.",
-  },
-  {
-    key: "control",
-    label: "Управление",
-    title: "Управление на расстоянии",
-    points: ["Лимиты скорости и интервалы потери связи", "Параметры эко-вождения: разгон, торможение, поворот", "Значок объекта и настройки трека"],
-    caption: "Раздел «Настройки объектов»: параметры, значки и лимиты для каждой машины.",
-  },
-] as const;
+const tabKeys = ["track", "fuel", "reports", "control"] as const;
 
-type TabKey = (typeof tabs)[number]["key"];
+type TabKey = (typeof tabKeys)[number];
 
 const screens: Record<TabKey, () => React.ReactElement> = {
   track: () => <SmpoMonitoring />,
@@ -54,6 +27,8 @@ const screens: Record<TabKey, () => React.ReactElement> = {
 };
 
 export default function Platform({ media = { screens: {} } }: { media?: PlatformMedia }) {
+  const { t } = useDict();
+  const tabs: (Dict["content"]["platformTabs"][number] & { key: TabKey })[] = tabKeys.map((key, i) => ({ key, ...t.content.platformTabs[i] }));
   const root = useRef<HTMLElement>(null);
   const screenBox = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState<TabKey>("track");
@@ -82,19 +57,16 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
     <section ref={root} id="platform" className="bg-ink py-24 text-paper lg:py-36">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
-          <h2 data-reveal className="h-section">
-            Одна система для всего автопарка
-          </h2>
+          <h2 data-reveal className="h-section">{t.platform.title}</h2>
           <p data-reveal className="max-w-[520px] text-[18px] leading-relaxed text-paper/60 lg:justify-self-end">
-            СМПО UZGPS — собственная платформа, разработанная в Узбекистане. Интерфейс на узбекском, русском и английском
-            языках.
+            {t.platform.lead}
           </p>
         </div>
 
         <div
           data-reveal
           role="tablist"
-          aria-label="Возможности платформы"
+          aria-label={t.platform.tabsLabel}
           className="mt-12 flex gap-6 overflow-x-auto border-b border-rule-inv [scrollbar-width:none] sm:gap-10 [&::-webkit-scrollbar]:hidden"
         >
           {tabs.map((t) => (
@@ -141,16 +113,14 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
             </div>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
               <p className="text-[14px] text-paper/45">{current.caption}</p>
-              <a href="#contact" className="btn-ghost text-primary">
-                Запросить демо-доступ
-              </a>
+              <a href="#contact" className="btn-ghost text-primary">{t.common.demo}</a>
             </div>
           </div>
         </div>
 
         {media.video && (
           <div data-reveal className="mt-20">
-            <h3 className="font-display text-[30px] leading-tight tracking-[-0.03em]">СМПО UZGPS в работе</h3>
+            <h3 className="font-display text-[30px] leading-tight tracking-[-0.03em]">{t.platform.videoTitle}</h3>
             <video
               className="mt-8 w-full rounded-md bg-ink-2 shadow-[0_30px_60px_-30px_rgba(0,0,0,.6)]"
               src={media.video}
@@ -166,16 +136,16 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
         )}
 
         <div data-reveal className="mt-24 border-t border-rule-inv pt-14">
-          <h3 className="font-display text-[30px] leading-tight tracking-[-0.03em]">Что входит в систему</h3>
+          <h3 className="font-display text-[30px] leading-tight tracking-[-0.03em]">{t.platform.modulesTitle}</h3>
           <ul className="mt-10 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
-            {systemModules.map((m) => (
+            {t.content.systemModules.map((m) => (
               <li key={m.title} className="border-t border-rule-inv py-5">
                 <p className="text-[17px] font-medium">{m.title}</p>
                 <p className="mt-2 text-[15px] leading-relaxed text-paper/60">{m.text}</p>
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-[14px] text-paper/45">Статусы объекта: {objectStatuses.join(" · ")}</p>
+          <p className="mt-6 text-[14px] text-paper/45">{t.platform.statuses}: {t.content.objectStatuses.join(" · ")}</p>
         </div>
 
         <MobileApp />
@@ -185,6 +155,7 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
 }
 
 function MobileApp() {
+  const { t } = useDict();
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -207,9 +178,9 @@ function MobileApp() {
   return (
     <div ref={root} className="mt-24 grid gap-12 border-t border-rule-inv pt-16 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
       <div>
-        <h3 className="font-display text-[30px] leading-tight tracking-[-0.03em] sm:text-[36px]">Мобильное приложение UzGPS</h3>
+        <h3 className="font-display text-[30px] leading-tight tracking-[-0.03em] sm:text-[36px]">{t.platform.mobile.title}</h3>
         <p className="mt-4 text-[17px] leading-relaxed text-paper/70">
-          Объекты на карте, треки поездок и отчёты — в смартфоне руководителя. Бесплатно для клиентов UZGPS.
+          {t.platform.mobile.text}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <a href={contacts.playStore} target="_blank" rel="noreferrer" className="btn-primary">
@@ -230,7 +201,7 @@ function MobileApp() {
         {appScreens.map((src, i) => (
           <li key={src} data-phone className={`w-[46%] shrink-0 snap-start sm:w-auto ${i % 2 ? "sm:mt-12" : ""}`}>
             <div className="overflow-hidden rounded-[22px] border-[5px] border-ink-3 bg-ink-3 shadow-[0_30px_50px_-25px_rgba(0,0,0,.7)]">
-              <Image src={src} alt={`Экран приложения UzGPS ${i + 1}`} width={360} height={800} sizes="(min-width:640px) 180px, 46vw" className="h-auto w-full rounded-[17px]" />
+              <Image src={src} alt={`${t.platform.mobile.screenAlt} ${i + 1}`} width={360} height={800} sizes="(min-width:640px) 180px, 46vw" className="h-auto w-full rounded-[17px]" />
             </div>
           </li>
         ))}

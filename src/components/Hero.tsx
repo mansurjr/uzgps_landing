@@ -3,14 +3,16 @@
 import { useEffect, useRef } from "react";
 import { animate, createTimeline, splitText, stagger } from "animejs";
 import HeroBackdrop from "./HeroBackdrop";
+import { useDict } from "@/i18n/DictProvider";
 
-const figures = [
-  { value: 2014, prefix: "с ", suffix: "", label: "года на рынке Узбекистана" },
-  { value: 30, prefix: "до ", suffix: "%", label: "снижение затрат на топливо" },
-  { value: 10000, prefix: "", suffix: "", label: "машин на одном сервере СМПО" },
+const figureValues = [
+  { value: 2014, prefix: "с ", prefixUz: "", suffix: "" },
+  { value: 30, prefix: "до ", prefixUz: "", suffix: "%" },
+  { value: 10000, prefix: "", prefixUz: "", suffix: "" },
 ];
 
 export default function Hero() {
+  const { t, locale } = useDict();
   const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -58,31 +60,30 @@ export default function Hero() {
 
       <div className="wrap relative flex flex-col items-center justify-center pb-20 pt-20 text-center lg:min-h-[calc(100svh-112px)] lg:pb-24">
         <h1 data-reveal className="h-display mx-auto max-w-[980px] text-[clamp(44px,6.4vw,100px)]">
-          Контроль автопарка без догадок
+          {t.hero.h1}
         </h1>
         <p data-reveal data-hero-copy className="mx-auto mt-8 max-w-[620px] text-[clamp(17px,1.4vw,20px)] leading-relaxed text-paper/75">
-          Спутниковый мониторинг транспорта и персонала: где машина, сколько топлива, кто нарушил маршрут — онлайн, в браузере
-          и в мобильном приложении.
+          {t.hero.lead}
         </p>
         <div data-reveal data-hero-copy className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
           <a href="#contact" className="btn-primary">
-            Получить консультацию
+            {t.common.consultation}
           </a>
           <a href="#platform" className="btn-ghost text-paper">
-            Посмотреть систему
+            {t.hero.ctaSecondary}
           </a>
         </div>
 
         <dl data-reveal data-hero-copy className="mx-auto mt-20 grid w-full max-w-[760px] grid-cols-3 border-t border-paper/20">
-          {figures.map((f, i) => (
-            <div key={f.label} className={`px-3 pt-6 sm:px-6 ${i ? "border-l border-paper/15" : ""}`}>
-              <dt className="sr-only">{f.label}</dt>
+          {figureValues.map((f, i) => (
+            <div key={f.value} className={`px-3 pt-6 sm:px-6 ${i ? "border-l border-paper/15" : ""}`}>
+              <dt className="sr-only">{t.hero.figures[i].label}</dt>
               <dd className="num font-display text-[clamp(24px,3vw,42px)] font-medium tracking-[-0.03em]">
-                {f.prefix}
+                {locale === "ru" ? f.prefix : f.prefixUz}
                 <span data-count={f.value}>{f.value === 2014 ? "2014" : f.value.toLocaleString("ru-RU")}</span>
                 {f.suffix}
               </dd>
-              <dd className="mt-1 text-[13px] leading-snug text-paper/55 sm:text-[14px]">{f.label}</dd>
+              <dd className="mt-1 text-[13px] leading-snug text-paper/55 sm:text-[14px]">{t.hero.figures[i].label}</dd>
             </div>
           ))}
         </dl>

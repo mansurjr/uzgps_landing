@@ -2,15 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { animate } from "animejs";
+import { fill } from "@/i18n";
+import { useDict } from "@/i18n/DictProvider";
 import { useReveal } from "@/lib/useReveal";
 
 // litres per 100 km — typical averages used for the estimate
-const kinds = [
-  { key: "car", label: "Легковые", l100: 10 },
-  { key: "truck", label: "Грузовые до 10 т", l100: 22 },
-  { key: "heavy", label: "Грузовые от 10 т", l100: 32 },
-  { key: "special", label: "Спецтехника", l100: 28 },
-];
+const l100 = [10, 22, 32, 28];
 
 const WORK_DAYS = 22;
 // conservative share of fuel cost recovered: drains, personal trips, idling, route padding
@@ -19,16 +16,18 @@ const SAVE_SHARE = 0.2;
 const fmt = (n: number) => Math.round(n).toLocaleString("ru-RU");
 
 export default function Calculator() {
+  const { t } = useDict();
+  const kinds = t.calculator.kinds.map((label, i) => ({ key: String(i), label, l100: l100[i] }));
   const root = useRef<HTMLElement>(null);
   useReveal(root);
-  const [kind, setKind] = useState(kinds[1].key);
+  const [kind, setKind] = useState("1");
   const [count, setCount] = useState(25);
   const [km, setKm] = useState(180);
   const [price, setPrice] = useState(11000);
 
   const r = useMemo(() => {
-    const l100 = kinds.find((k) => k.key === kind)!.l100;
-    const litres = count * km * WORK_DAYS * (l100 / 100);
+    const litresPer100 = l100[Number(kind)];
+    const litres = count * km * WORK_DAYS * (litresPer100 / 100);
     const cost = litres * price;
     return { litresSaved: litres * SAVE_SHARE, month: cost * SAVE_SHARE, year: cost * SAVE_SHARE * 12, cost };
   }, [kind, count, km, price]);
@@ -38,18 +37,17 @@ export default function Calculator() {
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <h2 data-reveal className="h-section">
-            Посчитайте, сколько теряет ваш автопарк
+            {t.calculator.title}
           </h2>
           <p data-reveal className="lead max-w-[520px] lg:justify-self-end">
-            Укажите параметры парка — калькулятор покажет, сколько можно вернуть за счёт контроля сливов, личных поездок и
-            простоя.
+            {t.calculator.lead}
           </p>
         </div>
 
         <div className="mt-16 grid border-2 border-ink lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div data-reveal className="space-y-10 p-6 md:p-10">
             <fieldset>
-              <legend className="text-[15px] font-medium">Тип техники</legend>
+              <legend className="text-[15px] font-medium">{t.calculator.kindLegend}</legend>
               <div className="mt-4 grid grid-cols-2 gap-px border border-ink bg-ink md:grid-cols-4">
                 {kinds.map((k) => (
                   <button
@@ -61,40 +59,37 @@ export default function Calculator() {
                   >
                     {k.label}
                     <span className={`num mt-0.5 block text-[13px] ${kind === k.key ? "text-paper/60" : "text-graphite"}`}>
-                      ~{k.l100} л/100 км
+                      ~{k.l100} {t.calculator.per100}
                     </span>
                   </button>
                 ))}
               </div>
             </fieldset>
 
-            <Slider label="Количество машин" value={count} min={1} max={500} onChange={setCount} suffix="шт." />
-            <Slider label="Средний пробег одной машины в день" value={km} min={10} max={600} step={10} onChange={setKm} suffix="км" />
-            <Slider label="Цена топлива" value={price} min={6000} max={16000} step={100} onChange={setPrice} suffix="сум/л" />
+            <Slider label={t.calculator.countLabel} value={count} min={1} max={500} onChange={setCount} suffix={t.calculator.units.pcs} />
+            <Slider label={t.calculator.kmLabel} value={km} min={10} max={600} step={10} onChange={setKm} suffix={t.calculator.units.km} />
+            <Slider label={t.calculator.priceLabel} value={price} min={6000} max={16000} step={100} onChange={setPrice} suffix={t.calculator.units.sumPerL} />
           </div>
 
           <div data-reveal className="flex flex-col justify-between bg-ink p-6 text-paper md:p-10">
             <div>
-              <p className="text-[15px] text-paper/60">Можно сэкономить за год</p>
+              <p className="text-[15px] text-paper/60">{t.calculator.resultTitle}</p>
               <p className="num mt-3 font-display text-[clamp(40px,5vw,68px)] font-medium leading-none tracking-[-0.04em] text-primary">
                 <Counter value={r.year} />
               </p>
-              <p className="mt-2 text-[15px] text-paper/60">сум</p>
+              <p className="mt-2 text-[15px] text-paper/60">{t.calculator.units.sum}</p>
 
               <dl className="mt-10 border-t border-rule-inv">
-                <Row label="В месяц" value={<><Counter value={r.month} /> сум</>} />
-                <Row label="Топлива в месяц" value={<><Counter value={r.litresSaved} /> л</>} />
-                <Row label="Текущие затраты на топливо" value={<>{fmt(r.cost)} сум/мес</>} />
+                <Row label={t.calculator.perMonth} value={<><Counter value={r.month} /> {t.calculator.units.sum}</>} />
+                <Row label={t.calculator.fuelPerMonth} value={<><Counter value={r.litresSaved} /> {t.calculator.units.litres}</>} />
+                <Row label={t.calculator.currentCost} value={<>{fmt(r.cost)} {t.calculator.perMonthSuffix}</>} />
               </dl>
             </div>
 
             <div className="mt-10">
-              <a href="#contact" className="btn-primary w-full">
-                Получить точный расчёт
-              </a>
+              <a href="#contact" className="btn-primary w-full">{t.calculator.cta}</a>
               <p className="mt-4 text-[13px] leading-relaxed text-paper/45">
-                Оценка при {WORK_DAYS} рабочих днях и возврате {SAVE_SHARE * 100}% затрат на топливо. Клиенты UZGPS
-                фиксируют до 30%.
+                {fill(t.calculator.note, { days: WORK_DAYS, share: SAVE_SHARE * 100 })}
               </p>
             </div>
           </div>

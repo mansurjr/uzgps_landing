@@ -1,25 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { industries } from "@/data/content";
+import { useDict } from "@/i18n/DictProvider";
 import { useReveal } from "@/lib/useReveal";
 
-const deploy = [
-  {
-    k: "Где хранятся данные",
-    cloud: "На серверах UZGPS — без покупки дорогостоящего оборудования",
-    server: "На вашем сервере, внутри контура организации",
-  },
-  { k: "Когда подходит", cloud: "Любой парк, быстрый старт", server: "Если политика безопасности запрещает сторонние серверы" },
-  { k: "Масштаб", cloud: "От одной машины", server: "От 500 до 10 000 машин" },
-  {
-    k: "Что нужно от вас",
-    cloud: "Браузер или мобильное приложение",
-    server: "Широкий интернет-канал, фиксированный IP, круглосуточный сервер и администрирование",
-  },
-];
-
 export default function Solutions() {
+  const { t } = useDict();
   const root = useRef<HTMLElement>(null);
   useReveal(root, { step: 50 });
 
@@ -28,16 +14,15 @@ export default function Solutions() {
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <h2 data-reveal className="h-section">
-            Решения для вашей отрасли
+            {t.solutions.title}
           </h2>
           <p data-reveal className="lead max-w-[520px] lg:justify-self-end">
-            С 2014 года мы внедряли мониторинг в банках, нефтегазе, на железной дороге, в агро и логистике. Модули те же —
-            настройка под ваши процессы.
+            {t.solutions.lead}
           </p>
         </div>
 
         <ul className="mt-16 border-t-2 border-ink">
-          {industries.map((it) => (
+          {t.content.industries.map((it) => (
             <li key={it.title} data-reveal>
               <a
                 href="#contact"
@@ -53,19 +38,19 @@ export default function Solutions() {
 
         <div className="mt-24">
           <h3 data-reveal className="font-display text-[30px] leading-tight tracking-[-0.03em]">
-            Облако или собственный сервер
+            {t.solutions.deployTitle}
           </h3>
           <div data-reveal className="mt-8 overflow-x-auto">
             <table className="w-full min-w-[640px] border-collapse text-left text-[16px]">
               <thead>
                 <tr className="border-b-2 border-ink">
                   <th className="w-[28%] py-4 pr-6 font-normal text-graphite" />
-                  <th className="py-4 pr-6 font-display text-[22px] font-medium tracking-[-0.02em]">Облачное решение</th>
-                  <th className="py-4 font-display text-[22px] font-medium tracking-[-0.02em]">Серверное решение</th>
+                  <th className="py-4 pr-6 font-display text-[22px] font-medium tracking-[-0.02em]">{t.solutions.cloud}</th>
+                  <th className="py-4 font-display text-[22px] font-medium tracking-[-0.02em]">{t.solutions.server}</th>
                 </tr>
               </thead>
               <tbody>
-                {deploy.map((row) => (
+                {t.solutions.deploy.map((row) => (
                   <tr key={row.k} className="border-b border-rule">
                     <td className="py-4 pr-6 text-graphite">{row.k}</td>
                     <td className="py-4 pr-6">{row.cloud}</td>
