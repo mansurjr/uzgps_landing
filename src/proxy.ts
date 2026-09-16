@@ -1,11 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, isLocale } from "@/i18n";
 
-/**
- * Locale Proxy:
- * "/" → redirects to "/ru"
- * "/ru" and "/uz" → served directly
- */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 

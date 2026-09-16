@@ -14,6 +14,11 @@ const WORK_DAYS = 22;
 const SAVE_SHARE = 0.2;
 
 const fmt = (n: number) => Math.round(n).toLocaleString("ru-RU");
+const roundApprox = (n: number) => {
+  if (n === 0) return 0;
+  const step = 10 ** Math.max(0, Math.floor(Math.log10(Math.abs(n))) - 1);
+  return Math.round(n / step) * step;
+};
 
 export default function Calculator() {
   const { t } = useDict();
@@ -75,14 +80,14 @@ export default function Calculator() {
             <div>
               <p className="text-[15px] text-paper/60">{t.calculator.resultTitle}</p>
               <p className="num mt-3 font-display text-[clamp(40px,5vw,68px)] font-medium leading-none tracking-[-0.04em] text-primary">
-                <Counter value={r.year} />
+                ≈ <Counter value={r.year} />
               </p>
               <p className="mt-2 text-[15px] text-paper/60">{t.calculator.units.sum}</p>
 
               <dl className="mt-10 border-t border-rule-inv">
-                <Row label={t.calculator.perMonth} value={<><Counter value={r.month} /> {t.calculator.units.sum}</>} />
-                <Row label={t.calculator.fuelPerMonth} value={<><Counter value={r.litresSaved} /> {t.calculator.units.litres}</>} />
-                <Row label={t.calculator.currentCost} value={<>{fmt(r.cost)} {t.calculator.perMonthSuffix}</>} />
+                <Row label={t.calculator.perMonth} value={<>≈ <Counter value={r.month} /> {t.calculator.units.sum}</>} />
+                <Row label={t.calculator.fuelPerMonth} value={<>≈ <Counter value={r.litresSaved} /> {t.calculator.units.litres}</>} />
+                <Row label={t.calculator.currentCost} value={<>≈ {fmt(roundApprox(r.cost))} {t.calculator.perMonthSuffix}</>} />
               </dl>
             </div>
 
@@ -101,23 +106,24 @@ export default function Calculator() {
 
 function Counter({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const current = useRef({ v: value });
+  const rounded = roundApprox(value);
+  const current = useRef({ v: rounded });
 
   useEffect(() => {
     const anim = animate(current.current, {
-      v: value,
+      v: rounded,
       duration: 700,
       ease: "outQuart",
       onUpdate: () => {
-        if (ref.current) ref.current.textContent = fmt(current.current.v);
+        if (ref.current) ref.current.textContent = fmt(roundApprox(current.current.v));
       },
     });
     return () => {
       anim.pause();
     };
-  }, [value]);
+  }, [rounded]);
 
-  return <span ref={ref}>{fmt(value)}</span>;
+  return <span ref={ref}>{fmt(rounded)}</span>;
 }
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {

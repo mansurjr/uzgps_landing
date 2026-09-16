@@ -200,7 +200,7 @@ export default function SmpoTracking() {
               <Stat className="col-span-4" label="Пробег" icon="mileage" value="126,3 км" />
               <Stat className="col-span-3" label="Нарушение" icon="speedometer" value="2" tint="smpo-icon-red" />
               <div className="col-span-5 row-span-2 flex items-center justify-center">
-                <Image src="/smpo/tracker.png" alt="" width={180} height={76} className="h-auto w-full object-contain" />
+                <Image src="/smpo/default_vehicle_side.png" alt="" width={180} height={76} className="h-[76px] w-full rounded object-contain object-center" />
               </div>
               <Stat className="col-span-4" label="Моточасы" icon="engine" value="7,8 ч" tint="smpo-icon-green" />
               <Stat className="col-span-3" label="Стоянки" icon="parking" value="9" />

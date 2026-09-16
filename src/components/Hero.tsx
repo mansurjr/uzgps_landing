@@ -6,9 +6,9 @@ import HeroBackdrop from "./HeroBackdrop";
 import { useDict } from "@/i18n/DictProvider";
 
 const figureValues = [
-  { value: 2014, prefix: "с ", prefixUz: "", suffix: "" },
-  { value: 30, prefix: "до ", prefixUz: "", suffix: "%" },
-  { value: 10000, prefix: "", prefixUz: "", suffix: "" },
+  { value: 10, prefix: "", prefixUz: "", suffix: "+", suffixUz: "+" },
+  { value: 30, prefix: "до ", prefixUz: "", suffix: "%", suffixUz: "% gacha" },
+  { value: 10000, prefix: "≈ ", prefixUz: "≈ ", suffix: "", suffixUz: "" },
 ];
 
 export default function Hero() {
@@ -24,7 +24,6 @@ export default function Hero() {
     }
     const heading = el.querySelector<HTMLElement>("h1")!;
     heading.style.opacity = "1";
-    // StrictMode runs effects twice; split the heading only once
     if (!heading.dataset.split) {
       heading.dataset.split = "1";
       splitText(heading, { words: { wrap: "clip" } });
@@ -36,14 +35,14 @@ export default function Hero() {
 
     const counters = Array.from(el.querySelectorAll<HTMLElement>("[data-count]")).map((node) => {
       const target = Number(node.dataset.count);
-      const obj = { v: target === 2014 ? 1990 : 0 };
+      const obj = { v: 0 };
       return animate(obj, {
         v: target,
         duration: 1800,
         delay: 900,
         ease: "outExpo",
         onUpdate: () => {
-          node.textContent = target === 2014 ? String(Math.round(obj.v)) : Math.round(obj.v).toLocaleString("ru-RU");
+          node.textContent = Math.round(obj.v).toLocaleString("ru-RU");
         },
       });
     });
@@ -55,14 +54,14 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={root} id="top" className="relative isolate overflow-hidden bg-ink pt-[76px] text-paper lg:pt-[112px]">
+    <section ref={root} id="top" className="relative isolate overflow-hidden bg-ink pt-20 text-paper lg:pt-24">
       <HeroBackdrop />
 
-      <div className="wrap relative flex flex-col items-center justify-center pb-20 pt-20 text-center lg:min-h-[calc(100svh-112px)] lg:pb-24">
-        <h1 data-reveal className="h-display mx-auto max-w-[980px] text-[clamp(44px,6.4vw,100px)]">
+      <div className="wrap relative flex flex-col items-center justify-center pb-20 pt-20 text-center lg:min-h-[calc(100svh-96px)] lg:pb-24">
+        <h1 data-reveal className="h-display mx-auto max-w-245 text-[clamp(44px,6.4vw,100px)]">
           {t.hero.h1}
         </h1>
-        <p data-reveal data-hero-copy className="mx-auto mt-8 max-w-[620px] text-[clamp(17px,1.4vw,20px)] leading-relaxed text-paper/75">
+        <p data-reveal data-hero-copy className="mx-auto mt-8 max-w-155 text-[clamp(17px,1.4vw,20px)] leading-relaxed text-paper/75">
           {t.hero.lead}
         </p>
         <div data-reveal data-hero-copy className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
@@ -74,14 +73,14 @@ export default function Hero() {
           </a>
         </div>
 
-        <dl data-reveal data-hero-copy className="mx-auto mt-20 grid w-full max-w-[760px] grid-cols-3 border-t border-paper/20">
+        <dl data-reveal data-hero-copy className="mx-auto mt-20 grid w-full max-w-190 grid-cols-3 border-t border-paper/20">
           {figureValues.map((f, i) => (
             <div key={f.value} className={`px-3 pt-6 sm:px-6 ${i ? "border-l border-paper/15" : ""}`}>
               <dt className="sr-only">{t.hero.figures[i].label}</dt>
               <dd className="num font-display text-[clamp(24px,3vw,42px)] font-medium tracking-[-0.03em]">
                 {locale === "ru" ? f.prefix : f.prefixUz}
-                <span data-count={f.value}>{f.value === 2014 ? "2014" : f.value.toLocaleString("ru-RU")}</span>
-                {f.suffix}
+                <span data-count={f.value}>{f.value.toLocaleString("ru-RU")}</span>
+                {locale === "ru" ? f.suffix : f.suffixUz}
               </dd>
               <dd className="mt-1 text-[13px] leading-snug text-paper/55 sm:text-[14px]">{t.hero.figures[i].label}</dd>
             </div>

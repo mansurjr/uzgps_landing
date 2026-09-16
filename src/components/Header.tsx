@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { animate, stagger } from "animejs";
 import { contacts } from "@/data/content";
 import { locales } from "@/i18n";
 import { useDict } from "@/i18n/DictProvider";
@@ -25,6 +24,8 @@ export default function Header() {
   const [sheet, setSheet] = useState(false);
   const megaRef = useRef<HTMLDivElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
 
   const links = [
@@ -35,284 +36,222 @@ export default function Header() {
   ];
 
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 40);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    const esc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMega(false);
-        setSheet(false);
-      }
-    };
-    window.addEventListener("keydown", esc);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", on);
-      window.removeEventListener("keydown", esc);
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(closeTimer.current);
     };
   }, []);
 
   useEffect(() => {
-    if (!mega || !megaRef.current) return;
-    const a = animate(megaRef.current.querySelectorAll("[data-mega-item]"), {
-      opacity: [0, 1],
-      translateY: [8, 0],
-      duration: 450,
-      delay: stagger(25),
-      ease: "outQuart",
-    });
-    return () => {
-      a.pause();
-    };
-  }, [mega]);
+    if (!sheet) return;
+    const previousOverflow = document.documentElement.style.overflow;
+    const menuButton = menuButtonRef.current;
+    document.documentElement.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
 
-  useEffect(() => {
-    document.documentElement.style.overflow = sheet ? "hidden" : "";
-    if (!sheet || !sheetRef.current) return;
-    const a = animate(sheetRef.current.querySelectorAll("[data-sheet-item]"), {
-      opacity: [0, 1],
-      translateX: [-16, 0],
-      duration: 500,
-      delay: stagger(40, { start: 80 }),
-      ease: "outQuart",
-    });
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSheet(false);
+        return;
+      }
+      if (event.key !== "Tab" || !sheetRef.current) return;
+      const focusable = sheetRef.current.querySelectorAll<HTMLElement>("a, button");
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    const desktop = window.matchMedia("(min-width: 1280px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setSheet(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    desktop.addEventListener("change", closeOnDesktop);
     return () => {
-      a.pause();
+      document.documentElement.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", closeOnDesktop);
+      menuButton?.focus();
     };
   }, [sheet]);
+
+  useEffect(() => {
+    if (!mega) return;
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMega(false);
+    };
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, [mega]);
 
   const openMega = () => {
     window.clearTimeout(closeTimer.current);
     setMega(true);
   };
   const closeMegaSoon = () => {
-    closeTimer.current = window.setTimeout(() => setMega(false), 140);
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setMega(false), 160);
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      {/* utility row collapses once the page scrolls */}
-      <div className={`hidden overflow-hidden bg-ink text-paper/70 transition-[height] duration-300 lg:block ${scrolled ? "h-0" : "h-9"}`}>
-        <div className="wrap flex h-9 items-center justify-between text-[13px]">
-          <span>{contacts.address}</span>
-          <div className="flex items-center gap-6">
-            <span>
-              {t.common.support}:{" "}
-              <a href="tel:+998712305544" className="text-paper hover:text-primary">
-                (71) 230-55-44
-              </a>
-            </span>
-            <a href={contacts.telegram} target="_blank" rel="noreferrer" className="hover:text-primary">
-              Telegram
-            </a>
-            <span className="flex items-center gap-2">
-              {locales.map((l, i) => (
-                <span key={l} className="flex items-center gap-2">
-                  {i > 0 && <span className="text-paper/30">/</span>}
-                  {l === locale ? (
-                    <span aria-current="true" className="text-paper">
-                      {t.common.langName[l]}
-                    </span>
-                  ) : (
-                    <Link
-                      href={localePath(l)}
-                      hrefLang={l}
-                      scroll={false}
-                      onClick={() => {
-                        window.scrollTo({ top: 0, behavior: "instant" });
-                      }}
-                      className="hover:text-primary"
-                    >
-                      {t.common.langName[l]}
-                    </Link>
-                  )}
-                </span>
-              ))}
-            </span>
-          </div>
-        </div>
-      </div>
-
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
       <div
-        className={`relative border-b bg-white transition-colors duration-300 ${scrolled || mega ? "border-rule" : "border-transparent"}`}
+        className={`glass-nav pointer-events-auto relative mx-auto flex h-[64px] w-full max-w-[1296px] items-center gap-3 px-4 transition-[box-shadow,background-color] duration-300 sm:h-[68px] sm:px-5 xl:gap-5 ${scrolled ? "shadow-[0_14px_42px_rgba(10,26,48,.18)]" : ""}`}
         onMouseLeave={closeMegaSoon}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setMega(false);
+        }}
       >
-        <div className="wrap flex h-[76px] items-center gap-6 whitespace-nowrap xl:gap-10">
-          <a href="#top" aria-label="UZGPS" className="shrink-0">
-            <Logo />
-          </a>
+        <a href="#top" aria-label="UZGPS" className="relative z-10 shrink-0 translate-y-[2px] rounded-lg" onClick={() => setMega(false)}>
+          <Logo />
+        </a>
 
-          <nav className="hidden h-full items-stretch gap-7 lg:flex" aria-label={t.nav.label}>
-            <button
-              type="button"
-              aria-expanded={mega}
-              aria-controls="mega"
-              onMouseEnter={openMega}
-              onClick={() => setMega((m) => !m)}
-              className={`relative flex items-center gap-1.5 text-[15px] transition-colors hover:text-ink ${mega ? "text-ink" : "text-ink/75"}`}
-            >
-              {t.nav.solutions}
-              <svg width="10" height="6" viewBox="0 0 10 6" className={`transition-transform ${mega ? "rotate-180" : ""}`} aria-hidden>
-                <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" />
-              </svg>
-              <span className={`absolute inset-x-0 bottom-0 h-[3px] bg-primary transition-transform ${mega ? "scale-x-100" : "scale-x-0"}`} />
-            </button>
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onMouseEnter={closeMegaSoon}
-                className="group relative flex items-center text-[15px] text-ink/75 transition-colors hover:text-ink"
-              >
-                {l.label}
-                <span className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-primary transition-transform group-hover:scale-x-100" />
-              </a>
-            ))}
-          </nav>
-
-          <div className="ml-auto hidden items-center gap-5 lg:flex">
-            <a href={contacts.salesHref} className="hidden text-right leading-tight xl:block">
-              <span className="block text-[12px] text-graphite">{t.common.salesDept}</span>
-              <span className="num block text-[16px] font-semibold">{contacts.sales}</span>
-            </a>
-            <a
-              href={contacts.login}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 border border-navy px-4 py-2.5 text-[15px] font-medium text-navy transition-colors hover:bg-navy hover:text-white"
-            >
-              {t.common.login}
-            </a>
-            <a href="#contact" className="btn-primary !py-3">
-              {t.common.request}
-            </a>
-          </div>
-
+        <nav className="ml-auto hidden items-center gap-0.5 xl:flex" aria-label={t.nav.label}>
           <button
             type="button"
-            className="ml-auto flex h-11 items-center gap-3 text-[15px] font-medium lg:hidden"
-            onClick={() => setSheet(true)}
-            aria-label={t.common.menu}
+            aria-expanded={mega}
+            aria-controls="mega"
+            onClick={() => setMega((current) => !current)}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowDown") {
+                event.preventDefault();
+                openMega();
+                requestAnimationFrame(() => megaRef.current?.querySelector<HTMLAnchorElement>("a")?.focus());
+              }
+            }}
+            className={`nav-pill flex items-center gap-1.5 ${mega ? "nav-pill-active" : ""}`}
           >
-            {t.common.menu}
-            <span className="flex w-6 flex-col gap-1.5" aria-hidden>
-              <span className="h-[2px] bg-ink" />
-              <span className="h-[2px] bg-ink" />
-            </span>
+            {t.nav.solutions}
+            <svg width="10" height="6" viewBox="0 0 10 6" className={`transition-transform ${mega ? "rotate-180" : ""}`} aria-hidden>
+              <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" />
+            </svg>
           </button>
+
+          {mega && (
+            <div id="mega" ref={megaRef} onMouseEnter={openMega} className="glass-panel absolute inset-x-0 top-[calc(100%+10px)] grid grid-cols-[1fr_1fr_260px] gap-8 rounded-[24px] p-8">
+              <div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-graphite">{t.nav.megaIndustries}</p>
+                <ul className="mt-3">
+                  {t.content.industries.slice(0, 6).map((item) => (
+                    <li key={item.title}>
+                      <a href="#solutions" onClick={() => setMega(false)} className="group flex items-center justify-between border-b border-rule px-2 py-2.5 text-[15px] text-ink transition-colors hover:bg-navy/5 hover:text-navy">
+                        {item.title}
+                        <span className="text-primary transition-transform group-hover:translate-x-1">→</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-graphite">{t.nav.megaDeployment}</p>
+                <ul className="mt-4 space-y-5">
+                  {[t.nav.megaCloud, t.nav.megaServer, t.nav.megaProvider].map((item) => (
+                    <li key={item.title}>
+                      <a href="#solutions" onClick={() => setMega(false)} className="group block rounded-lg px-2 py-1 transition-colors hover:bg-navy/5">
+                        <span className="text-[15px] font-semibold text-ink group-hover:text-navy">{item.title}</span>
+                        <span className="mt-1 block text-[13px] leading-snug text-graphite">{item.text}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <a href="#calculator" onClick={() => setMega(false)} className="flex flex-col justify-between rounded-[18px] bg-navy p-6 text-paper">
+                <span className="font-display text-[24px] leading-tight tracking-[-0.03em]">{t.nav.megaCta.title}</span>
+                <span className="mt-8 font-medium text-primary">{t.nav.megaCta.action}</span>
+              </a>
+            </div>
+          )}
+
+          {links.map((link) => (
+            <a key={link.href} href={link.href} onMouseEnter={closeMegaSoon} onClick={() => setMega(false)} className="nav-pill">
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="ml-auto hidden shrink-0 items-center gap-2 xl:flex">
+          <a href={contacts.salesHref} className="num mr-2 hidden text-[14px] font-semibold text-navy hover:text-primary 2xl:block">
+            {contacts.sales}
+          </a>
+          <a href={contacts.login} target="_blank" rel="noreferrer" className="nav-pill font-semibold">
+            {t.common.login}
+          </a>
+          <a href="#contact" className="nav-request">
+            {t.common.request}
+            <span aria-hidden>↗</span>
+          </a>
         </div>
 
-        {/* mega menu */}
-        {mega && (
-          <div
-            id="mega"
-            ref={megaRef}
-            onMouseEnter={openMega}
-            className="absolute inset-x-0 top-full hidden border-b border-rule bg-white shadow-[0_24px_40px_-24px_rgba(17,19,21,.25)] lg:block"
-          >
-            <div className="wrap grid grid-cols-[1fr_1fr_320px] gap-12 py-10">
-              <div>
-                <p data-mega-item className="text-[13px] text-graphite">
-                  {t.nav.megaIndustries}
-                </p>
-                <ul className="mt-4">
-                  {t.content.industries.slice(0, 6).map((it) => (
-                    <li key={it.title} data-mega-item>
-                      <a
-                        href="#solutions"
-                        onClick={() => setMega(false)}
-                        className="group flex items-center justify-between border-b border-rule py-3 text-[16px] hover:text-ink"
-                      >
-                        {it.title}
-                        <span className="text-graphite transition-transform group-hover:translate-x-1">→</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p data-mega-item className="text-[13px] text-graphite">
-                  {t.nav.megaDeployment}
-                </p>
-                <ul className="mt-4 space-y-6">
-                  {[t.nav.megaCloud, t.nav.megaServer, t.nav.megaProvider].map((item) => (
-                    <li key={item.title} data-mega-item>
-                      <a href="#solutions" onClick={() => setMega(false)} className="block">
-                        <span className="text-[16px] font-medium">{item.title}</span>
-                        <span className="mt-1 block text-[14px] text-graphite">{item.text}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <a data-mega-item href="#calculator" onClick={() => setMega(false)} className="flex flex-col justify-between bg-ink p-7 text-paper">
-                <span className="font-display text-[26px] leading-tight tracking-[-0.03em]">{t.nav.megaCta.title}</span>
-                <span className="mt-8 text-primary">{t.nav.megaCta.action}</span>
-              </a>
-            </div>
-          </div>
-        )}
+        <button
+          ref={menuButtonRef}
+          type="button"
+          className="ml-auto flex size-11 items-center justify-center gap-2 rounded-full text-[15px] font-semibold text-navy transition-colors hover:bg-navy/10 xl:hidden"
+          onClick={() => setSheet(true)}
+          aria-label={t.common.menu}
+          aria-expanded={sheet}
+          aria-controls="mobile-menu"
+        >
+          <span className="hidden sm:inline">{t.common.menu}</span>
+          <span className="flex w-5 flex-col gap-1.5" aria-hidden>
+            <span className="h-[2px] rounded-full bg-navy" />
+            <span className="h-[2px] rounded-full bg-navy" />
+          </span>
+        </button>
       </div>
 
-      {/* mobile sheet */}
       {sheet && (
-        <div ref={sheetRef} className="fixed inset-0 z-50 flex flex-col bg-white lg:hidden" role="dialog" aria-modal="true" aria-label={t.common.menu}>
-          <div className="wrap flex h-[76px] shrink-0 items-center justify-between border-b border-rule">
-            <Logo />
-            <button type="button" onClick={() => setSheet(false)} className="flex h-11 items-center gap-3 text-[15px] font-medium">
-              {t.common.close}
-              <span className="relative block size-5" aria-hidden>
-                <span className="absolute left-0 top-1/2 h-[2px] w-5 rotate-45 bg-ink" />
-                <span className="absolute left-0 top-1/2 h-[2px] w-5 -rotate-45 bg-ink" />
-              </span>
-            </button>
-          </div>
-          <nav className="wrap flex-1 overflow-y-auto py-6">
-            {[{ href: "#solutions", label: t.nav.solutions }, ...links].map((l) => (
-              <a
-                key={l.href}
-                data-sheet-item
-                href={l.href}
-                onClick={() => setSheet(false)}
-                className="flex items-center justify-between border-b border-rule py-4 font-display text-[28px] tracking-[-0.03em]"
-              >
-                {l.label}
-                <span className="text-[18px] text-graphite">→</span>
-              </a>
-            ))}
-            <div data-sheet-item className="flex gap-4 py-5 text-[18px]">
-              {locales.map((l) => (
-                <Link
-                  key={l}
-                  href={localePath(l)}
-                  hrefLang={l}
-                  scroll={false}
-                  onClick={() => {
-                    setSheet(false);
-                    window.scrollTo({ top: 0, behavior: "instant" });
-                  }}
-                  className={l === locale ? "font-semibold text-navy" : "text-graphite"}
-                >
-                  {t.common.langName[l]}
-                </Link>
-              ))}
+        <div className="pointer-events-auto fixed inset-0 z-50 bg-ink/55 p-3 sm:p-5" role="presentation" onMouseDown={(event) => {
+          if (event.target === event.currentTarget) setSheet(false);
+        }}>
+          <div id="mobile-menu" ref={sheetRef} className="glass-panel relative mx-auto flex h-full max-w-[520px] flex-col overflow-hidden rounded-[24px]" role="dialog" aria-modal="true" aria-label={t.common.menu}>
+            <div className="flex h-[68px] shrink-0 items-center justify-between border-b border-rule px-5">
+              <Logo />
+              <button ref={closeButtonRef} type="button" onClick={() => setSheet(false)} className="grid size-11 place-items-center rounded-full text-navy hover:bg-navy/10" aria-label={t.common.close}>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+                  <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              </button>
             </div>
-          </nav>
-          <div className="wrap shrink-0 space-y-3 border-t border-rule py-5">
-            <a href={contacts.salesHref} className="num block text-[20px] font-semibold">
-              {contacts.sales}
-            </a>
-            <div className="flex gap-3">
-              <a href="#contact" onClick={() => setSheet(false)} className="btn-primary flex-1">
-                {t.common.request}
-              </a>
-              <a
-                href={contacts.login}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center border border-navy px-5 font-medium text-navy"
-              >
-                {t.common.login}
-              </a>
+            <nav className="min-h-0 flex-1 overflow-y-auto px-5 py-4" aria-label={t.nav.label}>
+              {[{ href: "#solutions", label: t.nav.solutions }, ...links].map((link) => (
+                <a key={link.href} href={link.href} onClick={() => setSheet(false)} className="flex items-center justify-between border-b border-rule py-4 font-display text-[clamp(23px,6vw,30px)] tracking-[-0.03em] text-ink hover:text-navy">
+                  {link.label}
+                  <span className="text-lg text-primary" aria-hidden>↗</span>
+                </a>
+              ))}
+              <div className="flex gap-2 pt-6">
+                {locales.map((language) => (
+                  <Link
+                    key={language}
+                    href={localePath(language)}
+                    hrefLang={language}
+                    scroll={false}
+                    onClick={() => {
+                      setSheet(false);
+                      window.scrollTo({ top: 0, behavior: "instant" });
+                    }}
+                    className={`rounded-full px-4 py-2 text-sm font-semibold ${language === locale ? "bg-navy text-white" : "bg-navy/5 text-navy"}`}
+                    aria-current={language === locale ? "page" : undefined}
+                  >
+                    {t.common.langName[language]}
+                  </Link>
+                ))}
+              </div>
+            </nav>
+            <div className="shrink-0 border-t border-rule px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-4">
+              <a href={contacts.salesHref} className="num mb-3 block text-[18px] font-semibold text-navy">{contacts.sales}</a>
+              <div className="flex gap-2">
+                <a href="#contact" onClick={() => setSheet(false)} className="nav-request flex-1 justify-center text-center">{t.common.request}</a>
+                <a href={contacts.login} target="_blank" rel="noreferrer" className="rounded-full border border-navy/25 px-4 py-3 text-center text-sm font-semibold text-navy">{t.common.login}</a>
+              </div>
             </div>
           </div>
         </div>

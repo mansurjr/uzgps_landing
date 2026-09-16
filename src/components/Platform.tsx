@@ -67,7 +67,7 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
           data-reveal
           role="tablist"
           aria-label={t.platform.tabsLabel}
-          className="mt-12 flex gap-6 overflow-x-auto border-b border-rule-inv [scrollbar-width:none] sm:gap-10 [&::-webkit-scrollbar]:hidden"
+          className="mt-12 grid grid-cols-2 gap-x-5 gap-y-2 border-b border-rule-inv sm:flex sm:gap-10"
         >
           {tabs.map((t) => (
             <button
@@ -78,8 +78,8 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
               aria-selected={tab === t.key}
               aria-controls="platform-panel"
               onClick={() => setTab(t.key)}
-              className={`relative shrink-0 pb-4 text-[17px] font-medium transition-colors focus-visible:outline-primary sm:text-[19px] ${
-                tab === t.key ? "text-paper" : "text-paper/45 hover:text-paper/80"
+              className={`relative min-w-0 pb-3 text-left text-[16px] font-medium transition-colors focus-visible:outline-primary sm:shrink-0 sm:pb-4 sm:text-[19px] ${
+                tab === t.key ? "text-paper" : "text-paper/70 hover:text-paper"
               }`}
             >
               {t.label}
@@ -89,8 +89,8 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
         </div>
 
         <div id="platform-panel" role="tabpanel" aria-labelledby={`tab-${tab}`} className="mt-12">
-          <div data-reveal className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end">
-            <h3 className="font-display text-[28px] leading-tight tracking-[-0.03em] sm:text-[34px]">{current.title}</h3>
+          <div data-reveal className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center">
+            <h3 className="font-display text-[28px] tracking-[-0.03em] sm:text-[34px]">{current.title}</h3>
             <ul className="grid gap-x-8 border-t border-rule-inv sm:grid-cols-3">
               {current.points.map((p) => (
                 <li key={p} className="flex items-center gap-3 border-b border-rule-inv py-4 text-[16px] text-paper/80">

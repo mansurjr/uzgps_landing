@@ -63,11 +63,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
     },
     category: "technology",
     icons: {
-      icon: [
-        { url: "/brand/pin.svg", type: "image/svg+xml" },
-        { url: "/favicon.ico", sizes: "48x48" },
-      ],
-      apple: "/brand/pin.svg",
+      icon: [{ url: "/icon.svg", type: "image/svg+xml", sizes: "any" }],
+      apple: "/icon.svg",
     },
     formatDetection: { telephone: true },
   };

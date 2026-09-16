@@ -55,18 +55,24 @@ export const clients: ClientItem[] = [
   { id: "c-yellow", name: "Yellow Pages Uzbekistan", short: "Yellow Pages", logo: `${UPLOADS}/5e7/71e/827/5e771e82728f1658969707.png`, w: 158, h: 48 },
 ];
 
-// одна версия изображения на устройство: её же использует миниатюра, поэтому файл грузится один раз
-const wix = (id: string, name: string) =>
-  `https://static.wixstatic.com/media/${id}~mv2.png/v1/fill/w_720,h_480,al_c,q_85,enc_auto/${name}.png`;
-
-/** Официальные рендеры Teltonika. Тексты — в словарях (content.devices). */
+/** Изображения устройств хранятся локально; источники указаны в public/devices/SOURCES.md. */
 export const devices = [
-  { model: "FMB920", image: wix("83e479_be44ae027426433a84ac2a5f80461bc5", "FMB920") },
-  { model: "FMB125", image: wix("83e479_949f0a0ab8c2440eae3be60e91b3195f", "FMB125") },
-  { model: "FMB140", image: wix("83e479_a5412141602a4f189bbe1443873e1563", "FMB140") },
-  { model: "FMC130", image: wix("83e479_22b33b1a25304cccafd04584c7a3ff41", "FMC130") },
-  { model: "FMB003", image: wix("83e479_7efad16ad1c54f8dbbe9377957b9dfc5", "FMB003") },
-  { model: "FMM920", image: wix("83e479_89d7037335ba460ba11e70063df43a61", "FMM920") },
+  { model: "FMB920", image: "/devices/fmb920.webp" },
+  { model: "FMC920", image: "/devices/fmc920.webp" },
+  { model: "FMB930", image: "/devices/fmb930.webp" },
+  { model: "FMB125", image: "/devices/fmb125.webp" },
+  { model: "FMC125", image: "/devices/fmc125.webp" },
+  { model: "EYE Sensor", image: "/devices/eye-sensor.webp" },
+  { model: "EYE Beacon", image: "/devices/eye-beacon.webp" },
+  { model: "Technoton DUT-E", image: "/devices/dut-e.webp" },
+  { model: "Escort TD-BLE", image: "/devices/escort-td-ble.webp" },
+  { model: "Omnicomm LLS 4", image: "/devices/omnicomm-lls4.webp" },
+  { model: "Реле блокировки", image: "/devices/engine-relay.webp" },
+  { model: "Замки Jointech", image: "/devices/jointech-jt705a.webp" },
+  { model: "FMB140", image: "/devices/fmb140.webp" },
+  { model: "FMC130", image: "/devices/fmc130.webp" },
+  { model: "FMB003", image: "/devices/fmb003.webp" },
+  { model: "FMM920", image: "/devices/fmm920.webp" },
 ] as const;
 
 export type DeviceModel = (typeof devices)[number]["model"];
@@ -80,4 +86,4 @@ export const appScreens = [
 ];
 
 /** Марки датчиков уровня топлива с сайта uzgps.uz — имена собственные. */
-export const fuelSensors = ["OMNICOMM LLS", "MIELTA ZOND", "ЭСКОРТ ТД-150", "TECHNOTON DUT-E"];
+export const fuelSensors = ["OMNICOMM LLS 4", "MIELTA ZOND", "ЭСКОРТ TD-BLE", "TECHNOTON DUT-E"];

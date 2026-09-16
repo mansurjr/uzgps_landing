@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { animate, stagger } from "animejs";
 import { devices, type DeviceModel } from "@/data/content";
-import { fill } from "@/i18n";
 import { useDict } from "@/i18n/DictProvider";
 
 const AUTOPLAY_MS = 6000;
@@ -14,7 +13,13 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function DeviceCarousel() {
   const { t } = useDict();
-  const copy = (model: string) => t.content.devices[model as DeviceModel];
+  const copy = (model: DeviceModel) => t.content.devices[model];
+  const name = (model: DeviceModel) => {
+    const item = copy(model);
+    return "label" in item ? item.label : model;
+  };
+  const hasWhitePhotoBackground = (model: DeviceModel) =>
+    model === "Реле блокировки" || model === "Замки Jointech";
   const [index, setIndex] = useState(0);
   const dirRef = useRef<1 | -1>(1);
   const pausedRef = useRef(false);
@@ -132,7 +137,7 @@ export default function DeviceCarousel() {
         {/* stage */}
         <div
           ref={stage}
-          className="relative aspect-[4/3] overflow-hidden bg-[linear-gradient(160deg,#f4f6f9_0%,#dde5ee_100%)] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[520px]"
+          className={`relative aspect-[4/3] overflow-hidden sm:aspect-[16/10] lg:aspect-auto lg:min-h-[520px] ${hasWhitePhotoBackground(device.model) ? "bg-white" : "bg-[linear-gradient(160deg,#f4f6f9_0%,#dde5ee_100%)]"}`}
           onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
           onTouchEnd={(e) => {
             const dx = e.changedTouches[0].clientX - touchX.current;
@@ -144,7 +149,7 @@ export default function DeviceCarousel() {
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-[-0.12em] select-none whitespace-nowrap text-center font-display text-[clamp(96px,17vw,240px)] font-semibold leading-none tracking-[-0.06em] text-navy/[0.07]"
           >
-            {device.model}
+            {name(device.model)}
           </span>
           {/* every render is mounted once and cross-faded: switching slides must not refetch */}
           <div data-product className="absolute inset-[8%]">
@@ -152,12 +157,12 @@ export default function DeviceCarousel() {
               <Image
                 key={d.model}
                 src={d.image}
-                alt={i === index ? `Teltonika ${d.model}` : ""}
+                alt={i === index ? name(d.model) : ""}
                 aria-hidden={i !== index}
                 fill
                 priority={i === 0}
                 sizes="(min-width:1024px) 720px, 100vw"
-                className={`object-contain drop-shadow-[0_24px_30px_rgba(10,26,48,.22)] transition-opacity duration-500 ${i === index ? "opacity-100" : "opacity-0"}`}
+                className={`object-contain transition-opacity duration-500 ${hasWhitePhotoBackground(d.model) ? "" : "drop-shadow-[0_24px_30px_rgba(10,26,48,.22)]"} ${i === index ? "opacity-100" : "opacity-0"}`}
               />
             ))}
           </div>
@@ -192,8 +197,8 @@ export default function DeviceCarousel() {
           <p data-info className="text-[15px] text-primary">
             {copy(device.model).title}
           </p>
-          <h4 data-info className="num mt-2 font-display text-[clamp(40px,4.4vw,64px)] font-medium leading-none tracking-[-0.04em]">
-            {device.model}
+          <h4 data-info className="num mt-2 break-words font-display text-[clamp(34px,3.5vw,60px)] font-medium leading-[1.05] tracking-[-0.04em]">
+            {name(device.model)}
           </h4>
           <p data-info className="mt-6 text-[17px] leading-relaxed text-paper/70">
             {copy(device.model).text}
@@ -224,17 +229,17 @@ export default function DeviceCarousel() {
         ref={thumbs}
         role="tablist"
         aria-label={t.equipment.carousel.tablist}
-        className="mt-px flex overflow-x-auto border-x border-b border-rule-inv [scrollbar-width:none] lg:grid lg:grid-cols-6 [&::-webkit-scrollbar]:hidden"
+        className="mt-px flex overflow-x-auto border-x border-b border-rule-inv [scrollbar-color:#477197_#162b42] [scrollbar-width:thin]"
       >
         {devices.map((d, i) => {
           const active = i === index;
           return (
-            <li key={d.model} className="w-[40%] shrink-0 border-r border-rule-inv last:border-r-0 sm:w-[26%] lg:w-auto">
+            <li key={d.model} className="w-[40%] shrink-0 border-r border-rule-inv last:border-r-0 sm:w-[26%] lg:w-1/6">
               <button
                 type="button"
                 role="tab"
                 aria-selected={active}
-                aria-label={`${d.model} — ${copy(d.model).title}`}
+                aria-label={`${name(d.model)} — ${copy(d.model).title}`}
                 onClick={() => goTo(i)}
                 className={`group relative flex w-full flex-col items-center gap-2 px-3 pb-4 pt-5 transition-colors ${
                   active ? "bg-paper/[0.06]" : "hover:bg-paper/[0.03]"
@@ -243,14 +248,14 @@ export default function DeviceCarousel() {
                 <span className={`absolute inset-x-0 top-0 h-[3px] transition-colors ${active ? "bg-primary" : "bg-transparent"}`} />
                 {/* light tile so the dark device renders stay readable on the dark section */}
                 <span
-                  className={`relative block aspect-[3/2] w-full bg-[#e7ecf2] transition-opacity duration-300 ${
+                  className={`relative block aspect-[3/2] w-full transition-opacity duration-300 ${hasWhitePhotoBackground(d.model) ? "bg-white" : "bg-[#e7ecf2]"} ${
                     active ? "opacity-100" : "opacity-50 group-hover:opacity-85"
                   }`}
                 >
                   {/* same URL as the slide, so this is served from cache */}
                   <Image src={d.image} alt="" fill sizes="160px" className="object-contain p-1.5" />
                 </span>
-                <span className={`num text-[14px] transition-colors ${active ? "text-paper" : "text-paper/50"}`}>{d.model}</span>
+                <span className={`num min-h-10 text-center text-[14px] leading-5 transition-colors ${active ? "text-paper" : "text-paper/50"}`}>{name(d.model)}</span>
               </button>
             </li>
           );
