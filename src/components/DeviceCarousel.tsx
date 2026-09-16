@@ -53,14 +53,6 @@ export default function DeviceCarousel() {
     } else {
       const d = dirRef.current;
       const s = stage.current!;
-      animate(s.querySelector("[data-product]")!, {
-        translateX: [90 * d, 0],
-        rotate: [6 * d, 0],
-        scale: [0.92, 1],
-        opacity: [0, 1],
-        duration: 900,
-        ease: "outQuart",
-      });
       animate(s.querySelector("[data-ghost]")!, { translateX: [160 * d, 0], opacity: [0, 1], duration: 1100, ease: "outQuart" });
       animate(info.current!.querySelectorAll("[data-info]"), {
         translateY: [18, 0],
@@ -151,7 +143,7 @@ export default function DeviceCarousel() {
           >
             {name(device.model)}
           </span>
-          {/* every render is mounted once and cross-faded: switching slides must not refetch */}
+          {/* Keep each image mounted so slide changes use cached assets. */}
           <div data-product className="absolute inset-[8%]">
             {devices.map((d, i) => (
               <Image
@@ -162,7 +154,7 @@ export default function DeviceCarousel() {
                 fill
                 priority={i === 0}
                 sizes="(min-width:1024px) 720px, 100vw"
-                className={`object-contain transition-opacity duration-500 ${hasWhitePhotoBackground(d.model) ? "" : "drop-shadow-[0_24px_30px_rgba(10,26,48,.22)]"} ${i === index ? "opacity-100" : "opacity-0"}`}
+                className={`object-contain transition-[opacity,transform] ease-out ${hasWhitePhotoBackground(d.model) ? "" : "drop-shadow-[0_24px_30px_rgba(10,26,48,.22)]"} ${i === index ? "scale-100 opacity-100 duration-500" : "scale-[.96] opacity-0 duration-0"}`}
               />
             ))}
           </div>

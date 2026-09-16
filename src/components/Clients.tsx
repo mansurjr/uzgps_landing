@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { animate, stagger } from "animejs";
+import { animate } from "animejs";
 import { clients, featuredClient, type ClientItem } from "@/data/content";
 import { useDict } from "@/i18n/DictProvider";
 import { useReveal } from "@/lib/useReveal";
@@ -12,19 +12,17 @@ export default function Clients() {
   const root = useRef<HTMLElement>(null);
   const [selected, setSelected] = useState<ClientItem>(featuredClient);
   const card = useRef<HTMLDivElement>(null);
-  const firstRender = useRef(true);
+  const pendingSelection = useRef(false);
   useReveal(root, { y: 16, step: 35 });
 
   const allClients = [featuredClient, ...clients];
   const industries = t.content.clientIndustries as Record<string, string>;
   const isFeatured = selected.id === featuredClient.id;
 
-  // grow the picked logo into the big card; on narrow screens the card sits above the grid, so bring it into view
+  // Animate only a user-selected card, and bring it into view on narrow screens.
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
+    if (!pendingSelection.current) return;
+    pendingSelection.current = false;
     const el = card.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -33,17 +31,10 @@ export default function Clients() {
       window.scrollTo({ top: window.scrollY + rect.top - 100, behavior: "smooth" });
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const anims = [
-      animate(el.querySelector("[data-feature-logo]")!, { scale: [0.55, 1], opacity: [0, 1], duration: 650, ease: "outBack(1.4)" }),
-      animate(el.querySelectorAll("[data-feature-text]"), {
-        opacity: [0, 1],
-        translateY: [14, 0],
-        duration: 550,
-        delay: stagger(70, { start: 120 }),
-        ease: "outQuart",
-      }),
-    ];
-    return () => anims.forEach((a) => a.pause());
+    const animation = animate(el, { opacity: [0.72, 1], duration: 320, ease: "outQuart" });
+    return () => {
+      animation.pause();
+    };
   }, [selected]);
 
   return (
@@ -63,16 +54,15 @@ export default function Clients() {
           <div
             ref={card}
             aria-live="polite"
-            className="group relative flex h-full flex-col justify-between overflow-hidden border border-ink/20 bg-navy p-7 text-paper shadow-lg transition-all duration-300 md:p-10"
+            className="group relative flex h-full flex-col justify-between overflow-hidden border border-ink/20 bg-navy p-7 text-paper shadow-lg md:p-10"
           >
             <div>
               <span className="text-[14px] text-paper/60">{industries[selected.id]}</span>
 
               <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
                 {/* every selected logo gets the same large tile */}
-                <div data-feature-logo className="relative flex size-32 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-4 shadow-md md:size-40">
+                <div className="relative flex size-32 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-4 shadow-md md:size-40">
                   <Image
-                    key={selected.logo}
                     src={selected.logo}
                     alt={selected.short}
                     width={selected.w}
@@ -81,7 +71,7 @@ export default function Clients() {
                     className="size-full object-contain"
                   />
                 </div>
-                <div data-feature-text className="min-w-0">
+                <div className="min-w-0">
                   <span className="font-display text-[30px] font-bold leading-tight tracking-[-0.03em] text-primary sm:text-[40px]">
                     {isFeatured ? t.content.featured.short : selected.short}
                   </span>
@@ -89,7 +79,7 @@ export default function Clients() {
                 </div>
               </div>
 
-              <p data-feature-text className="mt-6 text-[16px] leading-relaxed text-paper/85">
+              <p className="mt-6 text-[16px] leading-relaxed text-paper/85">
                 {isFeatured ? t.content.featured.text : t.content.clientText}
               </p>
             </div>
@@ -104,7 +94,11 @@ export default function Clients() {
                   <li key={c.id}>
                     <button
                       type="button"
-                      onClick={() => setSelected(c)}
+                      onClick={() => {
+                        if (isSelected) return;
+                        pendingSelection.current = true;
+                        setSelected(c);
+                      }}
                       aria-pressed={isSelected}
                       title={c.name}
                       className={`group relative flex aspect-[3/2] w-full items-center justify-center p-4 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-navy ${
@@ -118,7 +112,7 @@ export default function Clients() {
                         height={c.h}
                         unoptimized
                         className={`h-auto max-h-16 w-auto max-w-full transition duration-300 ${
-                          isSelected ? "scale-110 opacity-100 grayscale-0" : "opacity-75 grayscale group-hover:scale-105 group-hover:opacity-100 group-hover:grayscale-0"
+                          isSelected ? "opacity-100 grayscale-0" : "opacity-75 grayscale group-hover:scale-105 group-hover:opacity-100 group-hover:grayscale-0"
                         }`}
                       />
                       {isSelected && <span className="absolute bottom-1 right-1.5 size-2 rounded-full bg-primary" />}

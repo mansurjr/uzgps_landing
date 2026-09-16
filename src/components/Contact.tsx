@@ -153,7 +153,7 @@ export default function Contact() {
           </div>
 
           {/* form */}
-          <div className="flex flex-col justify-center p-7 md:p-10 lg:p-12">
+          <div className="flex flex-col justify-center p-7 md:p-8 lg:p-10">
             {status === "done" ? (
               <div ref={doneRef} className="flex min-h-[420px] flex-col items-start justify-center" aria-live="polite">
                 <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden>
@@ -173,7 +173,7 @@ export default function Contact() {
                 <h3 className="font-display text-[clamp(26px,2.4vw,34px)] leading-tight tracking-[-0.03em]">{t.contact.formTitle}</h3>
                 <p className="mt-2 text-[15px] text-graphite">{t.contact.formLead}</p>
 
-                <div className="mt-8 grid gap-x-5 gap-y-2 sm:grid-cols-2">
+                <div className="mt-8 grid gap-x-5 gap-y-2 sm:grid-cols-2 ">
                   <Field
                     label={t.contact.name}
                     required

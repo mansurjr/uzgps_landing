@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { animate } from "animejs";
 import { contacts } from "@/data/content";
 import { locales } from "@/i18n";
 import { useDict } from "@/i18n/DictProvider";
@@ -36,7 +37,7 @@ export default function Header() {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
@@ -80,6 +81,36 @@ export default function Header() {
       window.removeEventListener("keydown", onKeyDown);
       desktop.removeEventListener("change", closeOnDesktop);
       menuButton?.focus();
+    };
+  }, [sheet]);
+
+  useEffect(() => {
+    if (!mega || !megaRef.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const anim = animate(megaRef.current, {
+      opacity: [0, 1],
+      translateY: [-10, 0],
+      scale: [0.98, 1],
+      duration: 350,
+      ease: "outQuart",
+    });
+    return () => {
+      anim.pause();
+    };
+  }, [mega]);
+
+  useEffect(() => {
+    if (!sheet || !sheetRef.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const anim = animate(sheetRef.current, {
+      opacity: [0, 1],
+      translateY: [20, 0],
+      scale: [0.97, 1],
+      duration: 400,
+      ease: "outQuart",
+    });
+    return () => {
+      anim.pause();
     };
   }, [sheet]);
 

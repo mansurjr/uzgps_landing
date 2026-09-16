@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getDict, isLocale } from "@/i18n";
 import { DictProvider } from "@/i18n/DictProvider";
 import Header from "@/components/Header";
+import SectionScroll from "@/components/SectionScroll";
 import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
 import Problems from "@/components/Problems";
@@ -38,6 +39,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
   return (
     <DictProvider t={t} locale={locale}>
+      <SectionScroll />
       <StructuredData t={t} locale={locale} />
       <a
         href="#top"
