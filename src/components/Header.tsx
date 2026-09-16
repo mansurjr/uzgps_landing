@@ -239,23 +239,25 @@ export default function Header() {
       </div>
 
       {sheet && (
-        <div className="pointer-events-auto fixed inset-0 z-50 bg-ink/55 p-3 sm:p-5" role="presentation" onMouseDown={(event) => {
+        <div className="pointer-events-auto fixed inset-0 z-50 bg-ink/75 p-2 backdrop-blur-sm sm:p-5" role="presentation" onMouseDown={(event) => {
           if (event.target === event.currentTarget) setSheet(false);
         }}>
-          <div id="mobile-menu" ref={sheetRef} className="glass-panel relative mx-auto flex h-full max-w-[520px] flex-col overflow-hidden rounded-[24px]" role="dialog" aria-modal="true" aria-label={t.common.menu}>
-            <div className="flex h-[68px] shrink-0 items-center justify-between border-b border-rule px-5">
-              <Logo />
-              <button ref={closeButtonRef} type="button" onClick={() => setSheet(false)} className="grid size-11 place-items-center rounded-full text-navy hover:bg-navy/10" aria-label={t.common.close}>
+          <div id="mobile-menu" ref={sheetRef} className="mobile-menu-panel relative mx-auto flex h-full max-w-[520px] flex-col overflow-hidden rounded-[24px] border border-white/15 text-paper shadow-[0_24px_80px_rgba(2,15,34,.45)]" role="dialog" aria-modal="true" aria-label={t.common.menu}>
+            <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-white/15 px-5">
+              <Logo inverted />
+              <button ref={closeButtonRef} type="button" onClick={() => setSheet(false)} className="grid size-11 place-items-center rounded-full border border-white/20 bg-white/10 text-paper transition-colors hover:bg-white/20" aria-label={t.common.close}>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
                   <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
               </button>
             </div>
-            <nav className="min-h-0 flex-1 overflow-y-auto px-5 py-4" aria-label={t.nav.label}>
-              {[{ href: "#solutions", label: t.nav.solutions }, ...links].map((link) => (
-                <a key={link.href} href={link.href} onClick={() => setSheet(false)} className="flex items-center justify-between border-b border-rule py-4 font-display text-[clamp(23px,6vw,30px)] tracking-[-0.03em] text-ink hover:text-navy">
-                  {link.label}
-                  <span className="text-lg text-primary" aria-hidden>↗</span>
+            <nav className="min-h-0 flex-1 overflow-y-auto px-5 pb-5 pt-6" aria-label={t.nav.label}>
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">{t.nav.label}</p>
+              {[{ href: "#solutions", label: t.nav.solutions }, ...links].map((link, index) => (
+                <a key={link.href} href={link.href} onClick={() => setSheet(false)} className="group flex min-h-[68px] items-center gap-4 border-b border-white/15 py-3 text-paper transition-colors hover:text-primary focus-visible:text-primary">
+                  <span className="num w-6 shrink-0 text-[12px] text-primary/80">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="min-w-0 flex-1 font-display text-[clamp(22px,6vw,28px)] leading-tight tracking-[-0.03em]">{link.label}</span>
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/20 text-[17px] text-primary transition-colors group-hover:border-primary group-hover:bg-primary group-hover:text-navy" aria-hidden>↗</span>
                 </a>
               ))}
               <div className="flex gap-2 pt-6">
@@ -269,7 +271,7 @@ export default function Header() {
                       setSheet(false);
                       window.scrollTo({ top: 0, behavior: "instant" });
                     }}
-                    className={`rounded-full px-4 py-2 text-sm font-semibold ${language === locale ? "bg-navy text-white" : "bg-navy/5 text-navy"}`}
+                    className={`min-w-14 rounded-full border px-4 py-2 text-center text-sm font-semibold transition-colors ${language === locale ? "border-primary bg-primary text-navy" : "border-white/20 bg-white/5 text-paper hover:bg-white/15"}`}
                     aria-current={language === locale ? "page" : undefined}
                   >
                     {t.common.langName[language]}
@@ -277,12 +279,12 @@ export default function Header() {
                 ))}
               </div>
             </nav>
-            <div className="shrink-0 border-t border-rule px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-4">
-              <a href={contacts.salesHref} className="num mb-3 block text-[18px] font-semibold text-navy">{contacts.sales}</a>
-              <div className="flex gap-2">
-                <a href="#contact" onClick={() => setSheet(false)} className="nav-request flex-1 justify-center text-center">{t.common.request}</a>
-                <a href={contacts.login} target="_blank" rel="noreferrer" className="rounded-full border border-navy/25 px-4 py-3 text-center text-sm font-semibold text-navy">{t.common.login}</a>
-              </div>
+            <div className="shrink-0 border-t border-white/15 bg-[#061f42]/80 px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-5">
+              <a href={contacts.salesHref} className="num mb-4 block text-[17px] font-semibold text-paper transition-colors hover:text-primary">{contacts.sales}</a>
+              <a href="#contact" onClick={() => setSheet(false)} className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-center text-[15px] font-semibold text-navy transition-colors hover:bg-[#68d7ff]">
+                {t.common.request} <span aria-hidden>↗</span>
+              </a>
+              <a href={contacts.login} target="_blank" rel="noreferrer" className="mt-3 flex min-h-11 items-center justify-center text-[14px] font-medium text-paper/80 underline decoration-white/30 underline-offset-4 transition-colors hover:text-paper">{t.common.login}</a>
             </div>
           </div>
         </div>
