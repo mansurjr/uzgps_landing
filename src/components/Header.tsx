@@ -133,9 +133,9 @@ export default function Header() {
   };
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
+    <header className={`site-header pointer-events-none fixed inset-x-0 top-0 z-50 ${scrolled ? "is-scrolled" : ""}`}>
       <div
-        className={`glass-nav pointer-events-auto relative mx-auto flex h-[64px] w-full max-w-[1296px] items-center gap-3 px-4 transition-[box-shadow,background-color] duration-300 sm:h-[68px] sm:px-5 xl:gap-5 ${scrolled ? "shadow-[0_14px_42px_rgba(10,26,48,.18)]" : ""}`}
+        className="glass-nav pointer-events-auto relative mx-auto flex h-[64px] w-full items-center gap-3 px-4 sm:h-[68px] sm:px-5 xl:gap-5"
         onMouseLeave={closeMegaSoon}
         onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget)) setMega(false);

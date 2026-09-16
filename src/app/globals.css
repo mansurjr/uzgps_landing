@@ -84,8 +84,38 @@ body {
   backdrop-filter: blur(22px) saturate(150%);
 }
 
+.site-header {
+  padding: 0;
+  transition: padding 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-header.is-scrolled {
+  padding: 12px 12px 0;
+}
+
 .glass-nav {
+  max-width: 100%;
+  border-radius: 0;
+  transition: max-width 420ms cubic-bezier(0.22, 1, 0.36, 1), border-radius 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 420ms ease;
+}
+
+.site-header.is-scrolled .glass-nav {
+  max-width: 1296px;
   border-radius: 22px;
+  box-shadow: 0 14px 42px rgba(10, 26, 48, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+@media (min-width: 640px) {
+  .site-header.is-scrolled {
+    padding-inline: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .glass-nav {
+    transition-duration: 0.01ms;
+  }
 }
 
 .glass-nav::before,
