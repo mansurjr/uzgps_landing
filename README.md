@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UZGPS — лендинг
 
-## Getting Started
+Одностраничный сайт компании UZGPS (спутниковый мониторинг транспорта и персонала, Узбекистан).
+Next.js 16 (App Router) + Tailwind v4 + anime.js.
 
-First, run the development server:
+## Запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # продакшн-сборка
+npm run lint    # ESLint
+npx tsc --noEmit
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Переменные окружения
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Переменная | Зачем |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Канонический адрес сайта: canonical, sitemap, robots, Open Graph. По умолчанию `https://uzgps.uz`. |
+| `TELEGRAM_BOT_TOKEN` | Токен бота для отправки заявок из формы. |
+| `TELEGRAM_CHAT_ID` | Чат, куда бот отправляет заявки. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Без телеграм-переменных заявка только пишется в лог сервера (`src/app/api/lead/route.ts`).
 
-## Learn More
+## Структура
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app` — страница, метаданные, `robots.ts`, `sitemap.ts`, `manifest.ts`, OG-картинка, API заявок.
+- `src/components` — секции лендинга.
+- `src/components/smpo` — копии экранов веб-клиента СМПО (мониторинг, трекинг, отчёты, настройки объектов),
+  построенные по исходникам `smn-web`: те же цвета, шрифты, иконки Tabler, шрифт госномера и значки объектов.
+- `src/data/content.ts` — весь текст и данные (контакты, отрасли, оборудование, клиенты, модули системы).
+- `src/data/routes.json` — реальные маршруты по улицам Ташкента (OSRM), используются на карте и в демо-экранах.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Карта
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Тайлы берутся с собственного сервера UZGPS `osm.uzgps.uz` через прокси `/tiles/osm/:z/:x/:y`
+(см. `next.config.ts`): у сервера нет CORS-заголовков, поэтому нужен прокси на своём origin.
+Карта офиса в секции контактов — виджет Яндекс.Карт.
 
-## Deploy on Vercel
+## Скриншоты системы
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Реальные снимки экрана СМПО можно положить в `public/platform/` — страница подхватит их автоматически
+вместо нарисованных копий:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `track.png` · `fuel.png` · `reports.png` · `control.png` (также `.jpg` / `.webp`, ~1600×1000)
+- `overview.mp4` — запись экрана, показывается отдельным блоком
+
+## Внешние изображения
+
+Фото трекеров Teltonika, скриншоты мобильного приложения и логотипы клиентов загружаются с внешних
+хостов (`static.wixstatic.com`, `play-lh.googleusercontent.com`, `uzgps.uz`, `uz103.uz`).
+Для продакшна их лучше перенести в `public/` — так страница не зависит от чужих CDN.

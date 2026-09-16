@@ -1,26 +1,208 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* brand: logo navy #043168 + logo cyan #00adec */
+  --paper: #f4f6f9;
+  --paper-2: #e7ecf2;
+  /* warm off-white used only behind the contact section */
+  --milk: #f7f3ec;
+  --ink: #0a1a30;
+  --ink-2: #10223c;
+  --ink-3: #1a2f4d;
+  --navy: #043168;
+  --navy-2: #0a4088;
+  --graphite: #5a6679;
+  --rule: rgba(10, 26, 48, 0.13);
+  --rule-strong: rgba(10, 26, 48, 0.3);
+  --rule-inv: rgba(244, 246, 249, 0.15);
+  --primary: #00adec;
+  --primary-ink: #ffffff;
+  --alert: #e5412d;
+  --ok: #1f9d57;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-milk: var(--milk);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-graphite: var(--graphite);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rule-inv: var(--rule-inv);
+  --color-primary: var(--primary);
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-alert: var(--alert);
+  --color-ok: var(--ok);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  background: #ffffff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.bg-ink :focus-visible {
+  outline-color: var(--primary);
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 48px);
+}
+
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.h-section {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-size: clamp(32px, 4vw, 56px);
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--graphite);
+  text-wrap: pretty;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--navy);
+  color: var(--primary-ink);
+  font-weight: 600;
+  padding: 16px 24px;
+  border-radius: 2px;
+  transition: background-color 0.2s, transform 0.2s;
+}
+.btn-primary:hover {
+  background: var(--navy-2);
+}
+.bg-ink .btn-primary,
+.bg-navy .btn-primary {
+  background: var(--primary);
+  color: var(--ink);
+}
+.bg-ink .btn-primary:hover,
+.bg-navy .btn-primary:hover {
+  background: #33c0f1;
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 4px;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
+
+/* reveal targets start hidden only when JS is active */
+.js [data-reveal] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1 !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: var(--rule-strong);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--navy);
+  border: 6px solid var(--primary);
+  border-radius: 0;
+  cursor: grab;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
+  border: 6px solid var(--primary);
+  border-radius: 0;
+}
+
+/* custom checkbox tick in the contact form */
+.check-mark {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+input:checked + span .check-mark {
+  opacity: 1;
+}
+
+/* number-plate font from the СМПО web client (smn-web/src/assets/fonts/num.ttf) */
+@font-face {
+  font-family: "SmpoNumber";
+  src: url("/smpo/num.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* stat icon tints from the СМПО VehiclePopup */
+.smpo-icon-red {
+  filter: brightness(0) saturate(100%) invert(18%) sepia(96%) saturate(7481%) hue-rotate(358deg) brightness(103%) contrast(112%);
+}
+.smpo-icon-blue {
+  filter: brightness(0) saturate(100%) invert(62%) sepia(50%) saturate(500%) hue-rotate(185deg) brightness(100%) contrast(88%);
+}
+.smpo-icon-green {
+  filter: brightness(0) saturate(100%) invert(55%) sepia(75%) saturate(400%) hue-rotate(85deg) brightness(95%) contrast(95%);
 }
