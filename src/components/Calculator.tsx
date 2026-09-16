@@ -6,11 +6,11 @@ import { fill } from "@/i18n";
 import { useDict } from "@/i18n/DictProvider";
 import { useReveal } from "@/lib/useReveal";
 
-// litres per 100 km — typical averages used for the estimate
+
 const l100 = [10, 22, 32, 28];
 
 const WORK_DAYS = 22;
-// conservative share of fuel cost recovered: drains, personal trips, idling, route padding
+
 const SAVE_SHARE = 0.2;
 
 const fmt = (n: number) => Math.round(n).toLocaleString("ru-RU");
@@ -44,7 +44,7 @@ export default function Calculator() {
           <h2 data-reveal className="h-section">
             {t.calculator.title}
           </h2>
-          <p data-reveal className="lead max-w-[520px] lg:justify-self-end">
+          <p data-reveal className="lead max-w-130 lg:justify-self-end">
             {t.calculator.lead}
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function Calculator() {
                   >
                     <span className="block truncate font-medium">{k.label}</span>
                     <span className={`num mt-0.5 block text-[12px] sm:text-[13px] ${kind === k.key ? "text-paper/60" : "text-graphite"}`}>
-                      ~{k.l100} {t.calculator.per100}
+                        {k.l100} {t.calculator.per100}
                     </span>
                   </button>
                 ))}
@@ -80,9 +80,9 @@ export default function Calculator() {
             <div>
               <p className="text-[14px] text-paper/60 sm:text-[15px]">{t.calculator.resultTitle}</p>
               <p className="num mt-2 font-display text-[clamp(32px,7.5vw,68px)] font-medium leading-none tracking-[-0.04em] text-primary sm:mt-3">
-                ≈ <Counter value={r.year} />
+                <Counter value={r.year} />
               </p>
-              <p className="mt-2 text-[14px] text-paper/60 sm:text-[15px]">{t.calculator.units.sum}</p>
+              <p className="mt-2 text-[20px] text-paper/60 sm:text-[25px]">{t.calculator.units.sum}</p>
 
               <dl className="mt-8 border-t border-rule-inv sm:mt-10">
                 <Row label={t.calculator.perMonth} value={<>≈ <Counter value={r.month} /> {t.calculator.units.sum}</>} />

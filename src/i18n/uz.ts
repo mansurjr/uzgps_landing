@@ -334,7 +334,7 @@ export const uz: Dict = {
       "Escort TD-BLE": { title: "Simsiz ЭСКОРТ yoqilg‘i datchigi", text: "Yoqilg‘i sathi ko‘rsatkichlarini trekerga signal kabelisiz Bluetooth LE orqali uzatadi.", specs: ["Bluetooth LE", "Yoqilg‘i nazorati", "Signal kabelisiz", "Bakka o‘rnatish"] },
       "Omnicomm LLS 4": { title: "Omnicomm yoqilg‘i datchigi", text: "Monitoring tizimida yoqilg‘i sathini va to‘ldirish yoki kamayish holatlarini aniq kuzatish uchun sig‘imli datchik.", specs: ["Yoqilg‘i sathi", "±1% aniqlik", "Harorat o‘lchovi", "Avtoparklar uchun"] },
       "Реле блокировки": { label: "Dvigatelni masofadan bloklash relesi", title: "Dvigatel ishga tushishini boshqarish", text: "Avtomobil relesi treker chiqishiga ulanadi va tizim to‘g‘ri sozlanganda dvigatelni ishga tushirishni masofadan cheklaydi. Rasmda rele namunasi ko‘rsatilgan.", specs: ["Treker orqali boshqaruv", "O‘g‘irlikdan himoya", "Elektr tizimga moslash", "Professional o‘rnatish"] },
-      "Замки Jointech": { label: "Jointech elektron qulflari", title: "Yuk himoyasi", text: "Yukni ochishni nazorat qilish, konteyner yoki furgonni kuzatish uchun elektron qulf. Rasmda JT705A modeli.", specs: ["Ochishni nazorat qilish", "GPS monitoring", "Masofadan boshqaruv", "Yuk himoyasi"] },
+      "Замки Jointech": { label: "Jointech elektron qulflari", title: "Yuk himoyasi", text: "Yukni ochishni nazorat qilish, konteyner yoki furgonni kuzatish uchun elektron qulf. Rasmda JT701 va ikkita JT709 qulf bor.", specs: ["Ochishni nazorat qilish", "GPS monitoring", "Masofadan boshqaruv", "Yuk himoyasi"] },
       FMB140: {
         title: "CAN-shinani o‘qish",
         text: "Bort kompyuteridan ma’lumot: haqiqiy sarf, aylanishlar, odometr bo‘yicha yurish.",
@@ -378,7 +378,7 @@ export const uz: Dict = {
     featured: {
       name: "Respublika shoshilinch tibbiy yordam markazi",
       short: "103 xizmati",
-      text: "Respublika tez yordam xizmati mashinalari alohida SMPO UZGPS tizimida ishlaydi — 103smpo.uzgps.uz.",
+      text: "Respublika tez yordam xizmati mashinalari UZGPS sun’iy yo‘ldosh monitoringi tizimidan foydalanadi.",
     },
   },
 };

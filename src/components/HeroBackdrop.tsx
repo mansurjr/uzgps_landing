@@ -21,8 +21,6 @@ uniform float uTime;
 
 void main() {
   vec2 point = (gl_FragCoord.xy - uResolution * 0.5) / uResolution.y * 2.0;
-  float aspect = uResolution.x / uResolution.y;
-  point.x -= mix(0.0, 0.58, smoothstep(0.8, 1.6, aspect));
 
   float distanceFromCenter = length(point);
   float angle = atan(point.y, point.x);
@@ -32,7 +30,7 @@ void main() {
   float spokes = (1.0 - smoothstep(0.0, 0.004, spokeAngle * distanceFromCenter))
     * smoothstep(0.06, 0.2, distanceFromCenter);
 
-  float sweepAngle = mod(angle - uTime * 0.24 + TAU, TAU);
+  float sweepAngle = mod(angle + uTime * 0.24 - TAU * 0.5 + TAU * 2.0, TAU);
   float sweep = pow(1.0 - sweepAngle / TAU, 6.0);
   float beam = 1.0 - smoothstep(0.0, 0.035, sweepAngle);
   float fade = 1.0 - smoothstep(0.8, 1.75, distanceFromCenter);

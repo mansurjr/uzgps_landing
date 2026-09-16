@@ -1,6 +1,6 @@
 # Device image sources
 
-Images were downloaded from the linked product pages and converted to WebP for this site. The relay photo illustrates the accessory type; the exact installed relay depends on the vehicle.
+Images were downloaded from the linked product pages. Most were converted to WebP; the JT701/JT709 photo is kept as a high-resolution JPEG. The relay photo illustrates the accessory type; the exact installed relay depends on the vehicle.
 
 | Files | Product image source |
 | --- | --- |
@@ -15,3 +15,4 @@ Images were downloaded from the linked product pages and converted to WebP for t
 | `omnicomm-lls4.webp` | [Omnicomm LLS 4](https://www.omnicomm.ru/components/datchiki-urovnya-topliva/lls-4/) |
 | `engine-relay.webp` | [Alite engine cut-off relay example](https://golchhacomputer.com/product/7353-alite-engine-cut-off-relay-vehicle-immobilizer-12v) |
 | `jointech-jt705a.webp` | [Jointech JT705A](https://www.jointcontrols.com/Intelligent-Container-Monitor-jt705a.html) |
+| `jointech-jt701-jt709.jpg` | [Jointech JT701/JT709 product photo](https://jointech.en.made-in-china.com/product/pnQUvTRJBkWP/China-Jt701-Electronic-Reusable-Seal-with-Long-Battery-Life-Smart-Lock.html); models also listed by [Jointech](https://www.jointcontrols.com/jt701-intelligent-lock-tracker.html) |

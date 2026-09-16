@@ -26,7 +26,6 @@ export default function Header() {
   const megaRef = useRef<HTMLDivElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
 
   const links = [
@@ -48,26 +47,15 @@ export default function Header() {
 
   useEffect(() => {
     if (!sheet) return;
-    const previousOverflow = document.documentElement.style.overflow;
-    const menuButton = menuButtonRef.current;
-    document.documentElement.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
-
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setSheet(false);
-        return;
+        menuButtonRef.current?.focus();
       }
-      if (event.key !== "Tab" || !sheetRef.current) return;
-      const focusable = sheetRef.current.querySelectorAll<HTMLElement>("a, button");
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      if (!sheetRef.current?.contains(event.target as Node) && !menuButtonRef.current?.contains(event.target as Node)) {
+        setSheet(false);
       }
     };
     const desktop = window.matchMedia("(min-width: 1280px)");
@@ -75,12 +63,12 @@ export default function Header() {
       if (desktop.matches) setSheet(false);
     };
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("pointerdown", onPointerDown);
     desktop.addEventListener("change", closeOnDesktop);
     return () => {
-      document.documentElement.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("pointerdown", onPointerDown);
       desktop.removeEventListener("change", closeOnDesktop);
-      menuButton?.focus();
     };
   }, [sheet]);
 
@@ -104,9 +92,8 @@ export default function Header() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const anim = animate(sheetRef.current, {
       opacity: [0, 1],
-      translateY: [20, 0],
-      scale: [0.97, 1],
-      duration: 400,
+      translateY: [-10, 0],
+      duration: 350,
       ease: "outQuart",
     });
     return () => {
@@ -224,67 +211,56 @@ export default function Header() {
         <button
           ref={menuButtonRef}
           type="button"
-          className="ml-auto flex size-11 items-center justify-center gap-2 rounded-full text-[15px] font-semibold text-navy transition-colors hover:bg-navy/10 xl:hidden"
-          onClick={() => setSheet(true)}
+          className="ml-auto flex size-11 items-center justify-center gap-2 rounded-full text-[15px] font-semibold text-navy transition-colors hover:bg-navy/10 sm:w-auto sm:px-3 xl:hidden"
+          onClick={() => setSheet((current) => !current)}
           aria-label={t.common.menu}
           aria-expanded={sheet}
           aria-controls="mobile-menu"
         >
           <span className="hidden sm:inline">{t.common.menu}</span>
           <span className="flex w-5 flex-col gap-1.5" aria-hidden>
-            <span className="h-[2px] rounded-full bg-navy" />
-            <span className="h-[2px] rounded-full bg-navy" />
+            <span className={`h-[2px] rounded-full bg-navy transition-transform ${sheet ? "translate-y-1 rotate-45" : ""}`} />
+            <span className={`h-[2px] rounded-full bg-navy transition-transform ${sheet ? "-translate-y-1 -rotate-45" : ""}`} />
           </span>
         </button>
       </div>
 
       {sheet && (
-        <div className="pointer-events-auto fixed inset-0 z-50 bg-ink/75 p-2 backdrop-blur-sm sm:p-5" role="presentation" onMouseDown={(event) => {
-          if (event.target === event.currentTarget) setSheet(false);
-        }}>
-          <div id="mobile-menu" ref={sheetRef} className="mobile-menu-panel relative mx-auto flex h-full max-w-[520px] flex-col overflow-hidden rounded-[24px] border border-white/15 text-paper shadow-[0_24px_80px_rgba(2,15,34,.45)]" role="dialog" aria-modal="true" aria-label={t.common.menu}>
-            <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-white/15 px-5">
-              <Logo inverted />
-              <button ref={closeButtonRef} type="button" onClick={() => setSheet(false)} className="grid size-11 place-items-center rounded-full border border-white/20 bg-white/10 text-paper transition-colors hover:bg-white/20" aria-label={t.common.close}>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-                  <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                </svg>
-              </button>
-            </div>
-            <nav className="min-h-0 flex-1 overflow-y-auto px-5 pb-5 pt-6" aria-label={t.nav.label}>
-              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">{t.nav.label}</p>
-              {[{ href: "#solutions", label: t.nav.solutions }, ...links].map((link, index) => (
-                <a key={link.href} href={link.href} onClick={() => setSheet(false)} className="group flex min-h-[68px] items-center gap-4 border-b border-white/15 py-3 text-paper transition-colors hover:text-primary focus-visible:text-primary">
-                  <span className="num w-6 shrink-0 text-[12px] text-primary/80">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="min-w-0 flex-1 font-display text-[clamp(22px,6vw,28px)] leading-tight tracking-[-0.03em]">{link.label}</span>
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/20 text-[17px] text-primary transition-colors group-hover:border-primary group-hover:bg-primary group-hover:text-navy" aria-hidden>↗</span>
+        <div id="mobile-menu" ref={sheetRef} className="glass-panel pointer-events-auto relative mx-auto mt-2 max-h-[calc(100dvh-88px)] w-full max-w-[1296px] overflow-y-auto rounded-[22px] p-5 sm:mt-2.5 sm:p-7 xl:hidden">
+          <nav className="relative" aria-label={t.nav.label}>
+            <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-graphite">{t.nav.label}</p>
+            <div className="mt-3 grid sm:grid-cols-2 sm:gap-x-8">
+              {[{ href: "#solutions", label: t.nav.solutions }, ...links].map((link) => (
+                <a key={link.href} href={link.href} onClick={() => setSheet(false)} className="group flex min-h-14 items-center justify-between border-b border-rule px-2 py-2 text-[16px] font-medium text-ink transition-colors hover:bg-navy/5 hover:text-navy focus-visible:bg-navy/5">
+                  {link.label}
+                  <span className="text-primary transition-transform group-hover:translate-x-1" aria-hidden>→</span>
                 </a>
               ))}
-              <div className="flex gap-2 pt-6">
-                {locales.map((language) => (
-                  <Link
-                    key={language}
-                    href={localePath(language)}
-                    hrefLang={language}
-                    scroll={false}
-                    onClick={() => {
-                      setSheet(false);
-                      window.scrollTo({ top: 0, behavior: "instant" });
-                    }}
-                    className={`min-w-14 rounded-full border px-4 py-2 text-center text-sm font-semibold transition-colors ${language === locale ? "border-primary bg-primary text-navy" : "border-white/20 bg-white/5 text-paper hover:bg-white/15"}`}
-                    aria-current={language === locale ? "page" : undefined}
-                  >
-                    {t.common.langName[language]}
-                  </Link>
-                ))}
-              </div>
-            </nav>
-            <div className="shrink-0 border-t border-white/15 bg-[#061f42]/80 px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-5">
-              <a href={contacts.salesHref} className="num mb-4 block text-[17px] font-semibold text-paper transition-colors hover:text-primary">{contacts.sales}</a>
-              <a href="#contact" onClick={() => setSheet(false)} className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-center text-[15px] font-semibold text-navy transition-colors hover:bg-[#68d7ff]">
-                {t.common.request} <span aria-hidden>↗</span>
-              </a>
-              <a href={contacts.login} target="_blank" rel="noreferrer" className="mt-3 flex min-h-11 items-center justify-center text-[14px] font-medium text-paper/80 underline decoration-white/30 underline-offset-4 transition-colors hover:text-paper">{t.common.login}</a>
+            </div>
+          </nav>
+          <div className="relative mt-6 flex flex-col gap-5 border-t border-rule pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              {locales.map((language) => (
+                <Link
+                  key={language}
+                  href={localePath(language)}
+                  hrefLang={language}
+                  scroll={false}
+                  onClick={() => {
+                    setSheet(false);
+                    window.scrollTo({ top: 0, behavior: "instant" });
+                  }}
+                  className={`min-w-14 rounded-full border px-4 py-2 text-center text-sm font-semibold transition-colors ${language === locale ? "border-navy bg-navy text-paper" : "border-rule-strong text-navy hover:bg-navy/5"}`}
+                  aria-current={language === locale ? "page" : undefined}
+                >
+                  {t.common.langName[language]}
+                </Link>
+              ))}
+              <a href={contacts.salesHref} className="num ml-auto text-sm font-semibold text-navy hover:text-primary sm:ml-3">{contacts.sales}</a>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href={contacts.login} target="_blank" rel="noreferrer" className="text-sm font-semibold text-navy hover:text-primary">{t.common.login}</a>
+              <a href="#contact" onClick={() => setSheet(false)} className="nav-request">{t.common.request} <span aria-hidden>↗</span></a>
             </div>
           </div>
         </div>

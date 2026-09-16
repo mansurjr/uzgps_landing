@@ -1,0 +1,8 @@
+<svg viewBox="-40 -40 80 80" width="90" height="90" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="0" cy="0" r="22" fill="#378ADD" opacity="0.16" />
+  <circle cx="0" cy="0" r="18" fill="#378ADD" opacity="0.32" />
+  <g transform="translate(15,-15)">
+    <circle r="8.5" fill="#185FA5" stroke="#FFFFFF" stroke-width="1.5" />
+    <text x="0" y="3.2" text-anchor="middle" font-size="10" font-weight="500" fill="#FFFFFF" font-family="system-ui,-apple-system,sans-serif">P</text>
+  </g>
+</svg>
