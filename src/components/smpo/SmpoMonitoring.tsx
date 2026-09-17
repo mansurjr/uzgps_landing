@@ -70,6 +70,31 @@ const OBJECTS: Obj[] = [
     plate: { type: 1, region: "01", numbers: "925", symbols: "TTA" },
     stats: { distance: "12,4", violations: "0", engineHours: "4,5", fuel: "0/0", parkings: "1" },
   },
+  {
+    id: 7, name: "Курьерский фургон", model: "Курьерский фургон", icon: "truck", status: "MOVING", kmh: 48, engine: true, sats: 15, route: "r1", offset: 0.15,
+    plate: { type: 1, region: "01", numbers: "482", symbols: "ABA" },
+    stats: { distance: "95,2", violations: "0", engineHours: "7,1", fuel: "45/0", parkings: "8" },
+  },
+  {
+    id: 8, name: "Сервисный автомобиль", model: "Сервисный автомобиль", icon: "taxi", status: "PARKING", kmh: 0, engine: false, sats: 12, route: "r2", offset: 0.78,
+    plate: { type: 1, region: "01", numbers: "316", symbols: "BBA" },
+    stats: { distance: "64,1", violations: "0", engineHours: "3,8", fuel: "0/0", parkings: "4" },
+  },
+  {
+    id: 9, name: "Тягач MAN", model: "Седельный тягач", icon: "gruzovik", status: "MOVING", kmh: 62, engine: true, sats: 16, route: "r3", offset: 0.85,
+    plate: { type: 3, region: "01", letter: "A", numbers: "888", symbols: "FA" },
+    stats: { distance: "340,5", violations: "1", engineHours: "12,5", fuel: "120/0", parkings: "6" },
+  },
+  {
+    id: 10, name: "Пассажирский бус", model: "Микроавтобус", icon: "bus", status: "MOVING", kmh: 44, engine: true, sats: 13, route: "r4", offset: 0.28,
+    plate: { type: 1, region: "01", numbers: "512", symbols: "VAA" },
+    stats: { distance: "178,0", violations: "0", engineHours: "8,9", fuel: "55/0", parkings: "11" },
+  },
+  {
+    id: 11, name: "Самосвал ISUZU", model: "Самосвал", icon: "gruzovik", status: "STOP", kmh: 0, engine: true, sats: 9, route: "r5", offset: 0.72,
+    plate: { type: 1, region: "10", numbers: "707", symbols: "OZA" },
+    stats: { distance: "110,4", violations: "0", engineHours: "6,7", fuel: "70/0", parkings: "7" },
+  },
 ];
 
 const W = 1440;
@@ -105,7 +130,7 @@ export default function SmpoMonitoring() {
   const frame = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
   const [selected, setSelected] = useState(1);
-  const [speeds, setSpeeds] = useState<Record<number, number>>(() => Object.fromEntries(OBJECTS.map((o) => [o.id, o.kmh])));
+  const [, setSpeeds] = useState<Record<number, number>>(() => Object.fromEntries(OBJECTS.map((o) => [o.id, o.kmh])));
   const markers = useRef<Record<number, HTMLDivElement | null>>({});
   const popup = useRef<HTMLDivElement>(null);
   const selectedRef = useRef(selected);
@@ -155,8 +180,7 @@ export default function SmpoMonitoring() {
         const icon = m?.firstElementChild as HTMLElement | null;
         if (icon) icon.style.transform = `translate(-50%, -50%) rotate(${s.heading}deg)`;
         if (popup.current && s.o.id === selectedRef.current) {
-          // keep the popup on screen and clear of the object list
-          const px = Math.min(W - 480, Math.max(500, a.x - 210));
+          const px = Math.min(W - 440, Math.max(30, a.x - 210));
           const py = a.y - 290 < 16 ? a.y + 40 : a.y - 290;
           popup.current.style.transform = `translate(${px}px, ${Math.min(H - 300, py)}px)`;
         }
@@ -273,88 +297,6 @@ export default function SmpoMonitoring() {
           </span>
         </div>
         <span className="absolute bottom-[10px] right-[70px] border-x-2 border-b-2 border-[#2F2B3D]/70 bg-white/70 px-2 text-[11px]">1 km</span>
-
-        {/* MapSidebar with the object list */}
-        <aside className="absolute bottom-4 left-5 top-4 flex w-[456px] flex-col overflow-hidden rounded-md bg-white shadow-[0_3px_12px_rgba(47,43,61,.14)]">
-          {/* MonitoringSidebarHeader */}
-          <div className="flex items-center gap-3 bg-[#808390]/[.16] py-3 pl-2 pr-4">
-            <Checkbox checked indeterminate={false} />
-            <div className="flex flex-1">
-              <span className="flex h-[38px] flex-1 items-center justify-between rounded-l-md border border-black/20 bg-white px-3 text-[15px]">
-                Список <TablerIcon name="chevron-down" size={20} color={T.secondary} />
-              </span>
-              <span className="grid h-[38px] w-[42px] place-items-center rounded-r-md text-white shadow-[0_2px_4px_rgba(47,43,61,.2)]" style={{ background: T.primary }}>
-                <TablerIcon name="search" size={20} />
-              </span>
-            </div>
-            <span className="grid size-[38px] place-items-center rounded-md text-white" style={{ background: T.primary }}>
-              <TablerIcon name="filter-2-x" size={20} />
-            </span>
-            <span className="grid size-[38px] place-items-center rounded-md text-white" style={{ background: T.success }}>
-              <TablerIcon name="file-spreadsheet" size={20} />
-            </span>
-          </div>
-          <div className="flex items-center justify-between px-4 py-3" style={{ background: T.background }}>
-            <span className="flex gap-1 rounded border border-black/15 px-2 py-1 text-[15px]">
-              <b className="font-black" style={{ color: T.primary }}>6</b> из <b className="font-black">6</b>
-            </span>
-            <span className="mr-1 flex items-center gap-3">
-              {(["gps", "engine", "satellite", "gas-station"] as const).map((n) => (
-                <TablerIcon key={n} name={n} size={24} color={T.secondary} />
-              ))}
-            </span>
-          </div>
-          <div className="h-px bg-black/10" />
-
-          {/* MonitoringListView */}
-          <ul className="flex-1 overflow-hidden">
-            {OBJECTS.map((o, i) => {
-              const st = STATUS[o.status];
-              const active = o.id === selected;
-              return (
-                <li key={o.id} className="flex">
-                  <button
-                    type="button"
-                    onClick={() => setSelected(o.id)}
-                    className="w-full text-left transition-colors"
-                    style={{ background: active ? "rgba(35,72,125,.08)" : undefined }}
-                  >
-                    <div className="flex items-center px-2 pt-2">
-                      <span className="mr-3"><Checkbox checked /></span>
-                      <span className="flex-1 truncate text-[16px]">
-                        {i + 1}.&nbsp; {o.name}
-                      </span>
-                      <span className="mr-2 flex items-center gap-2 text-[14px] text-[#2F2B3D]/70">
-                        16 Sep.
-                        {(["pencil", "message-dots", "road"] as const).map((n) => (
-                          <span key={n} className="grid size-[30px] place-items-center rounded-md bg-[#808390]/[.16]">
-                            <TablerIcon name={n} size={n === "road" ? 22 : 18} color={T.secondary} />
-                          </span>
-                        ))}
-                      </span>
-                    </div>
-                    <div className="flex items-center px-3 pb-2.5 pt-1">
-                      <span className="ml-9 flex flex-1 items-center gap-1 pl-2">
-                        <PlateNumber plate={o.plate} />
-                        <span className="ml-2 text-[18px] font-medium tabular-nums">
-                          {speeds[o.id]} <span className="font-normal">км/ч</span>
-                        </span>
-                      </span>
-                      <span className="mr-1 flex gap-4">
-                        <TablerIcon name={st.icon} size={24} color={st.color} />
-                        <TablerIcon name="engine" size={24} color={o.engine ? T.success : T.error} />
-                        <TablerIcon name="satellite" size={24} color={satColor(o.sats)} />
-                        <TablerIcon name="gas-station" size={24} color={T.secondary} />
-                      </span>
-                    </div>
-                    <div className="h-px bg-black/10" />
-                  </button>
-                  <span className="w-[5px] shrink-0 rounded-r-[10px]" style={{ background: st.color }} title={st.label} />
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
       </div>
     </div>
   );
