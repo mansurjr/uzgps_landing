@@ -29,7 +29,8 @@ function platformMedia(): PlatformMedia {
     const f = find(tab);
     if (f) screens[tab] = `/platform/${f}`;
   }
-  return { screens, video: existsSync(path.join(dir, "overview.mp4")) ? "/platform/overview.mp4" : undefined };
+  const videoFile = [".mp4", ".webm"].map((ext) => "overview" + ext).find((f) => existsSync(path.join(dir, f)));
+  return { screens, video: videoFile ? `/platform/${videoFile}` : undefined };
 }
 
 export default async function Home({ params }: PageProps<"/[locale]">) {
