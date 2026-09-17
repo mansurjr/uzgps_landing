@@ -6,7 +6,7 @@ import { animate, stagger } from "animejs";
 import { devices, type DeviceModel } from "@/data/content";
 import { useDict } from "@/i18n/DictProvider";
 
-const AUTOPLAY_MS = 6000;
+const AUTOPLAY_MS = 10000;
 const SWIPE_PX = 40;
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -159,24 +159,26 @@ export default function DeviceCarousel() {
             ))}
           </div>
 
-          <div className="absolute bottom-4 right-4 flex">
-            <button
-              type="button"
-              onClick={prev}
-              aria-label={t.equipment.carousel.prev}
-              className="grid size-12 place-items-center border border-ink bg-paper text-[20px] text-ink transition-colors hover:bg-navy hover:text-paper"
-            >
-              ←
-            </button>
-            <button
-              type="button"
-              onClick={next}
-              aria-label={t.equipment.carousel.next}
-              className="-ml-px grid size-12 place-items-center border border-ink bg-paper text-[20px] text-ink transition-colors hover:bg-navy hover:text-paper"
-            >
-              →
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={prev}
+            aria-label={t.equipment.carousel.prev}
+            className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center border border-ink bg-paper text-ink transition-colors hover:bg-navy hover:text-paper"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 12H4m7-7-7 7 7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label={t.equipment.carousel.next}
+            className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center border border-ink bg-paper text-ink transition-colors hover:bg-navy hover:text-paper"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12h16m-7-7 7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
 
           {/* autoplay progress */}
           <span className="absolute inset-x-0 top-0 h-[3px] bg-navy/10">

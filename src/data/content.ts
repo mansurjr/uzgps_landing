@@ -27,7 +27,7 @@ export type ClientItem = {
   h: number;
 };
 
-/** UZGPS ведёт отдельную систему для республиканской службы 103 (103smpo.uzgps.uz). */
+/** Республиканская служба 103 — выделенный клиент UZGPS. */
 export const featuredClient: ClientItem = {
   id: "c103",
   name: "Республиканский центр экстренной медицинской помощи",
@@ -68,7 +68,7 @@ export const devices = [
   { model: "Escort TD-BLE", image: "/devices/escort-td-ble.webp" },
   { model: "Omnicomm LLS 4", image: "/devices/omnicomm-lls4.webp" },
   { model: "Реле блокировки", image: "/devices/engine-relay.webp" },
-  { model: "Замки Jointech", image: "/devices/jointech-jt705a.webp" },
+  { model: "Замки Jointech", image: "/devices/jointech-jt701-jt709.jpg" },
   { model: "FMB140", image: "/devices/fmb140.webp" },
   { model: "FMC130", image: "/devices/fmc130.webp" },
   { model: "FMB003", image: "/devices/fmb003.webp" },

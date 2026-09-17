@@ -23,29 +23,36 @@ export async function POST(request: Request) {
     return Response.json({ ok: false, error: "invalid" }, { status: 422 });
   }
 
-  // Delivery target is configured by env; without it the lead is only logged.
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chat = process.env.TELEGRAM_CHAT_ID;
-  if (token && chat) {
-    const text = [
-      "Новая заявка с сайта",
-      `Имя: ${lead.name}`,
-      `Телефон: ${lead.phone}`,
-      lead.email && `E-mail: ${lead.email}`,
-      lead.company && `Компания: ${lead.company}`,
-      `Машин: ${lead.fleet}`,
-      lead.interest && `Интересует: ${lead.interest}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+  if (!token || !chat) {
+    console.error("[lead] Telegram delivery is not configured");
+    return Response.json({ ok: false, error: "unavailable" }, { status: 503 });
+  }
+
+  const text = [
+    "Новая заявка с сайта",
+    `Имя: ${lead.name}`,
+    `Телефон: ${lead.phone}`,
+    lead.email && `E-mail: ${lead.email}`,
+    lead.company && `Компания: ${lead.company}`,
+    lead.fleet && `Машин: ${lead.fleet}`,
+    lead.interest && `Интересует: ${lead.interest}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  try {
     const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: chat, text }),
+      signal: AbortSignal.timeout(10000),
     });
-    if (!res.ok) return Response.json({ ok: false }, { status: 502 });
-  } else {
-    console.info("[lead]", lead);
+    if (!res.ok) throw new Error(`Telegram returned ${res.status}`);
+  } catch {
+    console.error("[lead] Telegram delivery failed");
+    return Response.json({ ok: false, error: "delivery_failed" }, { status: 502 });
   }
 
   return Response.json({ ok: true });

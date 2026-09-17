@@ -8,7 +8,7 @@ import { useDict } from "@/i18n/DictProvider";
 const figureValues = [
   { value: 10, prefix: "", prefixUz: "", suffix: "+", suffixUz: "+" },
   { value: 30, prefix: "до ", prefixUz: "", suffix: "%", suffixUz: "% gacha" },
-  { value: 10000, prefix: "≈ ", prefixUz: "≈ ", suffix: "", suffixUz: "" },
+  { value: 10000, prefix: "", prefixUz: "", suffix: " +", suffixUz: "" },
 ];
 
 export default function Hero() {

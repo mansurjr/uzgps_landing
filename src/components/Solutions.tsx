@@ -16,7 +16,7 @@ export default function Solutions() {
           <h2 data-reveal className="h-section">
             {t.solutions.title}
           </h2>
-          <p data-reveal className="lead max-w-[520px] lg:justify-self-end">
+          <p data-reveal className="lead max-w-130 lg:justify-self-end">
             {t.solutions.lead}
           </p>
         </div>
@@ -30,7 +30,7 @@ export default function Solutions() {
               >
                 <h3 className="font-display text-[clamp(24px,2.6vw,36px)] leading-tight tracking-[-0.03em]">{it.title}</h3>
                 <p className="text-[17px] leading-relaxed text-graphite group-hover:text-paper/75">{it.text}</p>
-                <span className="hidden text-right text-[22px] transition-transform group-hover:translate-x-1 md:block">→</span>
+                <span className="hidden self-center text-right text-[22px] transition-transform group-hover:translate-x-1 md:block">→</span>
               </a>
             </li>
           ))}

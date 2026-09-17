@@ -199,12 +199,12 @@ export default function SmpoTracking() {
             <div className="grid grid-cols-12 gap-x-2 gap-y-2">
               <Stat className="col-span-4" label="Пробег" icon="mileage" value="126,3 км" />
               <Stat className="col-span-3" label="Нарушение" icon="speedometer" value="2" tint="smpo-icon-red" />
-              <div className="col-span-5 row-span-2 flex items-center justify-center">
-                <Image src="/smpo/default_vehicle_side.png" alt="" width={180} height={76} className="h-[76px] w-full rounded object-contain object-center" />
+              <div className="col-span-5 row-span-1 flex items-center justify-center">
+                <Image src="/smpo/default_vehicle_side.png" alt="" width={180} height={70} className="h-[76px] w-full rounded object-contain object-center" />
               </div>
               <Stat className="col-span-4" label="Моточасы" icon="engine" value="7,8 ч" tint="smpo-icon-green" />
               <Stat className="col-span-3" label="Стоянки" icon="parking" value="9" />
-              <Stat className="col-span-7" label="Заправка/слив" icon="gas-station" value="60/32" tint="smpo-icon-red" />
+              <Stat className="col-span-5" label="Заправка/слив" icon="gas-station" value="60/32" tint="smpo-icon-red" />
             </div>
           </div>
 
@@ -225,7 +225,7 @@ export default function SmpoTracking() {
             ))}
           </div>
 
-          <div className="mb-4 flex h-[48px] items-center justify-between rounded-md border pl-4 pr-3 text-[15px]" style={{ borderColor: T.border }}>
+          <div className="mb-4 flex h-12 items-center justify-between rounded-md border pl-4 pr-3 text-[15px]" style={{ borderColor: T.border }}>
             Настройка трека <TablerIcon name="settings-2" size={20} color={T.secondary} />
           </div>
 
@@ -236,7 +236,7 @@ export default function SmpoTracking() {
       </aside>
 
       {/* TrackPlayer islands */}
-      <div className="absolute flex items-center gap-2" style={{ left: SIDEBAR_RIGHT + 12, bottom: CHART_H + 30 }}>
+      <div className="absolute flex items-center gap-2" style={{ left: SIDEBAR_RIGHT + 300, bottom: CHART_H + 30 }}>
         <span className="grid size-[46px] place-items-center rounded-lg bg-white" style={{ boxShadow: T.cardShadow, color: T.primary }}>
           <TablerIcon name="location" size={22} />
         </span>

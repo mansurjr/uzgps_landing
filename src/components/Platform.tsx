@@ -58,7 +58,7 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <h2 data-reveal className="h-section">{t.platform.title}</h2>
-          <p data-reveal className="max-w-[520px] text-[18px] leading-relaxed text-paper/60 lg:justify-self-end">
+          <p data-reveal className="max-w-130 text-[18px] leading-relaxed text-paper/60 lg:justify-self-end">
             {t.platform.lead}
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function Platform({ media = { screens: {} } }: { media?: Platform
               }`}
             >
               {t.label}
-              <span className={`absolute inset-x-0 -bottom-px h-[3px] bg-primary transition-transform duration-300 ${tab === t.key ? "scale-x-100" : "scale-x-0"}`} />
+              <span className={`absolute inset-x-0 -bottom-px h-0.75 bg-primary transition-transform duration-300 ${tab === t.key ? "scale-x-100" : "scale-x-0"}`} />
             </button>
           ))}
         </div>
@@ -197,7 +197,7 @@ function MobileApp() {
         </div>
       </div>
 
-      <ul className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-4 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
+      <ul className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-4 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
         {appScreens.map((src, i) => (
           <li key={src} data-phone className={`w-[46%] shrink-0 snap-start sm:w-auto ${i % 2 ? "sm:mt-12" : ""}`}>
             <div className="overflow-hidden rounded-[22px] border-[5px] border-ink-3 bg-ink-3 shadow-[0_30px_50px_-25px_rgba(0,0,0,.7)]">

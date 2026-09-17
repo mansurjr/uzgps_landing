@@ -203,7 +203,7 @@ export default function Contact() {
                     onChange={(e) => setComment(e.target.value.slice(0, 200))}
                     rows={3}
                     placeholder={t.contact.commentPlaceholder}
-                    className="mt-2 w-full resize-none rounded-xl border-2 border-transparent bg-paper px-4 py-3.5 text-[16px] outline-none transition-all placeholder:text-ink/30 focus:border-primary focus:bg-white"
+                    className="mt-2 w-full resize-none rounded-xl border-2 border-transparent bg-paper px-4 py-3.5 text-[16px] outline-none  placeholder:text-ink/30 focus:bg-white"
                   />
                 </label>
 
@@ -257,8 +257,8 @@ function Field({
         required={required}
         aria-invalid={!!error}
         onChange={(e) => onChange(e.target.value)}
-        className={`mt-2 w-full rounded-xl border-2 bg-paper px-4 py-3.5 text-[16px] outline-none transition-all placeholder:text-ink/30 focus:bg-white ${
-          error ? "border-alert/60 focus:border-alert" : "border-transparent focus:border-primary"
+        className={`mt-2 w-full rounded-xl border-2 bg-paper px-4 py-3.5 text-[16px]  placeholder:text-ink/30 focus:bg-white ${
+          error ? "border-alert/60 focus:border-alert" : "border-transparent "
         }`}
       />
       <span className={`mt-1.5 block min-h-[20px] text-[13px] text-alert transition-opacity ${error ? "opacity-100" : "opacity-0"}`} aria-live="polite">
