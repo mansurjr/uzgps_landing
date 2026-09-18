@@ -165,7 +165,7 @@ export const uz: Dict = {
   about: {
     title: "Milliy sun’iy yo‘ldosh monitoringi tizimi",
     text1:
-      "UZGPS BePro dasturchilar markazi tomonidan «O‘zbektelekom» AK bilan birgalikda Milliy axborot tizimini rivojlantirish doirasida ishlab chiqilgan.",
+      "UZGPS Toshkentdagi BePro dasturchilar markazi tomonidan «O‘zbektelekom» AK bilan birgalikda Milliy axborot tizimini rivojlantirish doirasida ishlab chiqilgan.",
     text2:
       "Maqsadimiz — O‘zbekistonda sun’iy yo‘ldosh monitoringi, dispetcherlik va navigatsiya texnologiyalarini to‘liq import o‘rnini bosish.",
     reasonsTitle: "Nega UZGPS ni tanlashadi",
@@ -199,7 +199,7 @@ export const uz: Dict = {
   },
 
   footer: {
-    about: "Transport va xodimlar sun’iy yo‘ldosh monitoringi. BePro dasturchilar markazi, Toshkent.",
+    about: "Transport va xodimlar sun’iy yo‘ldosh monitoringi. UZGPS ishlab chiquvchisi — Toshkentdagi BePro dasturchilar markazi.",
     solutions: "Yechimlar",
     company: "Kompaniya",
     contacts: "Kontaktlar",
@@ -249,14 +249,6 @@ export const uz: Dict = {
       "Individual yondashuvli sohaviy yechimlar",
       "Arizalarga tez javob berish",
       "Turli ishlab chiqaruvchilar uskunalari bilan ishlash",
-    ],
-
-    timeline: [
-      { year: "2014", title: "Kompaniyaning tashkil etilishi", text: "BePro dasturchilar markazi va «O‘zbektelekom» AK Milliy axborot tizimi doirasida UZGPS ni yaratdi." },
-      { year: "2015", title: "Loyihaning rivoji", text: "SMPO UZGPS monitoring platformasining rivojlantirilishi." },
-      { year: "2016", title: "Faol savdoning boshlanishi", text: "Dastlabki korporativ mijozlarning ulanishi." },
-      { year: "2017", title: "Imkoniyatlarning kengayishi", text: "Yoqilg‘i nazorati, hisobotlar va bildirishnomalar tizimi." },
-      { year: "2018–19", title: "Sohaviy yechimlar", text: "Agro, temir yo‘l transporti, favqulodda xizmatlar va provayderlar uchun yechimlar." },
     ],
 
     systemModules: [

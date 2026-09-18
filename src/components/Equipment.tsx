@@ -32,14 +32,14 @@ export default function Equipment() {
           ))}
         </div>
 
-        <div data-reveal className="mt-12 flex flex-wrap items-baseline gap-x-8 gap-y-2 border-t border-rule-inv pt-6 text-[15px] text-paper/60">
+        <div data-reveal className="mb-8 flex flex-wrap items-baseline gap-x-8 gap-y-2 border-t border-rule-inv pt-6 text-[15px] text-paper/60">
           <span className="text-paper">{t.equipment.sensors}</span>
           {fuelSensors.map((s) => (
             <span key={s}>{s}</span>
           ))}
         </div>
 
-        <div data-reveal className="mt-16 border-t border-rule-inv pt-12">
+        <div data-reveal className="border-t border-rule-inv pt-12">
           <DeviceCarousel />
         </div>
       </div>

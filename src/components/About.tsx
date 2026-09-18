@@ -22,23 +22,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* timeline */}
-        <div className="mt-20">
-          <ol className="border-t-2 border-ink">
-            {t.content.timeline.map((item) => (
-              <li
-                key={item.year}
-                data-reveal
-                className="group grid gap-x-8 gap-y-2 border-b border-rule px-1 py-6 transition-colors hover:bg-paper sm:grid-cols-[150px_minmax(0,1fr)] sm:px-4 lg:grid-cols-[180px_minmax(0,4fr)_minmax(0,6fr)] lg:items-center lg:gap-x-10 lg:py-8"
-              >
-                <span className="num font-display text-[clamp(30px,3vw,42px)] font-medium leading-none tracking-[-0.05em] text-navy">{item.year}</span>
-                <h3 className="font-display text-[clamp(20px,2vw,28px)] leading-tight tracking-[-0.03em] text-ink">{item.title}</h3>
-                <p className="max-w-[650px] text-[16px] leading-relaxed text-graphite sm:col-start-2 lg:col-auto">{item.text}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-
         {/* why UZGPS */}
         <div className="mt-28 grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:items-start">
           <div className="self-center">

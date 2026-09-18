@@ -1,5 +1,5 @@
 import { contacts } from "@/data/content";
-import { defaultLocale, type Locale } from "@/i18n";
+import { type Locale } from "@/i18n";
 
 /** Canonical origin. Override per environment with NEXT_PUBLIC_SITE_URL (no trailing slash). */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://uzgps.uz").replace(/\/$/, "");
