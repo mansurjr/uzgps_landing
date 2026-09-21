@@ -17,7 +17,9 @@ export default function Clients() {
 
   const allClients = [featuredClient, ...clients];
   const industries = t.content.clientIndustries as Record<string, string>;
+  const descriptions = t.content.clientDescriptions as Record<string, string | undefined>;
   const isFeatured = selected.id === featuredClient.id;
+  const selectedTitle = isFeatured ? t.content.featured.short : selected.short;
 
   // Animate only a user-selected card, and bring it into view on narrow screens.
   useEffect(() => {
@@ -72,15 +74,19 @@ export default function Clients() {
                   />
                 </div>
                 <div className="min-w-0">
-                  <span className="font-display text-[30px] font-bold leading-tight tracking-[-0.03em] text-primary sm:text-[40px]">
-                    {isFeatured ? t.content.featured.short : selected.short}
+                  <span
+                    className={`block font-display font-bold leading-tight tracking-[-0.03em] text-primary [overflow-wrap:anywhere] ${
+                      selectedTitle.length > 12 ? "text-[24px] sm:text-[28px]" : "text-[30px] sm:text-[40px]"
+                    }`}
+                  >
+                    {selectedTitle}
                   </span>
                   <p className="mt-1 line-clamp-2 text-[14px] text-paper/70">{isFeatured ? t.content.featured.name : selected.name}</p>
                 </div>
               </div>
 
               <p className="mt-6 text-[16px] leading-relaxed text-paper/85">
-                {isFeatured ? t.content.featured.text : t.content.clientText}
+                {isFeatured ? t.content.featured.text : (descriptions[selected.id] ?? t.content.clientText)}
               </p>
             </div>
           </div>

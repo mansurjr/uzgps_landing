@@ -15,7 +15,6 @@ export const contacts = {
   privacy: "https://uzgps.uz/mobileprivacy",
 };
 
-const UPLOADS = "https://uzgps.uz/storage/app/uploads/public";
 
 export type ClientItem = {
   id: string;
@@ -37,22 +36,23 @@ export const featuredClient: ClientItem = {
   h: 96,
 };
 
-/** Логотипы из блока «Нам доверяют» на uzgps.uz; файлы маленькие, поэтому w/h — их родной размер. */
+/** Логотипы — официальные файлы организаций или Wikimedia Commons, хранятся локально в public/clients (источники в SOURCES.md). */
 export const clients: ClientItem[] = [
-  { id: "c-cbu", name: "Центральный банк Республики Узбекистан", short: "Центральный банк РУз", logo: `${UPLOADS}/5e7/71d/4f3/5e771d4f330ed278085412.png`, w: 78, h: 78 },
-  { id: "c-ung", name: "АО «Узбекнефтегаз»", short: "Узбекнефтегаз", logo: `${UPLOADS}/5e7/71d/a4e/5e771da4eebb1033651275.png`, w: 90, h: 80 },
-  { id: "c-uty", name: "АО «O‘zbekiston Temir Yo‘llari»", short: "O‘zbekiston Temir Yo‘llari", logo: `${UPLOADS}/5e7/71e/ad5/5e771ead5fd51348879917.png`, w: 65, h: 89 },
-  { id: "c-guvd", name: "Главное управление внутренних дел", short: "ГУВД г. Ташкента", logo: `${UPLOADS}/5e7/71d/cea/5e771dcea01ac984181953.png`, w: 134, h: 75 },
-  { id: "c-uzex", name: "АО «Узбекская республиканская товарно-сырьевая биржа»", short: "УзРТСБ (UZEX)", logo: `${UPLOADS}/5e7/71f/339/5e771f339a37c058535276.png`, w: 78, h: 78 },
-  { id: "c-uzagro", name: "АО «Узагросервис»", short: "УзАгроСервис", logo: `${UPLOADS}/5ef/ca6/4c9/5efca64c9988e051967399.png`, w: 90, h: 80 },
-  { id: "c-tshtx", name: "АК «Toshshahartransxizmat»", short: "Ташшахартрансхизмат", logo: `${UPLOADS}/5e7/71e/0a7/5e771e0a7f2a7312241892.png`, w: 86, h: 82 },
-  { id: "c-safia", name: "Кондитерский дом «Safia»", short: "Safia", logo: `${UPLOADS}/5e7/71f/831/5e771f831d009749699259.png`, w: 64, h: 64 },
-  { id: "c-zenta", name: "Zenta Pharm", short: "Zenta Pharm", logo: `${UPLOADS}/5e7/71f/16a/5e771f16aeeeb660236073.png`, w: 164, h: 48 },
-  { id: "c-eurasia", name: "Eurasia Logistics Service", short: "Eurasia Logistics", logo: `${UPLOADS}/5e7/721/8c4/5e77218c481c3326017965.png`, w: 179, h: 48 },
-  { id: "c-garant", name: "Garant Mebel", short: "Garant Mebel", logo: `${UPLOADS}/5e7/720/da1/5e7720da1edfe120011997.png`, w: 179, h: 43 },
-  { id: "c-tml", name: "TML Logistics", short: "TML", logo: `${UPLOADS}/5e7/71f/5ab/5e771f5abfcbd370606632.png`, w: 124, h: 65 },
-  { id: "c-oriat", name: "Радиостанция «Oriat FM»", short: "Oriat FM", logo: `${UPLOADS}/5e7/71e/f48/5e771ef48f077556170830.png`, w: 80, h: 75 },
-  { id: "c-yellow", name: "Yellow Pages Uzbekistan", short: "Yellow Pages", logo: `${UPLOADS}/5e7/71e/827/5e771e82728f1658969707.png`, w: 158, h: 48 },
+  { id: "c-hududgaz", name: "АО «Худудгазтаъминот»", short: "Худудгазтаъминот", logo: "/clients/hududgaz.webp", w: 567, h: 107 },
+  { id: "c-ung", name: "АО «Узбекнефтегаз»", short: "Узбекнефтегаз", logo: "/clients/uzbekneftegaz.svg", w: 1087, h: 218 },
+  { id: "c-uztelecom", name: "АК «Узбектелеком»", short: "Узбектелеком", logo: "/clients/uztelecom.svg", w: 810, h: 120 },
+  { id: "c-karantin", name: "Агентство карантина и защиты растений", short: "УзКарантин", logo: "/clients/karantin.webp", w: 538, h: 600 },
+  { id: "c-iiv", name: "Министерство внутренних дел Республики Узбекистан", short: "МВД (ИИВ)", logo: "/clients/iiv.webp", w: 600, h: 600 },
+  { id: "c-safe-city", name: "Центр развития систем «Безопасный город» МВД", short: "Безопасный город", logo: "/clients/iiv.webp", w: 600, h: 600 },
+  { id: "c-national-guard", name: "Национальная гвардия Республики Узбекистан", short: "Национальная гвардия", logo: "/clients/national-guard.webp", w: 600, h: 600 },
+  { id: "c-security", name: "Служба охраны Национальной гвардии", short: "Служба охраны", logo: "/clients/security.webp", w: 598, h: 600 },
+  { id: "c-guard-troops", name: "Караульные войска МВД Республики Узбекистан", short: "Караульные войска", logo: "/clients/iiv.webp", w: 600, h: 600 },
+  { id: "c-mchs", name: "Министерство по чрезвычайным ситуациям Республики Узбекистан", short: "МЧС", logo: "/clients/mchs.webp", w: 155, h: 156 },
+  { id: "c-cabinet", name: "Кабинет Министров Республики Узбекистан", short: "Кабинет Министров", logo: "/clients/cabinet.svg", w: 678, h: 714 },
+  { id: "c-lukoil", name: "ПАО «ЛУКОЙЛ»", short: "ЛУКОЙЛ", logo: "/clients/lukoil.svg", w: 709, h: 708 },
+  { id: "c-railways", name: "АО «O‘zbekiston temir yo‘llari»", short: "Узбекистон темир йуллари", logo: "/clients/railways.webp", w: 462, h: 600 },
+  { id: "c-airways", name: "АО «Uzbekistan Airways»", short: "Узбекистон хаво йуллари", logo: "/clients/uzairways.svg", w: 2506, h: 512 },
+  { id: "c-agroleasing", name: "АО «Узагролизинг»", short: "Агролизинг", logo: "/clients/agrolizing.webp", w: 200, h: 32 },
 ];
 
 /** Изображения устройств хранятся локально; источники указаны в public/devices/SOURCES.md. */
