@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { animate, createTimeline, splitText, stagger } from "animejs";
-import HeroBackdrop from "./HeroBackdrop";
+import HeroMap from "./hero/HeroMap";
 import { useDict } from "@/i18n/DictProvider";
 
 const figureValues = [
@@ -55,7 +55,7 @@ export default function Hero() {
 
   return (
     <section ref={root} id="top" className="relative isolate overflow-hidden bg-ink pt-20 text-paper lg:pt-24">
-      <HeroBackdrop />
+      <HeroMap />
 
       <div className="wrap relative flex flex-col items-center justify-center pb-20 pt-20 text-center lg:min-h-[calc(100svh-96px)] lg:pb-24">
         <h1 data-reveal className="h-display mx-auto max-w-245 text-[clamp(44px,6.4vw,100px)]">

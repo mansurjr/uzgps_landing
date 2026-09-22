@@ -50,7 +50,6 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       <Header />
       <main>
         <Hero />
-        <Clients />
         <Problems />
         <Platform media={platformMedia()} />
         <HowItWorks />
@@ -58,6 +57,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
         <Solutions />
         <Equipment />
         <About />
+        <Clients />
         <Contact />
       </main>
       <Footer t={t} />

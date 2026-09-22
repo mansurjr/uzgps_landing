@@ -316,3 +316,15 @@ input:checked + span .check-mark {
 .smpo-icon-green {
   filter: brightness(0) saturate(100%) invert(55%) sepia(75%) saturate(400%) hue-rotate(85deg) brightness(95%) contrast(95%);
 }
+
+/* hero 3D map: slow camera turn */
+@keyframes hero-map-drift {
+  from { transform: rotate(-7deg) scale(1.02); }
+  to { transform: rotate(7deg) scale(1.08); }
+}
+.hero-map-drift {
+  animation: hero-map-drift 70s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-map-drift { animation: none; }
+}
