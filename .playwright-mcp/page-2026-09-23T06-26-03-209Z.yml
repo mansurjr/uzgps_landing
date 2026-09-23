@@ -1,0 +1,844 @@
+- generic [active] [ref=e1]:
+  - link "Перейти к содержанию" [ref=e2] [cursor=pointer]:
+    - /url: "#top"
+  - banner:
+    - generic [ref=e3]:
+      - link "UZGPS" [ref=e4] [cursor=pointer]:
+        - /url: "#top"
+      - navigation "Основное меню" [ref=e7]:
+        - button "Решения" [ref=e8]
+        - link "Платформа" [ref=e11] [cursor=pointer]:
+          - /url: "#platform"
+        - link "Оборудование" [ref=e12] [cursor=pointer]:
+          - /url: "#equipment"
+        - link "Экономия" [ref=e13] [cursor=pointer]:
+          - /url: "#calculator"
+        - link "О компании" [ref=e14] [cursor=pointer]:
+          - /url: "#about"
+      - generic [ref=e15]:
+        - link "Вход в систему" [ref=e16] [cursor=pointer]:
+          - /url: https://smpo.uzgps.uz/
+        - link "Оставить заявку" [ref=e17] [cursor=pointer]:
+          - /url: "#contact"
+          - text: Оставить заявку
+          - generic [aria-hidden] [ref=e18]: ↗
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - link "© OpenStreetMap" [ref=e21] [cursor=pointer]:
+        - /url: https://www.openstreetmap.org/copyright
+      - generic [ref=e22]:
+        - heading "Контроль автопарка без догадок" [level=1] [ref=e23]:
+          - generic [aria-hidden] [ref=e26]: Контроль
+          - generic [aria-hidden] [ref=e28]: автопарка
+          - generic [aria-hidden] [ref=e30]: без
+          - generic [aria-hidden] [ref=e32]: догадок
+        - paragraph [ref=e33]: "Спутниковый мониторинг транспорта и персонала: где машина, сколько топлива, кто нарушил маршрут — онлайн, в браузере и в мобильном приложении."
+        - generic [ref=e34]:
+          - link "Получить консультацию" [ref=e35] [cursor=pointer]:
+            - /url: "#contact"
+          - link "Посмотреть систему" [ref=e36] [cursor=pointer]:
+            - /url: "#platform"
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - term [ref=e39]: лет на рынке Узбекистана
+            - definition [ref=e40]: 10+
+            - definition [ref=e41]: лет на рынке Узбекистана
+          - generic [ref=e42]:
+            - term [ref=e43]: снижение затрат на топливо
+            - definition [ref=e44]: до 30%
+            - definition [ref=e45]: снижение затрат на топливо
+          - generic [ref=e46]:
+            - term [ref=e47]: машин на одном сервере СМПО
+            - definition [ref=e48]: 10 000 +
+            - definition [ref=e49]: машин на одном сервере СМПО
+    - region [ref=e50]:
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - heading "Автопарк работает, а расходы растут. Знакомо?" [level=2] [ref=e53]
+          - paragraph [ref=e54]: Пять вопросов, с которыми к нам чаще всего приходят руководители автопарков, и решение от платформы UZGPS.
+        - list [ref=e56]:
+          - listitem [ref=e57]:
+            - paragraph [ref=e58]: Подозреваете использование корпоративного транспорта в личных целях?
+            - paragraph [ref=e59]: "Онлайн-контроль передвижения транспорта: местоположение, маршрут и статус каждого объекта в реальном времени."
+          - listitem [ref=e60]:
+            - paragraph [ref=e61]: Слишком большой расход топлива?
+            - paragraph [ref=e62]: Полный учёт поездок, заправок и сливов по датчикам уровня топлива.
+          - listitem [ref=e63]:
+            - paragraph [ref=e64]: Сотрудники не выполняют поручения в полном объёме, а клиенты недовольны сроками поставок?
+            - paragraph [ref=e65]: "Мониторинг посещения запланированных мест: точки интереса, геозоны и события въезда-выезда."
+          - listitem [ref=e66]:
+            - paragraph [ref=e67]: Не успеваете оплачивать штрафы сотрудников?
+            - paragraph [ref=e68]: "Профилактика нарушений: лимиты скорости, резкие разгоны, торможения и повороты, оценка качества вождения."
+          - listitem [ref=e69]:
+            - paragraph [ref=e70]: Вам необходима информация в любом месте и в любое время?
+            - paragraph [ref=e71]: Доступ к системе из браузера и мобильного приложения для Android и iOS.
+    - generic [ref=e73]:
+      - generic [ref=e74]:
+        - heading "Одна система для всего автопарка" [level=2] [ref=e75]
+        - paragraph [ref=e76]: СМПО UZGPS — собственная платформа, разработанная в Узбекистане. Интерфейс на узбекском, русском и английском языках.
+      - tablist "Возможности платформы" [ref=e77]:
+        - tab "Мониторинг" [selected] [ref=e78]
+        - tab "Топливо" [ref=e80]
+        - tab "Отчёты" [ref=e81]
+        - tab "Управление" [ref=e82]
+      - tabpanel "Мониторинг" [ref=e83]:
+        - generic [ref=e84]:
+          - heading "Где каждая машина прямо сейчас" [level=3] [ref=e85]
+          - list [ref=e86]:
+            - listitem [ref=e87]: Местоположение и скорость в реальном времени
+            - listitem [ref=e89]: Фильтры по статусу, зажиганию, спутникам и топливу
+            - listitem [ref=e91]: "Подложки карты: OSM, Google, Яндекс"
+        - generic [ref=e93]:
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - iframe [aria-hidden] [ref=e98]:
+                - generic [ref=f1e2]:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic [ref=f1e7]:
+                              - generic [ref=f1e8]:
+                                - button [aria-hidden] [ref=f1e11] [cursor=pointer]
+                                - button "Пробки" [ref=f1e13] [cursor=pointer]
+                              - iframe [aria-hidden] [ref=f1e17]
+                            - generic [ref=f1e18]:
+                              - generic [ref=f1e21]:
+                                - button "Приблизить" [ref=f1e23] [cursor=pointer]
+                                - button "Отдалить" [ref=f1e25] [cursor=pointer]
+                              - iframe [aria-hidden] [ref=f1e26]
+                            - generic [ref=f1e27]:
+                              - button "Моё местоположение" [ref=f1e30] [cursor=pointer]
+                              - iframe [aria-hidden] [ref=f1e31]
+                            - generic [ref=f1e32]:
+                              - button "Открыть в Яндекс Картах" [ref=f1e35] [cursor=pointer]
+                              - iframe [aria-hidden] [ref=f1e37]
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - button "Открыть в Картах"
+                              - iframe [aria-hidden] [ref=f1e38]
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - button
+                              - iframe [aria-hidden] [ref=f1e39]
+                          - generic:
+                            - generic:
+                              - contentinfo:
+                                - generic [ref=f1e41]:
+                                  - link "Условия использования" [ref=f1e42] [cursor=pointer]:
+                                    - /url: https://yandex.uz/legal/maps_termsofuse/?lang=ru
+                                  - link "Конфиденциальность" [ref=f1e43] [cursor=pointer]:
+                                    - /url: https://yandex.uz/legal/confidential/?lang=ru
+                            - generic:
+                              - generic:
+                                - generic [aria-hidden]:
+                                  - generic: 500 м
+                          - iframe [aria-hidden] [ref=f1e44]
+                      - iframe [aria-hidden] [ref=f1e45]
+              - generic:
+                - button "Фургон" [ref=e99]
+                - generic: Фургон
+              - generic:
+                - button "Грузовой автомобиль" [ref=e100]
+                - generic: Грузовой автомобиль
+              - generic:
+                - button "Легковой автомобиль" [ref=e101]
+                - generic: Легковой автомобиль
+              - generic:
+                - button "Пикап" [ref=e102]
+                - generic: Пикап
+              - generic:
+                - button "Автобус" [ref=e103]
+                - generic: Автобус
+              - generic:
+                - button "Экскаватор" [ref=e104]
+                - generic: Экскаватор
+              - generic:
+                - button "Курьерский фургон" [ref=e105]
+                - generic: Курьерский фургон
+              - generic:
+                - button "Сервисный автомобиль" [ref=e106]
+                - generic: Сервисный автомобиль
+              - generic [ref=e108]:
+                - generic [ref=e109]:
+                  - generic [ref=e110]: Экскаватор
+                  - generic [ref=e111]: Экскаватор
+                  - list [ref=e112]:
+                    - listitem [ref=e113]:
+                      - generic [ref=e114]: Пробег
+                      - generic [ref=e115]: 12,4 км
+                    - listitem [ref=e117]:
+                      - generic [ref=e118]: Нарушение
+                      - generic [ref=e119]: "0"
+                    - listitem [ref=e121]:
+                      - generic [ref=e122]: Моточасы
+                      - generic [ref=e123]: 4,5 ч
+                    - listitem [ref=e125]:
+                      - generic [ref=e126]: Заправка/слив
+                      - generic [ref=e127]: 0/0
+                    - listitem [ref=e129]:
+                      - generic [ref=e130]: Стоянки
+                      - generic [ref=e131]: "1"
+                  - button "Показать больше информации" [ref=e133]
+                - generic [ref=e136]: Задания
+            - complementary [ref=e138]:
+              - generic [ref=e139]: Список
+              - generic [ref=e160]:
+                - generic [ref=e161]: "8"
+                - text: из
+                - generic [ref=e162]: "8"
+              - list [ref=e179]:
+                - listitem [ref=e180]:
+                  - button "1. Фургон 16 Sep. 01 714 UZA uz 58 км/ч" [ref=e181]:
+                    - generic [ref=e182]:
+                      - generic [ref=e187]: 1. Фургон
+                      - generic [ref=e188]: 16 Sep.
+                    - generic [ref=e199]:
+                      - generic [ref=e200]:
+                        - generic [ref=e201]: "01"
+                        - generic [ref=e203]: "714"
+                        - generic [ref=e204]: UZA
+                        - generic [ref=e205]: uz
+                      - generic [ref=e207]: 58 км/ч
+                  - generic "В движении" [ref=e224]
+                - listitem [ref=e225]:
+                  - button "2. Грузовой автомобиль 16 Sep. 10 C 551 AA uz 41 км/ч" [ref=e226]:
+                    - generic [ref=e227]:
+                      - generic [ref=e232]: 2. Грузовой автомобиль
+                      - generic [ref=e233]: 16 Sep.
+                    - generic [ref=e244]:
+                      - generic [ref=e245]:
+                        - generic [ref=e246]: "10"
+                        - generic [ref=e248]: C
+                        - generic [ref=e249]: "551"
+                        - generic [ref=e250]: AA
+                        - generic [ref=e251]: uz
+                      - generic [ref=e253]: 41 км/ч
+                  - generic "В движении" [ref=e270]
+                - listitem [ref=e271]:
+                  - button "3. Легковой автомобиль 16 Sep. 01 B 208 GP uz 52 км/ч" [ref=e272]:
+                    - generic [ref=e273]:
+                      - generic [ref=e278]: 3. Легковой автомобиль
+                      - generic [ref=e279]: 16 Sep.
+                    - generic [ref=e290]:
+                      - generic [ref=e291]:
+                        - generic [ref=e292]: "01"
+                        - generic [ref=e294]: B
+                        - generic [ref=e295]: "208"
+                        - generic [ref=e296]: GP
+                        - generic [ref=e297]: uz
+                      - generic [ref=e299]: 52 км/ч
+                  - generic "В движении" [ref=e316]
+                - listitem [ref=e317]:
+                  - button "4. Пикап 16 Sep. 01 390 KBA uz 0 км/ч" [ref=e318]:
+                    - generic [ref=e319]:
+                      - generic [ref=e324]: 4. Пикап
+                      - generic [ref=e325]: 16 Sep.
+                    - generic [ref=e336]:
+                      - generic [ref=e337]:
+                        - generic [ref=e338]: "01"
+                        - generic [ref=e340]: "390"
+                        - generic [ref=e341]: KBA
+                        - generic [ref=e342]: uz
+                      - generic [ref=e344]: 0 км/ч
+                  - generic "Стоянка" [ref=e361]
+                - listitem [ref=e362]:
+                  - button "5. Автобус 16 Sep. 01 067 MAA uz 0 км/ч" [ref=e363]:
+                    - generic [ref=e364]:
+                      - generic [ref=e369]: 5. Автобус
+                      - generic [ref=e370]: 16 Sep.
+                    - generic [ref=e381]:
+                      - generic [ref=e382]:
+                        - generic [ref=e383]: "01"
+                        - generic [ref=e385]: "067"
+                        - generic [ref=e386]: MAA
+                        - generic [ref=e387]: uz
+                      - generic [ref=e389]: 0 км/ч
+                  - generic "Остановка" [ref=e404]
+                - listitem [ref=e405]:
+                  - button "6. Экскаватор 16 Sep. 01 925 TTA uz 0 км/ч" [ref=e406]:
+                    - generic [ref=e407]:
+                      - generic [ref=e412]: 6. Экскаватор
+                      - generic [ref=e413]: 16 Sep.
+                    - generic [ref=e424]:
+                      - generic [ref=e425]:
+                        - generic [ref=e426]: "01"
+                        - generic [ref=e428]: "925"
+                        - generic [ref=e429]: TTA
+                        - generic [ref=e430]: uz
+                      - generic [ref=e432]: 0 км/ч
+                  - generic "Потеря связи" [ref=e447]
+                - listitem [ref=e448]:
+                  - button "7. Курьерский фургон 16 Sep. 01 482 ABA uz 36 км/ч" [ref=e449]:
+                    - generic [ref=e450]:
+                      - generic [ref=e455]: 7. Курьерский фургон
+                      - generic [ref=e456]: 16 Sep.
+                    - generic [ref=e467]:
+                      - generic [ref=e468]:
+                        - generic [ref=e469]: "01"
+                        - generic [ref=e471]: "482"
+                        - generic [ref=e472]: ABA
+                        - generic [ref=e473]: uz
+                      - generic [ref=e475]: 36 км/ч
+                  - generic "В движении" [ref=e492]
+                - listitem [ref=e493]:
+                  - button "8. Сервисный автомобиль 16 Sep. 01 316 BBA uz 0 км/ч" [ref=e494]:
+                    - generic [ref=e495]:
+                      - generic [ref=e500]: 8. Сервисный автомобиль
+                      - generic [ref=e501]: 16 Sep.
+                    - generic [ref=e512]:
+                      - generic [ref=e513]:
+                        - generic [ref=e514]: "01"
+                        - generic [ref=e516]: "316"
+                        - generic [ref=e517]: BBA
+                        - generic [ref=e518]: uz
+                      - generic [ref=e520]: 0 км/ч
+                  - generic "Стоянка" [ref=e537]
+          - generic [ref=e538]:
+            - paragraph [ref=e539]: Экран «Мониторинг». Нажмите на объект в списке или на карте.
+            - link "Запросить демо-доступ" [ref=e540] [cursor=pointer]:
+              - /url: "#contact"
+      - generic [ref=e541]:
+        - heading "Что входит в систему" [level=3] [ref=e542]
+        - list [ref=e543]:
+          - listitem [ref=e544]:
+            - paragraph [ref=e545]: Мониторинг
+            - paragraph [ref=e546]: Список объектов с фильтрами по статусу, зажиганию, спутникам и топливу, карточка объекта и выгрузка в Excel.
+          - listitem [ref=e547]:
+            - paragraph [ref=e548]: Трекинг
+            - paragraph [ref=e549]: "Трек за период с плеером и графиком: скорость, зажигание, показания ДУТ, заправки и сливы."
+          - listitem [ref=e550]:
+            - paragraph [ref=e551]: Точки интереса (PoI)
+            - paragraph [ref=e552]: Собственные точки на карте с именами и значками для контроля посещений.
+          - listitem [ref=e553]:
+            - paragraph [ref=e554]: Геозоны (ZoI)
+            - paragraph [ref=e555]: "Зоны интереса: круг, полигон и линия, площадь в гектарах, события въезда и выезда."
+          - listitem [ref=e556]:
+            - paragraph [ref=e557]: Сообщения
+            - paragraph [ref=e558]: Сообщения от объектов и история обмена с оборудованием.
+          - listitem [ref=e559]:
+            - paragraph [ref=e560]: Отчёты
+            - paragraph [ref=e561]: "Аналитические панели: пробег, моточасы, простои, нарушения и расход топлива."
+          - listitem [ref=e562]:
+            - paragraph [ref=e563]: Настройки объектов
+            - paragraph [ref=e564]: Значок, параметры трека, лимиты скорости и интервалов связи, параметры эко-вождения.
+          - listitem [ref=e565]:
+            - paragraph [ref=e566]: Мобильное приложение
+            - paragraph [ref=e567]: "UzGPS для Android и iOS: объекты на карте, треки и отчёты в телефоне."
+        - paragraph [ref=e568]: "Статусы объекта: В движении · Остановка · Стоянка · Потеря связи · Долгая потеря связи · Нет данных"
+      - generic [ref=e569]:
+        - generic [ref=e570]:
+          - heading "Мобильное приложение UzGPS" [level=3] [ref=e571]
+          - paragraph [ref=e572]: Объекты на карте, треки поездок и отчёты — в смартфоне руководителя. Бесплатно для клиентов UZGPS.
+          - generic [ref=e573]:
+            - link "Google Play" [ref=e574] [cursor=pointer]:
+              - /url: https://play.google.com/store/apps/details?id=com.uzgps.uzgps_viewer
+            - link "App Store" [ref=e575] [cursor=pointer]:
+              - /url: https://apps.apple.com/uz/app/uzgps-app/id6739448332
+        - list [ref=e576]:
+          - listitem [ref=e577]:
+            - img "Экран приложения UzGPS 1" [ref=e579]
+          - listitem [ref=e580]:
+            - img "Экран приложения UzGPS 2" [ref=e582]
+          - listitem [ref=e583]:
+            - img "Экран приложения UzGPS 3" [ref=e585]
+          - listitem [ref=e586]:
+            - img "Экран приложения UzGPS 4" [ref=e588]
+    - region [ref=e589]:
+      - generic [ref=e590]:
+        - heading "От установки до первого отчёта" [level=2] [ref=e591]
+        - list [ref=e599]:
+          - listitem [ref=e600]:
+            - paragraph [ref=e601]: Шаг 1
+            - heading "Монтаж оборудования" [level=3] [ref=e602]
+            - paragraph [ref=e603]: Устанавливаем GPS-трекер и датчики топлива. Гарантия на оборудование — 12 месяцев.
+          - listitem [ref=e604]:
+            - paragraph [ref=e605]: Шаг 2
+            - heading "Передача данных" [level=3] [ref=e606]
+            - paragraph [ref=e607]: Координаты, скорость и уровень топлива уходят на сервер по сотовой сети каждые несколько секунд.
+          - listitem [ref=e608]:
+            - paragraph [ref=e609]: Шаг 3
+            - heading "Обработка на сервере" [level=3] [ref=e610]
+            - paragraph [ref=e611]: Облако UZGPS или ваш собственный сервер фиксирует события и хранит всю историю.
+          - listitem [ref=e612]:
+            - paragraph [ref=e613]: Шаг 4
+            - heading "Результат у вас" [level=3] [ref=e614]
+            - paragraph [ref=e615]: Карта, отчёты и уведомления в браузере и в мобильном приложении.
+    - generic [ref=e617]:
+      - generic [ref=e618]:
+        - heading "Посчитайте, сколько теряет ваш автопарк" [level=2] [ref=e619]
+        - paragraph [ref=e620]: Укажите параметры парка — калькулятор покажет, сколько можно вернуть за счёт контроля сливов, личных поездок и простоя.
+      - generic [ref=e621]:
+        - generic [ref=e622]:
+          - group "Тип техники" [ref=e623]:
+            - generic [ref=e625]:
+              - button "Легковые 10 л/100 км" [ref=e626]:
+                - generic [ref=e627]: Легковые
+                - generic [ref=e628]: 10 л/100 км
+              - button "Грузовые до 10 т 22 л/100 км" [pressed] [ref=e629]:
+                - generic [ref=e630]: Грузовые до 10 т
+                - generic [ref=e631]: 22 л/100 км
+              - button "Грузовые от 10 т 32 л/100 км" [ref=e632]:
+                - generic [ref=e633]: Грузовые от 10 т
+                - generic [ref=e634]: 32 л/100 км
+              - button "Спецтехника 28 л/100 км" [ref=e635]:
+                - generic [ref=e636]: Спецтехника
+                - generic [ref=e637]: 28 л/100 км
+          - generic [ref=e638]:
+            - generic [ref=e639]:
+              - generic [ref=e640]: Количество машин
+              - generic [ref=e641]: 25 шт.
+            - slider "Количество машин 25 шт. 1 500" [ref=e642] [cursor=pointer]: "25"
+            - generic [ref=e643]:
+              - generic [ref=e644]: "1"
+              - generic [ref=e645]: "500"
+          - generic [ref=e646]:
+            - generic [ref=e647]:
+              - generic [ref=e648]: Средний пробег одной машины в день
+              - generic [ref=e649]: 180 км
+            - slider "Средний пробег одной машины в день 180 км 10 600" [ref=e650] [cursor=pointer]: "180"
+            - generic [ref=e651]:
+              - generic [ref=e652]: "10"
+              - generic [ref=e653]: "600"
+          - generic [ref=e654]:
+            - generic [ref=e655]:
+              - generic [ref=e656]: Цена топлива
+              - generic [ref=e657]: 11 000 сум/л
+            - slider "Цена топлива 11 000 сум/л 6 000 16 000" [ref=e658] [cursor=pointer]: "11000"
+            - generic [ref=e659]:
+              - generic [ref=e660]: 6 000
+              - generic [ref=e661]: 16 000
+        - generic [ref=e662]:
+          - generic [ref=e663]:
+            - paragraph [ref=e664]: Можно сэкономить за год
+            - paragraph [ref=e665]: 570 000 000
+            - paragraph [ref=e666]: сум
+            - generic [ref=e667]:
+              - generic [ref=e668]:
+                - term [ref=e669]: В месяц
+                - definition [ref=e670]: ≈ 48 000 000 сум
+              - generic [ref=e671]:
+                - term [ref=e672]: Топлива в месяц
+                - definition [ref=e673]: ≈ 4 400 л
+              - generic [ref=e674]:
+                - term [ref=e675]: Текущие затраты на топливо
+                - definition [ref=e676]: ≈ 240 000 000 сум/мес
+          - generic [ref=e677]:
+            - link "Получить точный расчёт" [ref=e678] [cursor=pointer]:
+              - /url: "#contact"
+            - paragraph [ref=e679]: Оценка при 22 рабочих днях и возврате 20% затрат на топливо. Клиенты UZGPS фиксируют до 30%.
+    - generic [ref=e681]:
+      - generic [ref=e682]:
+        - heading "Решения для вашей отрасли" [level=2] [ref=e683]
+        - paragraph [ref=e684]: С 2014 года мы внедряем мониторинг в государственном секторе, промышленности, на транспорте и в логистике. Модули те же — настройка под ваши процессы.
+      - list [ref=e685]:
+        - listitem [ref=e686]:
+          - 'link "Корпоративный транспорт Служебные машины под контролем: маршруты, пробег, простои и расход топлива по каждому объекту. →" [ref=e687] [cursor=pointer]':
+            - /url: "#contact"
+            - heading "Корпоративный транспорт" [level=3] [ref=e688]
+            - paragraph [ref=e689]: "Служебные машины под контролем: маршруты, пробег, простои и расход топлива по каждому объекту."
+            - generic [ref=e690]: →
+        - listitem [ref=e691]:
+          - link "Грузоперевозки и логистика Контроль доставки, соблюдение маршрутов и сроков, учёт топлива на магистральных рейсах. →" [ref=e692] [cursor=pointer]:
+            - /url: "#contact"
+            - heading "Грузоперевозки и логистика" [level=3] [ref=e693]
+            - paragraph [ref=e694]: Контроль доставки, соблюдение маршрутов и сроков, учёт топлива на магистральных рейсах.
+            - generic [ref=e695]: →
+        - listitem [ref=e696]:
+          - link "Пассажирский транспорт Соблюдение расписания и маршрутов, контроль скоростного режима на линии. →" [ref=e697] [cursor=pointer]:
+            - /url: "#contact"
+            - heading "Пассажирский транспорт" [level=3] [ref=e698]
+            - paragraph [ref=e699]: Соблюдение расписания и маршрутов, контроль скоростного режима на линии.
+            - generic [ref=e700]: →
+        - listitem [ref=e701]:
+          - 'link "Агропромышленный комплекс Техника в поле: моточасы, топливо и работа по геозонам во время посевной и уборочной. →" [ref=e702] [cursor=pointer]':
+            - /url: "#contact"
+            - heading "Агропромышленный комплекс" [level=3] [ref=e703]
+            - paragraph [ref=e704]: "Техника в поле: моточасы, топливо и работа по геозонам во время посевной и уборочной."
+            - generic [ref=e705]: →
+        - listitem [ref=e706]:
+          - link "Железнодорожный транспорт Мониторинг подвижного состава и путевой техники на протяжённых участках. →" [ref=e707] [cursor=pointer]:
+            - /url: "#contact"
+            - heading "Железнодорожный транспорт" [level=3] [ref=e708]
+            - paragraph [ref=e709]: Мониторинг подвижного состава и путевой техники на протяжённых участках.
+            - generic [ref=e710]: →
+        - listitem [ref=e711]:
+          - 'link "Экстренные и коммунальные службы Диспетчеризация выездных бригад: ближайшая свободная машина и контроль времени прибытия. →" [ref=e712] [cursor=pointer]':
+            - /url: "#contact"
+            - heading "Экстренные и коммунальные службы" [level=3] [ref=e713]
+            - paragraph [ref=e714]: "Диспетчеризация выездных бригад: ближайшая свободная машина и контроль времени прибытия."
+            - generic [ref=e715]: →
+        - listitem [ref=e716]:
+          - link "Дистрибуция и ритейл Планы посещений торговых точек, отклонения от маршрута и фактическое время визита. →" [ref=e717] [cursor=pointer]:
+            - /url: "#contact"
+            - heading "Дистрибуция и ритейл" [level=3] [ref=e718]
+            - paragraph [ref=e719]: Планы посещений торговых точек, отклонения от маршрута и фактическое время визита.
+            - generic [ref=e720]: →
+        - listitem [ref=e721]:
+          - 'link "Провайдерам телематических услуг СМПО UZGPS на вашем сервере: от сотен до нескольких тысяч объектов и полная техническая поддержка. →" [ref=e722] [cursor=pointer]':
+            - /url: "#contact"
+            - heading "Провайдерам телематических услуг" [level=3] [ref=e723]
+            - paragraph [ref=e724]: "СМПО UZGPS на вашем сервере: от сотен до нескольких тысяч объектов и полная техническая поддержка."
+            - generic [ref=e725]: →
+      - generic [ref=e726]:
+        - heading "Облако или собственный сервер" [level=3] [ref=e727]
+        - generic [ref=e728]:
+          - article [ref=e729]:
+            - generic [ref=e748]:
+              - heading "Облачное решение" [level=4] [ref=e749]
+              - generic [ref=e752]: "01"
+            - generic [ref=e753]:
+              - generic [ref=e754]:
+                - term [ref=e755]: Где хранятся данные
+                - definition [ref=e762]: На серверах UZGPS — без покупки дорогостоящего оборудования
+              - generic [ref=e763]:
+                - term [ref=e764]: Когда подходит
+                - definition [ref=e768]: Любой парк, быстрый старт
+              - generic [ref=e769]:
+                - term [ref=e770]: Масштаб
+                - definition [ref=e774]: От одной машины
+              - generic [ref=e775]:
+                - term [ref=e776]: Что нужно от вас
+                - definition [ref=e780]: Браузер или мобильное приложение
+          - article [ref=e781]:
+            - generic [ref=e800]:
+              - heading "Серверное решение" [level=4] [ref=e801]
+              - generic [ref=e804]: "02"
+            - generic [ref=e805]:
+              - generic [ref=e806]:
+                - term [ref=e807]: Где хранятся данные
+                - definition [ref=e814]: На вашем сервере, внутри контура организации
+              - generic [ref=e815]:
+                - term [ref=e816]: Когда подходит
+                - definition [ref=e820]: Если политика безопасности запрещает сторонние серверы
+              - generic [ref=e821]:
+                - term [ref=e822]: Масштаб
+                - definition [ref=e826]: Сотни и тысячи машин
+              - generic [ref=e827]:
+                - term [ref=e828]: Что нужно от вас
+                - definition [ref=e832]: Широкий интернет-канал, фиксированный IP, круглосуточный сервер и администрирование
+    - generic [ref=e834]:
+      - generic [ref=e835]:
+        - heading "Оборудование, монтаж и обслуживание" [level=2] [ref=e836]
+        - paragraph [ref=e837]: Полный цикл — от подбора и установки до технического обслуживания. Гарантия на оборудование 12 месяцев.
+      - generic [ref=e838]:
+        - generic [ref=e839]:
+          - heading "GPS-трекеры" [level=3] [ref=e840]
+          - paragraph [ref=e841]: "Компактный прибор с GPS-приёмником и GSM-модемом: определяет координаты и скорость и передаёт данные на сервер по GPRS. Автомобильные и персональные модели."
+        - generic [ref=e842]:
+          - heading "Датчики уровня топлива" [level=3] [ref=e843]
+          - paragraph [ref=e844]: "ДУТ измеряет наполнение и расход топлива в баке. Устанавливается на транспорт с объёмом бака более 50 литров: грузовые машины, спецтехника, автобусы."
+        - generic [ref=e845]:
+          - heading "Дополнительное оборудование" [level=3] [ref=e846]
+          - paragraph [ref=e847]: Идентификация водителя (iButton), CAN-адаптеры, датчик нагрузки на ось, датчик наличия пассажира, защитный бокс на трекер, диспетчерская связь.
+      - generic [ref=e848]:
+        - generic [ref=e849]: "Датчики уровня топлива:"
+        - generic [ref=e850]: OMNICOMM LLS 4
+        - generic [ref=e851]: MIELTA ZOND
+        - generic [ref=e852]: ЭСКОРТ TD-BLE
+        - generic [ref=e853]: TECHNOTON DUT-E
+      - region "Трекеры и оборудование" [ref=e855]:
+        - generic [ref=e856]:
+          - generic [ref=e857]:
+            - heading "Трекеры и оборудование" [level=3] [ref=e858]
+            - paragraph [ref=e859]: Трекеры, датчики топлива и аксессуары для мониторинга транспорта. Подберём комплект под ваш парк.
+          - paragraph [ref=e860]: 01 / 16
+        - generic [ref=e861]:
+          - generic [ref=e862]:
+            - generic [aria-hidden]: FMB920
+            - img "FMB920" [ref=e864]
+            - button "Предыдущее устройство" [ref=e880]
+            - button "Следующее устройство" [ref=e883]
+          - generic [ref=e887]:
+            - paragraph [ref=e888]: Компактный трекер
+            - heading "FMB920" [level=4] [ref=e889]
+            - paragraph [ref=e890]: Самая популярная модель для легковых машин и защиты от угона. Скрытая установка, встроенные антенны.
+            - generic [ref=e891]:
+              - generic [ref=e892]:
+                - term [ref=e893]: Характеристика
+                - definition [ref=e894]: GNSS / GSM
+              - generic [ref=e895]:
+                - term [ref=e896]: Характеристика
+                - definition [ref=e897]: Bluetooth 4.0
+              - generic [ref=e898]:
+                - term [ref=e899]: Характеристика
+                - definition [ref=e900]: Micro-SIM
+              - generic [ref=e901]:
+                - term [ref=e902]: Характеристика
+                - definition [ref=e903]: Встроенный акселерометр
+            - link "Подобрать оборудование" [ref=e905] [cursor=pointer]:
+              - /url: "#contact"
+        - tablist "Модели оборудования" [ref=e906]:
+          - listitem [ref=e907]:
+            - tab "FMB920 — Компактный трекер" [selected] [ref=e908]:
+              - generic [ref=e911]: FMB920
+          - listitem [ref=e912]:
+            - tab "FMC920 — Компактный 4G трекер" [ref=e913]:
+              - generic [ref=e916]: FMC920
+          - listitem [ref=e917]:
+            - tab "FMB930 — Трекер для электротранспорта" [ref=e918]:
+              - generic [ref=e921]: FMB930
+          - listitem [ref=e922]:
+            - tab "FMB125 — Трекер с RS232 / RS485" [ref=e923]:
+              - generic [ref=e926]: FMB125
+          - listitem [ref=e927]:
+            - tab "FMC125 — 4G трекер с RS232 / RS485" [ref=e928]:
+              - generic [ref=e931]: FMC125
+          - listitem [ref=e932]:
+            - tab "EYE Sensor — Беспроводной BLE-датчик" [ref=e933]:
+              - generic [ref=e936]: EYE Sensor
+          - listitem [ref=e937]:
+            - tab "EYE Beacon — BLE-маяк для имущества" [ref=e938]:
+              - generic [ref=e941]: EYE Beacon
+          - listitem [ref=e942]:
+            - tab "Technoton DUT-E — ДУТ Technoton" [ref=e943]:
+              - generic [ref=e946]: Technoton DUT-E
+          - listitem [ref=e947]:
+            - tab "Escort TD-BLE — Беспроводной ДУТ ЭСКОРТ" [ref=e948]:
+              - generic [ref=e951]: Escort TD-BLE
+          - listitem [ref=e952]:
+            - tab "Omnicomm LLS 4 — ДУТ Omnicomm" [ref=e953]:
+              - generic [ref=e956]: Omnicomm LLS 4
+          - listitem [ref=e957]:
+            - tab "Реле удалённой блокировки двигателя — Управление запуском" [ref=e958]:
+              - generic [ref=e961]: Реле удалённой блокировки двигателя
+          - listitem [ref=e962]:
+            - tab "Электронные замки Jointech — Защита груза" [ref=e963]:
+              - generic [ref=e966]: Электронные замки Jointech
+          - listitem [ref=e967]:
+            - tab "FMB140 — Чтение CAN-шины" [ref=e968]:
+              - generic [ref=e971]: FMB140
+          - listitem [ref=e972]:
+            - tab "FMC130 — 4G LTE трекер" [ref=e973]:
+              - generic [ref=e976]: FMC130
+          - listitem [ref=e977]:
+            - tab "FMB003 — OBD-трекер" [ref=e978]:
+              - generic [ref=e981]: FMB003
+          - listitem [ref=e982]:
+            - tab "FMM920 — Компактный LTE Cat M1" [ref=e983]:
+              - generic [ref=e986]: FMM920
+    - generic [ref=e988]:
+      - generic [ref=e989]:
+        - heading "Национальная система спутникового мониторинга" [level=2] [ref=e990]
+        - generic [ref=e991]:
+          - paragraph [ref=e992]: UZGPS разработана Центром программистов BePro совместно с АК «Узбектелеком» в рамках развития Национальной информационной системы.
+          - paragraph [ref=e993]: Наша цель — полное импортозамещение технологий спутникового мониторинга, диспетчеризации и навигации в Узбекистане.
+      - generic [ref=e994]:
+        - generic [ref=e995]:
+          - heading "Почему выбирают UZGPS" [level=3] [ref=e996]
+          - paragraph [ref=e997]: Собственная платформа, разработанная в Узбекистане, техническая поддержка и отраслевые решения под задачи клиента.
+        - list [ref=e998]:
+          - listitem [ref=e999]:
+            - generic [ref=e1003]: Доступ к системе из любой точки мира 24/7/365
+          - listitem [ref=e1004]:
+            - generic [ref=e1008]: Подключение в сжатые сроки
+          - listitem [ref=e1009]:
+            - generic [ref=e1013]: Удобный интерфейс на узбекском, русском и английском языках
+          - listitem [ref=e1014]:
+            - generic [ref=e1018]: Полная техническая поддержка
+          - listitem [ref=e1019]:
+            - generic [ref=e1023]: Высококвалифицированные специалисты
+          - listitem [ref=e1024]:
+            - generic [ref=e1028]: Лицензии и сертификаты
+          - listitem [ref=e1029]:
+            - generic [ref=e1033]: Отраслевые решения с индивидуальным подходом
+          - listitem [ref=e1034]:
+            - generic [ref=e1038]: Быстрое реагирование на заявки
+          - listitem [ref=e1039]:
+            - generic [ref=e1043]: Работа с оборудованием разных производителей
+    - region [ref=e1044]:
+      - generic [ref=e1045]:
+        - generic [ref=e1046]:
+          - heading "Нам доверяют" [level=2] [ref=e1047]
+          - paragraph
+        - generic [ref=e1048]:
+          - generic [ref=e1050]:
+            - text: Экстренные службы
+            - generic [ref=e1051]:
+              - img "103" [ref=e1053]
+              - generic [ref=e1054]:
+                - generic [ref=e1055]: Служба 103
+                - paragraph [ref=e1056]: Республиканский центр экстренной медицинской помощи
+            - paragraph [ref=e1057]: Машины республиканской службы скорой помощи используют систему спутникового мониторинга UZGPS.
+          - list [ref=e1059]:
+            - listitem [ref=e1060]:
+              - button "Республиканский центр экстренной медицинской помощи" [pressed] [ref=e1061]:
+                - img "Республиканский центр экстренной медицинской помощи"
+            - listitem [ref=e1063]:
+              - button "АО «Худудгазтаъминот»" [ref=e1064]:
+                - img "АО «Худудгазтаъминот»"
+            - listitem [ref=e1065]:
+              - button "АО «Узбекнефтегаз»" [ref=e1066]:
+                - img "АО «Узбекнефтегаз»"
+            - listitem [ref=e1067]:
+              - button "АК «Узбектелеком»" [ref=e1068]:
+                - img "АК «Узбектелеком»"
+            - listitem [ref=e1069]:
+              - button "Агентство карантина и защиты растений" [ref=e1070]:
+                - img "Агентство карантина и защиты растений"
+            - listitem [ref=e1071]:
+              - button "Министерство внутренних дел Республики Узбекистан" [ref=e1072]:
+                - img "Министерство внутренних дел Республики Узбекистан"
+            - listitem [ref=e1073]:
+              - button "Центр развития систем «Безопасный город» МВД" [ref=e1074]:
+                - img "Центр развития систем «Безопасный город» МВД"
+            - listitem [ref=e1075]:
+              - button "Национальная гвардия Республики Узбекистан" [ref=e1076]:
+                - img "Национальная гвардия Республики Узбекистан"
+            - listitem [ref=e1077]:
+              - button "Служба охраны Национальной гвардии" [ref=e1078]:
+                - img "Служба охраны Национальной гвардии"
+            - listitem [ref=e1079]:
+              - button "Караульные войска МВД Республики Узбекистан" [ref=e1080]:
+                - img "Караульные войска МВД Республики Узбекистан"
+            - listitem [ref=e1081]:
+              - button "Министерство по чрезвычайным ситуациям Республики Узбекистан" [ref=e1082]:
+                - img "Министерство по чрезвычайным ситуациям Республики Узбекистан"
+            - listitem [ref=e1083]:
+              - button "Кабинет Министров Республики Узбекистан" [ref=e1084]:
+                - img "Кабинет Министров Республики Узбекистан"
+            - listitem [ref=e1085]:
+              - button "ПАО «ЛУКОЙЛ»" [ref=e1086]:
+                - img "ПАО «ЛУКОЙЛ»"
+            - listitem [ref=e1087]:
+              - button "АО «O‘zbekiston temir yo‘llari»" [ref=e1088]:
+                - img "АО «O‘zbekiston temir yo‘llari»"
+            - listitem [ref=e1089]:
+              - button "АО «Uzbekistan Airways»" [ref=e1090]:
+                - img "АО «Uzbekistan Airways»"
+            - listitem [ref=e1091]:
+              - button "АО «Узагролизинг»" [ref=e1092]:
+                - img "АО «Узагролизинг»"
+    - generic [ref=e1094]:
+      - generic [ref=e1095]:
+        - heading "С UZGPS всегда на правильном пути" [level=2] [ref=e1096]
+        - paragraph [ref=e1097]: Оставьте контакты — специалист перезвонит, подберёт оборудование и рассчитает стоимость. Консультация бесплатная.
+      - generic [ref=e1098]:
+        - generic [ref=e1099]:
+          - generic [ref=e1100]:
+            - paragraph [ref=e1101]: Или свяжитесь напрямую
+            - list [ref=e1102]:
+              - listitem [ref=e1103]:
+                - link "Отдел продаж +998 (71) 207-44-44" [ref=e1104] [cursor=pointer]:
+                  - /url: tel:+998712074444
+                  - generic [ref=e1108]:
+                    - generic [ref=e1109]: Отдел продаж
+                    - generic [ref=e1110]: +998 (71) 207-44-44
+              - listitem [ref=e1111]:
+                - link "Техподдержка (71) 230-55-44, (93) 183-55-44" [ref=e1112] [cursor=pointer]:
+                  - /url: tel:+998712305544
+                  - generic [ref=e1118]:
+                    - generic [ref=e1119]: Техподдержка
+                    - generic [ref=e1120]: (71) 230-55-44, (93) 183-55-44
+              - listitem [ref=e1121]:
+                - link "Электронная почта info@uzgps.uz" [ref=e1122] [cursor=pointer]:
+                  - /url: mailto:info@uzgps.uz
+                  - generic [ref=e1128]:
+                    - generic [ref=e1129]: Электронная почта
+                    - generic [ref=e1130]: info@uzgps.uz
+              - listitem [ref=e1131]:
+                - link "Telegram t.me/uzgps" [ref=e1132] [cursor=pointer]:
+                  - /url: https://t.me/uzgps
+                  - generic [ref=e1136]:
+                    - generic [ref=e1137]: Telegram
+                    - generic [ref=e1138]: t.me/uzgps
+          - generic [ref=e1139]:
+            - iframe [ref=e1140]
+            - link "100115, Ташкент, ул. Кирк Киз, 10 стадион «Миллий», мечеть «Козиробод» Маршрут →" [ref=e1141] [cursor=pointer]:
+              - /url: https://yandex.uz/maps/?pt=69.220057,41.275578&z=17&l=map
+              - generic [ref=e1142]:
+                - generic [ref=e1143]: 100115, Ташкент, ул. Кирк Киз, 10
+                - generic [ref=e1144]: стадион «Миллий», мечеть «Козиробод»
+              - generic [ref=e1145]: Маршрут →
+        - generic [ref=e1147]:
+          - heading "Заявка на консультацию" [level=3] [ref=e1148]
+          - paragraph [ref=e1149]: Перезвоним в рабочее время.
+          - generic [ref=e1150]:
+            - generic [ref=e1151]:
+              - generic [ref=e1152]: Ваше имя *
+              - textbox "Ваше имя *" [ref=e1153]
+            - generic [ref=e1155]:
+              - generic [ref=e1156]: Телефон *
+              - textbox "Телефон *" [ref=e1157]:
+                - /placeholder: +998 (__) ___-__-__
+            - generic [ref=e1159]:
+              - text: Компания
+              - textbox "Компания" [ref=e1160]
+          - generic [ref=e1162]:
+            - text: Комментарий
+            - textbox "Комментарий" [ref=e1163]:
+              - /placeholder: "Например: 20 грузовиков, нужен контроль топлива"
+          - button "Отправить заявку" [ref=e1164]
+          - paragraph [ref=e1165]:
+            - text: Нажимая «Отправить заявку», вы соглашаетесь с
+            - link "политикой конфиденциальности" [ref=e1166] [cursor=pointer]:
+              - /url: https://uzgps.uz/mobileprivacy
+            - text: .
+  - contentinfo [ref=e1167]:
+    - generic [ref=e1168]:
+      - generic [ref=e1169]:
+        - generic [ref=e1170]: UZGPS
+        - paragraph [ref=e1172]: Спутниковый мониторинг транспорта и персонала. Центр программистов BePro — разработчик UZGPS, Ташкент.
+      - generic [ref=e1173]:
+        - paragraph [ref=e1174]: Решения
+        - list [ref=e1175]:
+          - listitem [ref=e1176]:
+            - link "Корпоративный транспорт" [ref=e1177] [cursor=pointer]:
+              - /url: "#solutions"
+          - listitem [ref=e1178]:
+            - link "Грузоперевозки и логистика" [ref=e1179] [cursor=pointer]:
+              - /url: "#solutions"
+          - listitem [ref=e1180]:
+            - link "Пассажирский транспорт" [ref=e1181] [cursor=pointer]:
+              - /url: "#solutions"
+          - listitem [ref=e1182]:
+            - link "Агропромышленный комплекс" [ref=e1183] [cursor=pointer]:
+              - /url: "#solutions"
+          - listitem [ref=e1184]:
+            - link "Железнодорожный транспорт" [ref=e1185] [cursor=pointer]:
+              - /url: "#solutions"
+          - listitem [ref=e1186]:
+            - link "Экстренные и коммунальные службы" [ref=e1187] [cursor=pointer]:
+              - /url: "#solutions"
+      - generic [ref=e1188]:
+        - paragraph [ref=e1189]: Компания
+        - list [ref=e1190]:
+          - listitem [ref=e1191]:
+            - link "Платформа" [ref=e1192] [cursor=pointer]:
+              - /url: "#platform"
+          - listitem [ref=e1193]:
+            - link "Оборудование" [ref=e1194] [cursor=pointer]:
+              - /url: "#equipment"
+          - listitem [ref=e1195]:
+            - link "Калькулятор экономии" [ref=e1196] [cursor=pointer]:
+              - /url: "#calculator"
+          - listitem [ref=e1197]:
+            - link "О компании" [ref=e1198] [cursor=pointer]:
+              - /url: "#about"
+          - listitem [ref=e1199]:
+            - link "Вход в систему" [ref=e1200] [cursor=pointer]:
+              - /url: https://smpo.uzgps.uz/
+      - generic [ref=e1201]:
+        - paragraph [ref=e1202]: Контакты
+        - list [ref=e1203]:
+          - listitem [ref=e1204]:
+            - link "+998 (71) 207-44-44" [ref=e1205] [cursor=pointer]:
+              - /url: tel:+998712074444
+          - listitem [ref=e1206]:
+            - link "info@uzgps.uz" [ref=e1207] [cursor=pointer]:
+              - /url: mailto:info@uzgps.uz
+          - listitem [ref=e1208]: 100115, Ташкент, ул. Кирк Киз, 10
+          - listitem [ref=e1209]:
+            - link "Telegram" [ref=e1210] [cursor=pointer]:
+              - /url: https://t.me/uzgps
+            - link "Facebook" [ref=e1211] [cursor=pointer]:
+              - /url: https://www.facebook.com/uzgps/
+    - generic [ref=e1213]:
+      - generic [ref=e1214]: © 2014–2026 UZGPS. Все права защищены.
+      - link "политикой конфиденциальности" [ref=e1215] [cursor=pointer]:
+        - /url: https://uzgps.uz/mobileprivacy
+  - button "Open Next.js Dev Tools" [ref=e1221] [cursor=pointer]
+  - alert [ref=e1225]
