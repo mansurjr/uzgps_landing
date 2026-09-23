@@ -112,10 +112,12 @@ function positionPopup(element: HTMLDivElement, point: { x: number; y: number })
 
 const satColor = (n: number) => (n > 6 ? T.success : n > 3 ? T.error : n > 0 ? T.warning : T.secondary);
 
+const DEFAULT_OBJECT_ID = OBJECTS.find((o) => o.name === "Экскаватор")?.id ?? 6;
+
 export default function SmpoMonitoring() {
   const frame = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
-  const [selected, setSelected] = useState<number | null>(1);
+  const [selected, setSelected] = useState<number | null>(DEFAULT_OBJECT_ID);
   const [showMore, setShowMore] = useState(false);
   const [speeds, setSpeeds] = useState<Record<number, number>>(() => Object.fromEntries(OBJECTS.map((o) => [o.id, o.kmh])));
   const markers = useRef<Record<number, HTMLDivElement | null>>({});

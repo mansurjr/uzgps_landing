@@ -38,32 +38,32 @@ export default function Calculator() {
   }, [kind, count, km, price]);
 
   return (
-    <section ref={root} id="calculator" className="border-t border-rule bg-white py-16 sm:py-24 lg:py-36">
+    <section ref={root} id="calculator" className="bg-ink py-16 text-paper sm:py-24 lg:py-36">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <h2 data-reveal className="h-section">
             {t.calculator.title}
           </h2>
-          <p data-reveal className="lead max-w-130 lg:justify-self-end">
+          <p data-reveal className="max-w-130 text-[18px] leading-relaxed text-paper/60 lg:justify-self-end">
             {t.calculator.lead}
           </p>
         </div>
 
-        <div className="mt-10 sm:mt-16 grid border-2 border-ink lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+        <div className="mt-10 sm:mt-16 grid border border-rule-inv bg-ink-2 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div data-reveal className="space-y-8 p-5 sm:space-y-10 sm:p-8 md:p-10">
             <fieldset>
               <legend className="text-[14px] font-medium sm:text-[15px]">{t.calculator.kindLegend}</legend>
-              <div className="mt-3 grid grid-cols-2 gap-px border border-ink bg-ink sm:mt-4 md:grid-cols-4">
+              <div className="mt-3 grid grid-cols-2 gap-px border border-rule-inv bg-rule-inv sm:mt-4 md:grid-cols-4">
                 {kinds.map((k) => (
                   <button
                     key={k.key}
                     type="button"
                     onClick={() => setKind(k.key)}
                     aria-pressed={kind === k.key}
-                    className={`px-3 py-3 text-left text-[13px] transition-colors sm:px-4 sm:py-3.5 sm:text-[15px] ${kind === k.key ? "bg-ink text-paper" : "bg-paper hover:bg-paper-2"}`}
+                    className={`px-3 py-3 text-left text-[13px] transition-colors sm:px-4 sm:py-3.5 sm:text-[15px] ${kind === k.key ? "bg-primary text-ink" : "bg-ink-2 hover:bg-ink-3"}`}
                   >
                     <span className="block truncate font-medium">{k.label}</span>
-                    <span className={`num mt-0.5 block text-[12px] sm:text-[13px] ${kind === k.key ? "text-paper/60" : "text-graphite"}`}>
+                    <span className={`num mt-0.5 block text-[12px] sm:text-[13px] ${kind === k.key ? "text-ink/65" : "text-paper/50"}`}>
                         {k.l100} {t.calculator.per100}
                     </span>
                   </button>
@@ -76,7 +76,7 @@ export default function Calculator() {
             <Slider label={t.calculator.priceLabel} value={price} min={6000} max={16000} step={100} onChange={setPrice} suffix={t.calculator.units.sumPerL} />
           </div>
 
-          <div data-reveal className="flex flex-col justify-between bg-ink p-5 text-paper sm:p-8 md:p-10">
+          <div data-reveal className="flex flex-col justify-between bg-navy p-5 text-paper sm:p-8 md:p-10">
             <div>
               <p className="text-[14px] text-paper/60 sm:text-[15px]">{t.calculator.resultTitle}</p>
               <p className="num mt-2 font-display text-[clamp(32px,7.5vw,68px)] font-medium leading-none tracking-[-0.04em] text-primary sm:mt-3">
@@ -158,7 +158,7 @@ function Slider({
       <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
         <span className="text-[14px] font-medium sm:text-[15px]">{label}</span>
         <span className="num shrink-0 text-[17px] font-semibold sm:text-[20px]">
-          {fmt(value)} <span className="text-[13px] font-normal text-graphite sm:text-[14px]">{suffix}</span>
+          {fmt(value)} <span className="text-[13px] font-normal text-paper/50 sm:text-[14px]">{suffix}</span>
         </span>
       </span>
       <input
@@ -169,9 +169,9 @@ function Slider({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className="mt-3 sm:mt-5 w-full cursor-pointer h-2"
-        style={{ background: `linear-gradient(90deg, var(--ink) ${pct}%, var(--rule-strong) ${pct}%)` }}
+        style={{ background: `linear-gradient(90deg, var(--primary) ${pct}%, var(--rule-inv) ${pct}%)` }}
       />
-      <span className="num mt-2 flex justify-between text-[11px] text-graphite sm:text-[12px]">
+      <span className="num mt-2 flex justify-between text-[11px] text-paper/45 sm:text-[12px]">
         <span>{fmt(min)}</span>
         <span>{fmt(max)}</span>
       </span>

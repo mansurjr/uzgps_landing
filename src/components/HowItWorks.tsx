@@ -34,7 +34,6 @@ export default function HowItWorks() {
           ...svg.createMotionPath(line),
           duration: 4200,
           delay: 1900,
-          loop: true,
           ease: "inOutSine",
         }),
       );

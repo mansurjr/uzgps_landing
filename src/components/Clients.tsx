@@ -7,29 +7,54 @@ import { clients, featuredClient, type ClientItem } from "@/data/content";
 import { useDict } from "@/i18n/DictProvider";
 import { useReveal } from "@/lib/useReveal";
 
+const ROTATE_MS = 4000;
+const allClients = [featuredClient, ...clients];
+
 export default function Clients() {
   const { t } = useDict();
   const root = useRef<HTMLElement>(null);
   const [selected, setSelected] = useState<ClientItem>(featuredClient);
   const card = useRef<HTMLDivElement>(null);
-  const pendingSelection = useRef(false);
+  const pendingSelection = useRef<"user" | "auto" | null>(null);
+  const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(false);
   useReveal(root, { y: 16, step: 35 });
 
-  const allClients = [featuredClient, ...clients];
   const industries = t.content.clientIndustries as Record<string, string>;
   const descriptions = t.content.clientDescriptions as Record<string, string | undefined>;
   const isFeatured = selected.id === featuredClient.id;
   const selectedTitle = isFeatured ? t.content.featured.short : selected.short;
 
-  // Animate only a user-selected card, and bring it into view on narrow screens.
+  // Rotate only while the section is on screen.
   useEffect(() => {
-    if (!pendingSelection.current) return;
-    pendingSelection.current = false;
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Advance to the next client every 4 s; a manual pick restarts the countdown.
+  useEffect(() => {
+    if (paused || !inView) return;
+    const id = window.setTimeout(() => {
+      const i = allClients.findIndex((c) => c.id === selected.id);
+      pendingSelection.current = "auto";
+      setSelected(allClients[(i + 1) % allClients.length]);
+    }, ROTATE_MS);
+    return () => window.clearTimeout(id);
+  }, [selected, paused, inView]);
+
+  // Animate a changed card; a user pick also brings it into view on narrow screens.
+  useEffect(() => {
+    const source = pendingSelection.current;
+    if (!source) return;
+    pendingSelection.current = null;
     const el = card.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const stacked = window.innerWidth < 1024;
-    if (stacked && (rect.top < 80 || rect.top > window.innerHeight * 0.6)) {
+    if (source === "user" && stacked && (rect.top < 80 || rect.top > window.innerHeight * 0.6)) {
       window.scrollTo({ top: window.scrollY + rect.top - 100, behavior: "smooth" });
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -40,23 +65,31 @@ export default function Clients() {
   }, [selected]);
 
   return (
-    <section ref={root} id="clients" aria-labelledby="clients-title" className="border-t border-rule bg-white py-20 lg:py-28">
+    <section ref={root} id="clients" aria-labelledby="clients-title" className="bg-ink py-20 text-paper lg:py-28">
       <div className="wrap">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 id="clients-title" data-reveal className="h-section">
             {t.clients.title}
           </h2>
-          <p data-reveal className="max-w-[520px] text-[16px] text-graphite">
+          <p data-reveal className="max-w-[520px] text-[16px] text-paper/60">
             {t.clients.lead}
           </p>
         </div>
 
-        <div data-reveal className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start">
+        <div
+          data-reveal
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false);
+          }}
+          className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start">
           {/* selected client — kept outside the reveal so a state change never leaves it at opacity 0 */}
           <div
             ref={card}
-            aria-live="polite"
-            className="group relative flex h-full flex-col justify-between overflow-hidden border border-ink/20 bg-navy p-7 text-paper shadow-lg md:p-10"
+            aria-live={paused ? "polite" : "off"}
+            className="group relative flex h-full flex-col justify-between overflow-hidden border border-rule-inv bg-navy p-7 text-paper shadow-lg md:p-10"
           >
             <div>
               <span className="text-[14px] text-paper/60">{industries[selected.id]}</span>
@@ -92,8 +125,8 @@ export default function Clients() {
           </div>
 
           {/* logo grid */}
-          <div className="border border-rule bg-rule">
-            <ul className="grid grid-cols-2 gap-px bg-rule sm:grid-cols-3 xl:grid-cols-4">
+          <div className="border border-rule-inv bg-rule-inv">
+            <ul className="grid grid-cols-2 gap-px bg-rule-inv sm:grid-cols-3 xl:grid-cols-4">
               {allClients.map((c) => {
                 const isSelected = selected.id === c.id;
                 return (
@@ -102,7 +135,7 @@ export default function Clients() {
                       type="button"
                       onClick={() => {
                         if (isSelected) return;
-                        pendingSelection.current = true;
+                        pendingSelection.current = "user";
                         setSelected(c);
                       }}
                       aria-pressed={isSelected}

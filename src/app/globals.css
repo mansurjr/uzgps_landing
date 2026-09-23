@@ -328,3 +328,28 @@ input:checked + span .check-mark {
 @media (prefers-reduced-motion: reduce) {
   .hero-map-drift { animation: none; }
 }
+
+/* deployment illustrations (Solutions) */
+@keyframes deploy-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+@keyframes deploy-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+.deploy-flow {
+  stroke-dasharray: 4 6;
+  animation: deploy-flow 1.2s linear infinite;
+}
+.deploy-blink {
+  animation: deploy-blink 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .deploy-flow,
+  .deploy-blink {
+    animation: none;
+  }
+}
